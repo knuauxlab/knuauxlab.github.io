@@ -24,8 +24,17 @@ Home, News, Members, Publications, Projects, Join Us, Contact
 - 디자인은 템플릿처럼 보이지 않게 한다. 기본 그라디언트, 과한 카드 그리드, 의미 없는 아이콘을 피한다.
 - 변경 후에는 빌드가 통과하는지 확인한다.
 
+## 스킬
+
+출처와 업데이트 방법은 `.claude/THIRD_PARTY.md`에 있다.
+
+- 새 기능이나 여러 파일에 걸친 변경은 구현 전에 `/ecc-plan`으로 계획을 세우고 승인받은 뒤 구현한다. 새 라이브러리나 도구를 도입할 때는 `search-first`로 기존 해법을 먼저 찾는다.
+- 페이지나 컴포넌트의 시각 디자인을 만들거나 고칠 때는 `design-taste-frontend`를 쓴다. 연구실 사이트는 마케팅 랜딩 페이지가 아니므로, 연구 내용과 논문이 가장 잘 읽히는 방향을 우선한다.
+- 작업을 마치면 `verification-loop`로 빌드와 결과를 확인한다.
+
 ## 브랜치 규칙
 
+- `dev` 브랜치는 두지 않는다. 개발자가 1명이고 GitHub Pages는 한 브랜치만 배포하므로 `main` + 작업 브랜치로 충분하다.
 - `main`은 항상 빌드가 통과하는 상태를 유지한다. 배포는 `main` 기준이다.
 - 코드/디자인 변경은 브랜치에서 작업한 뒤 PR로 합친다. 브랜치 이름은 `feat/<주제>`, `fix/<주제>`, `chore/<주제>`.
 - 콘텐츠 수정(`src/content/` 아래 파일)은 교수님이 GitHub 웹 화면에서 `main`에 직접 커밋해도 된다.
@@ -38,6 +47,7 @@ Home, News, Members, Publications, Projects, Join Us, Contact
 - scope는 선택. 예: `members`, `publications`, `home`.
 - 예: `content(news): 2026 학부연구생 합류 소식 추가`
 - 본문에는 무엇을 바꿨는지보다 왜 바꿨는지를 적는다.
+- 작업 단위마다 커밋한다. 한 커밋에는 한 가지 변경만 담는다.
 - 커밋 전에 `npm run build`가 통과해야 한다.
 
 ## 배포
