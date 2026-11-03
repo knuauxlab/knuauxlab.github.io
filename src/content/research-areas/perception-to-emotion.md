@@ -1,5 +1,5 @@
 ---
-title: 지각에서 감정까지
-summary: 사람이 감각 정보를 받아들이고 해석하는 과정을, 아직 충분히 밝혀지지 않은 메커니즘까지 포함해 연구합니다.
+title: From Perception to Emotion
+summary: Investigating how humans perceive and interpret sensory stimuli, uncovering the mechanisms linking tactile perception to emotional experience.
 order: 1
 ---

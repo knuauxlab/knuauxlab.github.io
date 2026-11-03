@@ -1,5 +1,5 @@
 ---
-title: 차세대 인터페이스
-summary: 경험의 질과 조작 성능을 함께 높이는 사용자 인터페이스를 설계합니다.
+title: Next-Generation Interfaces
+summary: Designing human-computer and XR interfaces that enhance both experiential immersion and manipulation performance.
 order: 3
 ---
