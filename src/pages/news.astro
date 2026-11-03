@@ -1,0 +1,86 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+const rawNews = (await getCollection('news', ({ data }) => !data.draft)).sort((a, b) =>
+  b.data.date.localeCompare(a.data.date)
+);
+
+const newsItems = await Promise.all(
+  rawNews.map(async (entry) => {
+    const { Content } = await render(entry);
+    const hasBody = Boolean(entry.body && entry.body.trim().length > 0);
+    return { entry, Content, hasBody };
+  })
+);
+---
+
+<BaseLayout title="News — AUX Lab">
+  <section class="page-hero">
+    <div class="wrap">
+      <h1 class="display">News</h1>
+    </div>
+  </section>
+
+  <section class="chapter chapter-white">
+    <div class="wrap">
+      <ul class="news-list">
+        {
+          newsItems.map(({ entry, Content, hasBody }) => (
+            <li class="news-item">
+              <span class="news-date nums">{entry.data.date}</span>
+              <div class="news-body">
+                <h2 class="news-title">{entry.data.title}</h2>
+                {hasBody && (
+                  <div class="small muted news-extra">
+                    <Content />
+                  </div>
+                )}
+              </div>
+              <span class="tag tag-surface">{entry.data.category}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .news-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .news-item {
+    display: grid;
+    grid-template-columns: 120px 1fr auto;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--surface);
+  }
+
+  .news-date {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--muted);
+  }
+
+  .news-title {
+    font-size: var(--step-body);
+    font-weight: 600;
+  }
+
+  .news-extra {
+    margin-top: 0.35rem;
+  }
+
+  @media (max-width: 48em) {
+    .news-item {
+      grid-template-columns: 1fr;
+      gap: 0.4rem;
+    }
+  }
+</style>

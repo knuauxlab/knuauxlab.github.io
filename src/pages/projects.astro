@@ -1,0 +1,76 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+const rawProjects = (await getCollection('projects', ({ data }) => !data.draft)).sort((a, b) =>
+  b.data.start.localeCompare(a.data.start)
+);
+
+const projects = await Promise.all(
+  rawProjects.map(async (entry) => {
+    const { Content } = await render(entry);
+    const hasBody = Boolean(entry.body && entry.body.trim().length > 0);
+    return { entry, Content, hasBody };
+  })
+);
+---
+
+<BaseLayout title="Projects — AUX Lab">
+  <section class="page-hero">
+    <div class="wrap">
+      <h1 class="display">Projects</h1>
+    </div>
+  </section>
+
+  <section class="chapter chapter-white">
+    <div class="wrap">
+      <div class="project-list">
+        {
+          projects.map(({ entry, Content, hasBody }) => (
+            <article class="project-item">
+              <div class="project-meta">
+                <span class="tag tag-orange">{entry.data.funder}</span>
+                <span class="small muted nums">
+                  {entry.data.start} — {entry.data.end ?? 'Present'}
+                </span>
+              </div>
+              <h2 class="head project-title">{entry.data.title}</h2>
+              {entry.data.summary && <p class="body-copy muted">{entry.data.summary}</p>}
+              {hasBody && (
+                <div class="body-copy">
+                  <Content />
+                </div>
+              )}
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .project-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .project-item {
+    background: var(--surface);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .project-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .project-title {
+    font-size: var(--step-lead);
+  }
+</style>

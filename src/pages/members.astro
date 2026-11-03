@@ -1,0 +1,222 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+import { Image } from 'astro:assets';
+
+const allMembers = (await getCollection('members', ({ data }) => !data.draft)).sort(
+  (a, b) => a.data.order - b.data.order
+);
+
+const renderedMembers = await Promise.all(
+  allMembers.map(async (entry) => {
+    const { Content } = await render(entry);
+    const hasBody = Boolean(entry.body && entry.body.trim().length > 0);
+    return { entry, Content, hasBody };
+  })
+);
+
+const currentMembers = renderedMembers.filter((m) => m.entry.data.status === 'current');
+const professors = currentMembers.filter((m) => m.entry.data.role === 'professor');
+const graduateStudents = currentMembers.filter((m) =>
+  ['phd', 'ms', 'integrated'].includes(m.entry.data.role)
+);
+const undergrads = currentMembers.filter((m) => m.entry.data.role === 'undergraduate');
+const alumni = renderedMembers.filter((m) => m.entry.data.status === 'alumni');
+
+const roleLabels: Record<string, string> = {
+  professor: 'Principal Investigator · Assistant Professor',
+  phd: 'Ph.D. Student',
+  ms: 'M.S. Student',
+  integrated: 'M.S./Ph.D. Integrated Student',
+  undergraduate: 'Undergraduate Researcher',
+};
+---
+
+<BaseLayout title="Members — AUX Lab">
+  <section class="page-hero">
+    <div class="wrap">
+      <h1 class="display">Members</h1>
+    </div>
+  </section>
+
+  <!-- Principal Investigator -->
+  {
+    professors.length > 0 && (
+      <section class="chapter chapter-white">
+        <div class="wrap">
+          <h2 class="head group-heading">Principal Investigator</h2>
+          {professors.map(({ entry, Content, hasBody }) => (
+            <article class="pi-card">
+              <div class="pi-main">
+                <h3 class="head">{entry.data.name}</h3>
+                <p class="small muted">{roleLabels[entry.data.role]}</p>
+                {hasBody && (
+                  <div class="body-copy pi-bio">
+                    <Content />
+                  </div>
+                )}
+                {entry.data.interests.length > 0 && (
+                  <p class="small muted">
+                    <strong>Research Interests:</strong> {entry.data.interests.join(', ')}
+                  </p>
+                )}
+                <div class="member-links">
+                  {entry.data.email && (
+                    <a href={`mailto:${entry.data.email}`} class="text-link">
+                      {entry.data.email}
+                    </a>
+                  )}
+                  {entry.data.links.homepage && (
+                    <a href={entry.data.links.homepage} target="_blank" rel="noopener noreferrer" class="text-link">
+                      Website
+                    </a>
+                  )}
+                  {entry.data.links.scholar && (
+                    <a href={entry.data.links.scholar} target="_blank" rel="noopener noreferrer" class="text-link">
+                      Google Scholar
+                    </a>
+                  )}
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+    )
+  }
+
+  <!-- Graduate Students -->
+  {
+    graduateStudents.length > 0 && (
+      <section class="chapter chapter-surface">
+        <div class="wrap">
+          <h2 class="head group-heading">Graduate Students</h2>
+          <ul class="member-grid">
+            {graduateStudents.map(({ entry, Content, hasBody }) => (
+              <li class="member-card">
+                {entry.data.photo && (
+                  <Image src={entry.data.photo} alt={entry.data.name} width={320} height={400} />
+                )}
+                <h3 class="lead">{entry.data.name}</h3>
+                <p class="small muted">{roleLabels[entry.data.role]}</p>
+                {entry.data.interests.length > 0 && (
+                  <p class="small">{entry.data.interests.join(', ')}</p>
+                )}
+                {hasBody && (
+                  <div class="small muted">
+                    <Content />
+                  </div>
+                )}
+                {entry.data.email && (
+                  <a href={`mailto:${entry.data.email}`} class="text-link small">
+                    {entry.data.email}
+                  </a>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- Undergraduate Researchers -->
+  {
+    undergrads.length > 0 && (
+      <section class="chapter chapter-white">
+        <div class="wrap">
+          <h2 class="head group-heading">Undergraduate Researchers</h2>
+          <ul class="member-grid">
+            {undergrads.map(({ entry, Content, hasBody }) => (
+              <li class="member-card member-card-surface">
+                {entry.data.photo && (
+                  <Image src={entry.data.photo} alt={entry.data.name} width={320} height={400} />
+                )}
+                <h3 class="lead">{entry.data.name}</h3>
+                <p class="small muted">{roleLabels[entry.data.role]}</p>
+                {entry.data.interests.length > 0 && (
+                  <p class="small">{entry.data.interests.join(', ')}</p>
+                )}
+                {hasBody && (
+                  <div class="small muted">
+                    <Content />
+                  </div>
+                )}
+                {entry.data.email && (
+                  <a href={`mailto:${entry.data.email}`} class="text-link small">
+                    {entry.data.email}
+                  </a>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- Alumni -->
+  {
+    alumni.length > 0 && (
+      <section class="chapter chapter-surface">
+        <div class="wrap">
+          <h2 class="head group-heading">Alumni</h2>
+          <ul class="member-grid">
+            {alumni.map(({ entry }) => (
+              <li class="member-card">
+                <h3 class="lead">{entry.data.name}</h3>
+                <p class="small muted">{roleLabels[entry.data.role]}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+</BaseLayout>
+
+<style>
+  .group-heading {
+    margin-bottom: 1.75rem;
+  }
+
+  .pi-card {
+    background: var(--surface);
+    padding: 2rem;
+  }
+
+  .pi-main {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .pi-bio {
+    margin-block: 0.35rem;
+  }
+
+  .member-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    margin-top: 0.4rem;
+  }
+
+  .member-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 12px;
+  }
+
+  .member-card {
+    background: var(--bg);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .member-card-surface {
+    background: var(--surface);
+  }
+</style>

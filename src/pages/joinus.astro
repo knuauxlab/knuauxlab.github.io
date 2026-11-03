@@ -1,0 +1,70 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+const labEntries = await getCollection('lab');
+const lab = labEntries[0]?.data ?? {
+  name: 'AUX Lab',
+  email: 'gyeoreyun@knu.ac.kr',
+  address: 'IT College Bldg (E9), 80 Daehak-ro, Buk-gu, Daegu 41566, Republic of Korea',
+};
+
+const joinEntries = await getCollection('joinus');
+const activeJoin = joinEntries.find((e) => !e.data.draft);
+const renderedJoin = activeJoin ? await render(activeJoin) : null;
+const JoinContent = renderedJoin?.Content;
+---
+
+<BaseLayout title="Join Us — AUX Lab">
+  <section class="page-hero">
+    <div class="wrap">
+      <h1 class="display">Join Us</h1>
+    </div>
+  </section>
+
+  <section class="chapter chapter-white">
+    <div class="wrap join-box">
+      {
+        JoinContent ? (
+          <div class="body-copy">
+            <JoinContent />
+          </div>
+        ) : (
+          <div class="join-content">
+            <h2 class="head">Open Positions</h2>
+            <p class="lead">
+              We are looking for motivated Graduate Students (M.S., Ph.D., and Integrated M.S./Ph.D.) and Undergraduate Researchers interested in Haptics, HCI, Virtual Reality, and Multisensory AI.
+            </p>
+            <p class="body-copy muted">
+              If you are interested in building interactive prototypes, designing haptic interfaces, or conducting user experience studies, please contact Prof. Gyeore Yun with your CV and brief research interests.
+            </p>
+            <div class="join-action">
+              <a href={`mailto:${lab.email}`} class="button">
+                Contact: {lab.email}
+              </a>
+            </div>
+          </div>
+        )
+      }
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .join-box {
+    max-width: 860px;
+    margin-inline: 0;
+  }
+
+  .join-content {
+    background: var(--surface);
+    padding: clamp(2rem, 4vw, 3rem);
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .join-action {
+    margin-top: 0.5rem;
+  }
+</style>
