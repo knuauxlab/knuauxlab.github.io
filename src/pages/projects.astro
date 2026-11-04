@@ -29,7 +29,7 @@ const projects = await Promise.all(
           projects.map(({ entry, Content, hasBody }) => (
             <article class="project-item">
               <div class="project-meta">
-                <span class="tag tag-orange">{entry.data.funder}</span>
+                <span class="tag tag-accent">{entry.data.funder}</span>
                 <span class="small muted nums">
                   {entry.data.start} — {entry.data.end ?? '진행 중'}
                 </span>

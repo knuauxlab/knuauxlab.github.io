@@ -191,9 +191,9 @@
 
           if (norm > 0.14) {
             const t = Math.min(1, (norm - 0.14) / 0.7);
-            const red = Math.round(15 + (254 - 15) * t);
-            const green = Math.round(17 + (113 - 17) * t);
-            const blue = Math.round(21 + (65 - 21) * t);
+            const red = Math.round(15 + (184 - 15) * t);
+            const green = Math.round(17 + (32 - 17) * t);
+            const blue = Math.round(21 + (32 - 21) * t);
             const alpha = 0.28 + t * 0.72;
             ctx!.fillStyle = `rgba(${red}, ${green}, ${blue}, ${alpha.toFixed(2)})`;
           } else {
