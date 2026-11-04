@@ -90,20 +90,6 @@ h1, h2, h3 {
   text-wrap: balance;
 }
 
-.display {
-  font-size: var(--step-display);
-  line-height: 0.98;
-  letter-spacing: -0.03em;
-  font-weight: 700;
-}
-
-.head {
-  font-size: var(--step-head);
-  line-height: 1.08;
-  letter-spacing: -0.025em;
-  font-weight: 700;
-}
-
 .lead {
   font-size: var(--step-lead);
   line-height: 1.55;
@@ -115,11 +101,6 @@ h1, h2, h3 {
   font-size: var(--step-body);
   line-height: 1.75;
   max-width: 62ch;
-}
-
-.small {
-  font-size: var(--step-small);
-  line-height: 1.6;
 }
 
 .muted {
@@ -146,13 +127,6 @@ h1, h2, h3 {
   margin-inline: auto;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  column-gap: var(--gutter);
-  row-gap: var(--gutter);
-}
-
 /* 연차 보고서식 기준선: 왼쪽 라벨(5) + 오른쪽 내용(7), 약 42% 지점에 세로선이 선다 */
 .axis {
   display: grid;
@@ -168,98 +142,7 @@ h1, h2, h3 {
   }
 }
 
-.chapter {
-  width: 100%;
-  padding-block: var(--section);
-  position: relative;
-}
-
-.chapter-white {
-  background: var(--bg);
-  color: var(--ink);
-}
-
-.chapter-surface {
-  background: var(--surface);
-  color: var(--ink);
-}
-
-.chapter-ink {
-  background: var(--ink);
-  color: var(--bg);
-}
-
-/* ---------- buttons & links ---------- */
-.button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  min-height: 3.1rem;
-  padding: 0 1.45rem;
-  background: var(--ink);
-  color: var(--bg);
-  font-weight: 700;
-  font-size: var(--step-small);
-  border-radius: var(--radius);
-  white-space: nowrap;
-  transition: transform var(--t-press) var(--ease-out), background-color var(--t-hover) ease, color var(--t-hover) ease;
-}
-
 /* 평소에는 차분하게, 마우스를 올렸을 때만 강조색 */
-.button:hover {
-  background: var(--accent);
-  color: var(--accent-ink);
-}
-
-.button:active {
-  transform: scale(0.98);
-}
-
-.button-surface {
-  background: var(--surface-strong);
-  color: var(--ink);
-}
-
-.button-surface:hover {
-  background: var(--accent);
-  color: var(--accent-ink);
-}
-
-.text-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  font-weight: 600;
-  text-decoration: underline;
-  text-underline-offset: 0.22em;
-  text-decoration-thickness: 1.5px;
-  transition: color var(--t-hover) ease;
-}
-
-.text-link:hover {
-  color: var(--accent);
-}
-
-/* ---------- tags ---------- */
-.tag {
-  display: inline-block;
-  padding: 0.22rem 0.65rem;
-  background: var(--ink);
-  color: var(--bg);
-  font-size: var(--step-small);
-  font-weight: 600;
-}
-
-.tag-accent {
-  background: var(--accent);
-  color: var(--accent-ink);
-}
-
-.tag-surface {
-  background: var(--surface-strong);
-  color: var(--ink);
-}
 
 /* ---------- reveal motion ---------- */
 @media (prefers-reduced-motion: no-preference) {

@@ -1,4 +1,5 @@
 ---
+import TextLink from '../ui/TextLink.astro';
 import { getLabInfo } from '../../utils/lab';
 
 const lab = await getLabInfo();
@@ -16,7 +17,7 @@ const lab = await getLabInfo();
     </div>
 
     <div class="footer-right">
-      <a href={`mailto:${lab.email}`} class="text-link">{lab.email}</a>
+      <TextLink href={`mailto:${lab.email}`}>{lab.email}</TextLink>
       {lab.phone && <p class="muted nums">{lab.phone}</p>}
     </div>
   </div>
