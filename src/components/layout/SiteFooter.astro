@@ -11,22 +11,23 @@ const lab = await getLabInfo();
         <img src="/logo.png" alt="AUX Lab 로고" class="footer-logo" width="96" height="40" />
         <p class="footer-brand">{lab.name} — {lab.fullName}</p>
       </div>
-      <p class="small muted">{lab.affiliation}</p>
-      <p class="small muted">{lab.address}</p>
+      <p class="muted">{lab.affiliation}</p>
+      <p class="muted">{lab.address}</p>
     </div>
 
     <div class="footer-right">
       <a href={`mailto:${lab.email}`} class="text-link">{lab.email}</a>
-      {lab.phone && <p class="small muted nums">{lab.phone}</p>}
+      {lab.phone && <p class="muted nums">{lab.phone}</p>}
     </div>
   </div>
 </footer>
 
 <style>
+  /* 배경 없이 여백으로만 본문과 구분한다 */
   .site-footer {
-    background: var(--surface-strong);
-    color: var(--ink);
-    padding-block: 3.5rem;
+    margin-top: var(--space-7);
+    padding-block: var(--space-7);
+    font-size: var(--fs-small);
   }
 
   .footer-inner {
@@ -34,14 +35,14 @@ const lab = await getLabInfo();
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: flex-end;
-    gap: 2rem;
+    gap: var(--space-6);
   }
 
   .footer-brand-row {
     display: flex;
     align-items: center;
-    gap: 0.85rem;
-    margin-bottom: 0.5rem;
+    gap: var(--space-3);
+    margin-bottom: var(--space-2);
   }
 
   .footer-logo {
@@ -52,15 +53,15 @@ const lab = await getLabInfo();
 
   .footer-brand {
     font-family: var(--font-display);
-    font-size: var(--step-lead);
-    font-weight: 700;
+    font-size: var(--fs-lead);
+    font-weight: var(--fw-bold);
   }
 
   .footer-right {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    gap: 0.25rem;
+    gap: var(--space-1);
   }
 
   @media (max-width: 48em) {
