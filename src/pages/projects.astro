@@ -1,13 +1,15 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import PageLayout from '../layouts/PageLayout.astro';
+import Section from '../components/layout/Section.astro';
+import ProjectItem from '../components/content/ProjectItem.astro';
 import { getCollection, render } from 'astro:content';
 
-const rawProjects = (await getCollection('projects', ({ data }) => !data.draft)).sort((a, b) =>
+const entries = (await getCollection('projects', ({ data }) => !data.draft)).sort((a, b) =>
   b.data.start.localeCompare(a.data.start)
 );
 
 const projects = await Promise.all(
-  rawProjects.map(async (entry) => {
+  entries.map(async (entry) => {
     const { Content } = await render(entry);
     const hasBody = Boolean(entry.body && entry.body.trim().length > 0);
     return { entry, Content, hasBody };
@@ -15,62 +17,17 @@ const projects = await Promise.all(
 );
 ---
 
-<BaseLayout title="프로젝트 — AUX Lab">
-  <section class="page-hero">
-    <div class="wrap">
-      <h1 class="display">프로젝트</h1>
-    </div>
-  </section>
-
-  <section class="chapter chapter-white">
-    <div class="wrap">
-      <div class="project-list">
-        {
-          projects.map(({ entry, Content, hasBody }) => (
-            <article class="project-item">
-              <div class="project-meta">
-                <span class="tag tag-accent">{entry.data.funder}</span>
-                <span class="small muted nums">
-                  {entry.data.start} — {entry.data.end ?? '진행 중'}
-                </span>
-              </div>
-              <h2 class="head project-title">{entry.data.title}</h2>
-              {entry.data.summary && <p class="body-copy muted">{entry.data.summary}</p>}
-              {hasBody && (
-                <div class="body-copy">
-                  <Content />
-                </div>
-              )}
-            </article>
-          ))
-        }
-      </div>
-    </div>
-  </section>
-</BaseLayout>
-
-<style>
-  .project-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+<PageLayout title="프로젝트">
+  {
+    projects.map(({ entry, Content, hasBody }) => (
+      <Section heading={entry.data.funder}>
+        <Fragment slot="aside">
+          {entry.data.start} — {entry.data.end ?? '진행 중'}
+        </Fragment>
+        <ProjectItem title={entry.data.title} summary={entry.data.summary}>
+          {hasBody && <Content />}
+        </ProjectItem>
+      </Section>
+    ))
   }
-
-  .project-item {
-    background: var(--surface);
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .project-meta {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-
-  .project-title {
-    font-size: var(--step-lead);
-  }
-</style>
+</PageLayout>

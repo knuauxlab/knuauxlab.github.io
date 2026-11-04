@@ -174,6 +174,21 @@ h1, h2, h3 {
   row-gap: var(--gutter);
 }
 
+/* 연차 보고서식 기준선: 왼쪽 라벨(5) + 오른쪽 내용(7), 약 42% 지점에 세로선이 선다 */
+.axis {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  column-gap: clamp(1.5rem, 4vw, 4rem);
+  row-gap: 1rem;
+  align-items: start;
+}
+
+@media (max-width: 48em) {
+  .axis {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 .chapter {
   width: 100%;
   padding-block: var(--section);
@@ -265,23 +280,6 @@ h1, h2, h3 {
 .tag-surface {
   background: var(--surface-strong);
   color: var(--ink);
-}
-
-/* ---------- inner page header ---------- */
-.page-hero {
-  padding-top: clamp(3rem, 6vw, 5rem);
-  padding-bottom: clamp(2.25rem, 4vw, 3.5rem);
-  background: var(--surface);
-  color: var(--ink);
-}
-
-/* 서브페이지 제목은 섹션 제목보다 한 단계 크게만 */
-.page-hero .display {
-  font-size: clamp(2.25rem, 1.5rem + 3vw, 3.75rem);
-}
-
-.page-hero + .chapter {
-  padding-top: clamp(2.5rem, 4vw, 4rem);
 }
 
 /* ---------- reveal motion ---------- */

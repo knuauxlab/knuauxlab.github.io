@@ -1,66 +1,27 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { getCollection } from 'astro:content';
+import PageLayout from '../layouts/PageLayout.astro';
+import Section from '../components/layout/Section.astro';
+import TextLink from '../components/ui/TextLink.astro';
+import { getLabInfo } from '../utils/lab';
 
-const labEntries = await getCollection('lab');
-const lab = labEntries[0]?.data ?? {
-  name: 'AUX Lab',
-  fullName: 'Augmented User eXperience Laboratory',
-  affiliation: '경북대학교 공과대학',
-  address: '대구광역시 북구 대학로 80 (41566), 공과대학 9호관',
-  email: 'gyeoreyun@knu.ac.kr',
-  phone: '053-950-7554',
-};
+const lab = await getLabInfo();
 ---
 
-<BaseLayout title="연락처 — AUX Lab">
-  <section class="page-hero">
-    <div class="wrap">
-      <h1 class="display">연락처</h1>
-    </div>
-  </section>
+<PageLayout title="연락처">
+  <Section heading="이메일">
+    <p class="lead"><TextLink href={`mailto:${lab.email}`}>{lab.email}</TextLink></p>
+  </Section>
 
-  <section class="chapter chapter-white">
-    <div class="wrap contact-grid">
-      <div class="contact-card">
-        <p class="small muted">이메일</p>
-        <a href={`mailto:${lab.email}`} class="lead text-link">{lab.email}</a>
-      </div>
-
-      <div class="contact-card">
-        <p class="small muted">전화</p>
-        <p class="lead nums">{lab.phone ?? '053-950-7554'}</p>
-      </div>
-
-      <div class="contact-card">
-        <p class="small muted">위치</p>
-        <p class="body-copy">
-          <strong>{lab.affiliation}</strong><br />
-          {lab.address}
-        </p>
-      </div>
-    </div>
-  </section>
-</BaseLayout>
-
-<style>
-  .contact-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 12px;
+  {
+    lab.phone && (
+      <Section heading="전화">
+        <p class="lead nums">{lab.phone}</p>
+      </Section>
+    )
   }
 
-  .contact-card {
-    background: var(--surface);
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  @media (max-width: 52em) {
-    .contact-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-</style>
+  <Section heading="위치">
+    <p class="lead">{lab.affiliation}</p>
+    <p class="body-copy muted">{lab.address}</p>
+  </Section>
+</PageLayout>

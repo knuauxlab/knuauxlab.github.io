@@ -1,5 +1,5 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import PageLayout from '../layouts/PageLayout.astro';
 import { getCollection, render } from 'astro:content';
 
 const rawPubs = (await getCollection('publications', ({ data }) => !data.draft)).sort(
@@ -15,12 +15,7 @@ const publications = await Promise.all(
 );
 ---
 
-<BaseLayout title="논문 — AUX Lab">
-  <section class="page-hero">
-    <div class="wrap">
-      <h1 class="display">논문</h1>
-    </div>
-  </section>
+<PageLayout title="논문">
 
   <section class="chapter chapter-white">
     <div class="wrap">
@@ -67,7 +62,7 @@ const publications = await Promise.all(
       </ul>
     </div>
   </section>
-</BaseLayout>
+</PageLayout>
 
 <style>
   .pub-list {

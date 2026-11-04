@@ -1,5 +1,5 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import PageLayout from '../layouts/PageLayout.astro';
 import { getCollection, render } from 'astro:content';
 import { Image } from 'astro:assets';
 
@@ -32,12 +32,7 @@ const roleLabels: Record<string, string> = {
 };
 ---
 
-<BaseLayout title="구성원 — AUX Lab">
-  <section class="page-hero">
-    <div class="wrap">
-      <h1 class="display">구성원</h1>
-    </div>
-  </section>
+<PageLayout title="구성원">
 
   <!-- Principal Investigator -->
   {
@@ -173,7 +168,7 @@ const roleLabels: Record<string, string> = {
       </section>
     )
   }
-</BaseLayout>
+</PageLayout>
 
 <style>
   .group-heading {

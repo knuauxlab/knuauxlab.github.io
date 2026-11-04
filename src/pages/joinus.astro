@@ -1,13 +1,11 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import PageLayout from '../layouts/PageLayout.astro';
+import Section from '../components/layout/Section.astro';
+import Button from '../components/ui/Button.astro';
 import { getCollection, render } from 'astro:content';
+import { getLabInfo } from '../utils/lab';
 
-const labEntries = await getCollection('lab');
-const lab = labEntries[0]?.data ?? {
-  name: 'AUX Lab',
-  email: 'gyeoreyun@knu.ac.kr',
-  address: '대구광역시 북구 대학로 80 (41566), 공과대학 9호관',
-};
+const lab = await getLabInfo();
 
 const joinEntries = await getCollection('joinus');
 const activeJoin = joinEntries.find((e) => !e.data.draft);
@@ -15,73 +13,34 @@ const renderedJoin = activeJoin ? await render(activeJoin) : null;
 const JoinContent = renderedJoin?.Content;
 ---
 
-<BaseLayout title="모집 안내 — AUX Lab">
-  <section class="page-hero">
-    <div class="wrap">
-      <h1 class="display">모집 안내</h1>
-    </div>
-  </section>
-
-  <section class="chapter chapter-white">
-    <div class="wrap join-box">
-      {
-        JoinContent ? (
-          <div class="body-copy">
-            <JoinContent />
+<PageLayout title="모집 안내">
+  <Section heading="모집 분야">
+    {
+      JoinContent ? (
+        <div class="body-copy">
+          <JoinContent />
+        </div>
+      ) : (
+        <div class="join-content">
+          <p class="lead">
+            햅틱, HCI, 가상현실, 멀티센서리 AI에 관심 있는 대학원생(석사, 박사, 석박사통합과정)과 학부연구생을 찾고 있습니다.
+          </p>
+          <p class="body-copy muted">
+            인터랙티브 프로토타입 제작, 햅틱 인터페이스 설계, 사용자 경험 연구에 관심이 있다면 이력서와 간단한 연구 관심사를 함께 Gyeore Yun 교수에게 연락해 주세요.
+          </p>
+          <div>
+            <Button href={`mailto:${lab.email}`}>문의: {lab.email}</Button>
           </div>
-        ) : (
-          <div class="join-content">
-            <h2 class="head">모집 분야</h2>
-            <p class="lead">
-              햅틱, HCI, 가상현실, 멀티센서리 AI에 관심 있는 대학원생(석사, 박사, 석박사통합과정)과 학부연구생을 찾고 있습니다.
-            </p>
-            <p class="body-copy muted">
-              인터랙티브 프로토타입 제작, 햅틱 인터페이스 설계, 사용자 경험 연구에 관심이 있다면 이력서와 간단한 연구 관심사를 함께 Gyeore Yun 교수에게 연락해 주세요.
-            </p>
-            <div class="join-action">
-              <a href={`mailto:${lab.email}`} class="button">
-                문의: {lab.email}
-              </a>
-            </div>
-          </div>
-        )
-      }
-    </div>
-  </section>
-</BaseLayout>
+        </div>
+      )
+    }
+  </Section>
+</PageLayout>
 
 <style>
-  .join-box {
-  }
-
   .join-content {
-    background: var(--surface);
-    padding: clamp(2rem, 4vw, 3rem);
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 1.25rem 4rem;
-    align-content: start;
-  }
-
-  /* 넓은 화면에서는 제목과 모집 대상을 왼쪽, 연락 안내를 오른쪽에 둔다 */
-  @media (min-width: 56em) {
-    .join-content {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-    .join-content > .head,
-    .join-content > .lead {
-      grid-column: 1;
-    }
-    .join-content > .body-copy {
-      grid-column: 2;
-      grid-row: 1 / span 2;
-    }
-    .join-content > .join-action {
-      grid-column: 1;
-    }
-  }
-
-  .join-action {
-    margin-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
   }
 </style>

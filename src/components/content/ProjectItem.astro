@@ -1,0 +1,30 @@
+---
+interface Props {
+  title: string;
+  summary?: string;
+}
+
+const { title, summary } = Astro.props;
+const hasBody = Astro.slots.has('default');
+---
+
+<article class="project-item">
+  <h3 class="project-title">{title}</h3>
+  {summary && <p class="body-copy muted">{summary}</p>}
+  {hasBody && <div class="body-copy"><slot /></div>}
+</article>
+
+<style>
+  .project-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .project-title {
+    font-size: var(--step-lead);
+    line-height: 1.35;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+</style>
