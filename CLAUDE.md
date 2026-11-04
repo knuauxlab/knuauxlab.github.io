@@ -10,7 +10,8 @@
 
 ## 콘텐츠 원칙
 
-- 콘텐츠 수정자는 코딩을 모르는 교수님이다. 모든 콘텐츠는 Markdown/YAML 파일(content collections)로 두고, 코드를 건드리지 않고 GitHub 웹 화면에서 수정할 수 있어야 한다.
+- 콘텐츠 수정자는 코딩을 모르는 교수님이다. 모든 콘텐츠는 Markdown/YAML 파일(content collections)로 두고, 코드를 건드리지 않고 관리 화면(`/admin/`, Sveltia CMS)이나 GitHub 웹 화면에서 수정할 수 있어야 한다.
+- 콘텐츠 스키마에 필드를 추가하거나 바꾸면 `public/admin/config.yml`도 같이 바꾼다. 그래야 교수님이 폼에서 그 항목을 고칠 수 있다. `npm run check:cms`가 어긋난 곳을 알려주고 CI에서도 돈다. 설정과 사용법은 `docs/cms.md`에 있다.
 - 콘텐츠 스키마(필드, 날짜 형식)는 `src/content.config.ts`에서 검증한다. 형식이 틀리면 빌드가 실패해야 한다.
 - 구성원, 논문, 프로젝트, 뉴스는 각각 별도 컬렉션이다.
 - 화면에 보이는 문구는 한국어로 쓴다. 논문 제목, 저자, 학회/저널명, 사람 이름의 로마자 표기는 영어 원문을 그대로 둔다. enum 값(`paper`, `undergraduate` 등)을 화면에 그대로 보이지 말고 `src/utils/labels.ts`나 페이지의 라벨 맵으로 한국어로 바꿔 보여준다.
