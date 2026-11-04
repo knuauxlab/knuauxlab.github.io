@@ -17,7 +17,7 @@ const projects = await Promise.all(
 );
 ---
 
-<PageLayout title="프로젝트">
+<PageLayout title="프로젝트" description="AUX Lab이 수행하는 연구 과제를 지원 기관과 기간별로 소개합니다.">
   {
     projects.map(({ entry, Content, hasBody }) => (
       <Section heading={entry.data.funder}>

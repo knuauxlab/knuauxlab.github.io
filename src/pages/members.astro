@@ -42,7 +42,7 @@ const groups = [
 ].filter((group) => group.people.length > 0);
 ---
 
-<PageLayout title="구성원">
+<PageLayout title="구성원" description="AUX Lab의 지도교수, 대학원생, 학부연구생을 소개합니다.">
   {
     groups.map(({ heading, large, people }) => (
       <Section heading={heading}>

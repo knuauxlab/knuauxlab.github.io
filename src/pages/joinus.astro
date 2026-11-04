@@ -13,7 +13,7 @@ const renderedJoin = activeJoin ? await render(activeJoin) : null;
 const JoinContent = renderedJoin?.Content;
 ---
 
-<PageLayout title="모집 안내">
+<PageLayout title="모집 안내" description="AUX Lab의 대학원생, 학부연구생 모집 안내입니다.">
   <Section heading="모집 분야">
     {
       JoinContent ? (
