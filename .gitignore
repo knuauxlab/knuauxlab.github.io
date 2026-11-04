@@ -5,3 +5,6 @@ dist/
 .env.*
 .DS_Store
 *.log
+
+# design-taste-frontend 작업 산출물
+.taste-skill/
