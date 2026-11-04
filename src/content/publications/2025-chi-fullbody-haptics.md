@@ -7,7 +7,7 @@ venue: Proceedings of the ACM CHI Conference on Human Factors in Computing Syste
 year: 2025
 type: conference
 links:
-  page: https://gyeoreyun.github.io/publication/2025-04-28-RealTime
+  doi: https://dl.acm.org/doi/full/10.1145/3706598.3713355
 draft: false
 ---
 

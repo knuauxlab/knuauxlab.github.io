@@ -38,11 +38,15 @@ const latestNews = (await getCollection('news', ({ data }) => !data.draft))
 
   <Section heading="연구실 소개" id="lab-intro">
     <p class="lead">AUX Lab의 연구 방향, 소리-햅틱 변환 시스템, 프로토타입을 소개합니다.</p>
-    <PdfViewer src={withBase('/AUX_Lab_Introduction.pdf')} title="AUX Lab 소개 자료" />
     <div class="intro-actions">
       <Button href="/AUX_Lab_Introduction.pdf" external>전체 화면으로 보기</Button>
       <TextLink href="/AUX_Lab_Introduction.pdf" download>PDF 내려받기</TextLink>
     </div>
+    <PdfViewer
+      slot="below"
+      src={withBase('/AUX_Lab_Introduction.pdf')}
+      title="AUX Lab 소개 자료"
+    />
   </Section>
 
   <Section heading="최신 소식">
@@ -63,11 +67,6 @@ const latestNews = (await getCollection('news', ({ data }) => !data.draft))
     flex-wrap: wrap;
     align-items: center;
     gap: var(--space-5);
-    margin-top: var(--space-5);
-  }
-
-  /* 소개 문장과 미리보기 사이 간격 */
-  .lead + :global(.pdf-viewer) {
     margin-top: var(--space-5);
   }
 </style>
