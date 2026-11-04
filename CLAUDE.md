@@ -57,7 +57,8 @@ Home, News, Members, Publications, Projects, Join Us, Contact
 - 예: `content(news): 2026 학부연구생 합류 소식 추가`
 - 본문에는 무엇을 바꿨는지보다 왜 바꿨는지를 적는다.
 - 작업 단위마다 커밋한다. 한 커밋에는 한 가지 변경만 담는다.
-- 커밋 전에 `npm run build`가 통과해야 한다.
+- 커밋 전에 `npm run build:ci`(빌드, 링크 검사, CMS 설정 검사)가 통과해야 한다. `.githooks/pre-commit`이 이를 강제하고 `npm install` 때 자동 설치된다. 훅이 막으면 오류를 고치고 다시 커밋한다. `--no-verify`로 우회하지 않는다.
+- 훅은 작업 폴더 전체를 빌드한다. 일부 파일만 `git add`할 때는 나머지 변경이 섞여 있어도 통과할 수 있으니, 커밋할 내용만으로도 빌드되는지 스스로 확인한다.
 
 ## 배포
 
