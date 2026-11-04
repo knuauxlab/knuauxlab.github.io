@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { newsCategoryLabels } from '../utils/labels';
 import HapticDotCanvas from '../components/HapticDotCanvas.astro';
 import { getCollection } from 'astro:content';
 
@@ -7,13 +8,13 @@ const labEntries = await getCollection('lab');
 const lab = labEntries[0]?.data ?? {
   name: 'AUX Lab',
   fullName: 'Augmented User eXperience Laboratory',
-  tagline: 'Multisensory Media, Haptics, HCI, and Virtual Reality',
+  tagline: '멀티센서리 미디어, 햅틱, HCI, 가상현실',
   intro:
-    'AUX Lab at Kyungpook National University researches multisensory media and human-computer interaction, focusing on real-time haptic effects generated from audio and visual stimuli using AI.',
-  affiliation: 'School of Computer Science and Engineering, Kyungpook National University',
-  address: 'IT College Bldg (E9), 80 Daehak-ro, Buk-gu, Daegu 41566, Republic of Korea',
+    'AUX Lab은 경북대학교에서 멀티센서리 미디어와 인간-컴퓨터 상호작용을 연구하며, AI로 소리와 시각 자극에서 실시간 햅틱 효과를 만드는 데 집중합니다.',
+  affiliation: '경북대학교 공과대학',
+  address: '대구광역시 북구 대학로 80 (41566), 공과대학 9호관',
   email: 'gyeoreyun@knu.ac.kr',
-  phone: '+82-53-950-7554',
+  phone: '053-950-7554',
 };
 
 const researchAreas = (await getCollection('researchAreas', ({ data }) => !data.draft)).sort(
@@ -25,22 +26,22 @@ const newsList = (await getCollection('news', ({ data }) => !data.draft)).sort((
 );
 ---
 
-<BaseLayout title={`${lab.name} — KNU`} description={lab.tagline}>
+<BaseLayout title={`${lab.name} — 경북대학교`} description={lab.tagline}>
   <!-- Hero with Interactive Repulsion Dot Field -->
-  <section class="hero-chapter" aria-label="AUX Lab Introduction">
+  <section class="hero-chapter" aria-label="AUX Lab 소개">
     <HapticDotCanvas />
 
     <div class="wrap hero-inner">
       <div class="hero-content">
         <p class="small muted hero-affiliation">{lab.affiliation}</p>
         <div class="hero-title-row">
-          <img src="/logo.png" alt="AUX Lab Logo" class="hero-logo" width="180" height="74" />
+          <img src="/logo.png" alt="AUX Lab 로고" class="hero-logo" width="180" height="74" />
           <h1 class="display hero-headline">{lab.fullName}</h1>
         </div>
         <p class="lead hero-supporting">{lab.intro}</p>
         <div class="hero-actions">
-          <a href="#lab-slides" class="button">Lab Introduction Slides</a>
-          <a href="/publications" class="button button-ink">Publications</a>
+          <a href="#lab-slides" class="button">연구실 소개 자료</a>
+          <a href="/publications" class="button button-ink">논문 보기</a>
         </div>
       </div>
     </div>
@@ -49,7 +50,7 @@ const newsList = (await getCollection('news', ({ data }) => !data.draft)).sort((
   <!-- Research Focus (3 Clean Columns) -->
   <section class="chapter chapter-surface" aria-labelledby="research-heading">
     <div class="wrap">
-      <h2 id="research-heading" class="head section-heading" data-reveal>Research Focus</h2>
+      <h2 id="research-heading" class="head section-heading" data-reveal>연구 분야</h2>
       <div class="research-grid grid" data-reveal>
         {
           researchAreas.map((area) => (
@@ -68,15 +69,15 @@ const newsList = (await getCollection('news', ({ data }) => !data.draft)).sort((
     <div class="wrap">
       <div class="section-bar" data-reveal>
         <div>
-          <h2 id="slides-heading" class="head">Lab Introduction</h2>
-          <p class="body-copy muted">Overview of AUX Lab research directions, sound-to-haptic systems, and prototypes.</p>
+          <h2 id="slides-heading" class="head">연구실 소개</h2>
+          <p class="body-copy muted">AUX Lab의 연구 방향, 소리-햅틱 변환 시스템, 프로토타입을 소개합니다.</p>
         </div>
         <div class="slides-actions">
           <a href="/AUX_Lab_Introduction.pdf" target="_blank" rel="noopener noreferrer" class="button button-ink">
-            Open Full Screen
+            전체 화면으로 보기
           </a>
           <a href="/AUX_Lab_Introduction.pdf" download class="button button-surface">
-            Download PDF
+            PDF 내려받기
           </a>
         </div>
       </div>
@@ -86,12 +87,12 @@ const newsList = (await getCollection('news', ({ data }) => !data.draft)).sort((
           data="/AUX_Lab_Introduction.pdf#view=FitH"
           type="application/pdf"
           class="pdf-object"
-          aria-label="AUX Lab Introduction Slides"
+          aria-label="AUX Lab 소개 자료"
         >
           <div class="pdf-fallback">
-            <p class="lead">Your browser does not support inline PDF viewing.</p>
+            <p class="lead">이 브라우저에서는 PDF를 바로 볼 수 없습니다.</p>
             <a href="/AUX_Lab_Introduction.pdf" target="_blank" rel="noopener noreferrer" class="button">
-              View / Download Lab Introduction PDF
+              연구실 소개 PDF 보기 / 내려받기
             </a>
           </div>
         </object>
@@ -103,8 +104,8 @@ const newsList = (await getCollection('news', ({ data }) => !data.draft)).sort((
   <section class="chapter chapter-surface" aria-labelledby="news-heading">
     <div class="wrap">
       <div class="section-bar" data-reveal>
-        <h2 id="news-heading" class="head">Latest News</h2>
-        <a href="/news" class="text-link">View All News →</a>
+        <h2 id="news-heading" class="head">최신 소식</h2>
+        <a href="/news" class="text-link">소식 전체 보기 →</a>
       </div>
 
       <ul class="news-list" data-reveal>
@@ -113,7 +114,7 @@ const newsList = (await getCollection('news', ({ data }) => !data.draft)).sort((
             <li class="news-row">
               <span class="news-date nums">{item.data.date}</span>
               <span class="news-title">{item.data.title}</span>
-              <span class="tag tag-surface">{item.data.category}</span>
+              <span class="tag tag-surface">{newsCategoryLabels[item.data.category]}</span>
             </li>
           ))
         }

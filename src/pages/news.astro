@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { newsCategoryLabels } from '../utils/labels';
 import { getCollection, render } from 'astro:content';
 
 const rawNews = (await getCollection('news', ({ data }) => !data.draft)).sort((a, b) =>
@@ -15,10 +16,10 @@ const newsItems = await Promise.all(
 );
 ---
 
-<BaseLayout title="News — AUX Lab">
+<BaseLayout title="소식 — AUX Lab">
   <section class="page-hero">
     <div class="wrap">
-      <h1 class="display">News</h1>
+      <h1 class="display">소식</h1>
     </div>
   </section>
 
@@ -37,7 +38,7 @@ const newsItems = await Promise.all(
                   </div>
                 )}
               </div>
-              <span class="tag tag-surface">{entry.data.category}</span>
+              <span class="tag tag-surface">{newsCategoryLabels[entry.data.category]}</span>
             </li>
           ))
         }

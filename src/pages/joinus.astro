@@ -6,7 +6,7 @@ const labEntries = await getCollection('lab');
 const lab = labEntries[0]?.data ?? {
   name: 'AUX Lab',
   email: 'gyeoreyun@knu.ac.kr',
-  address: 'IT College Bldg (E9), 80 Daehak-ro, Buk-gu, Daegu 41566, Republic of Korea',
+  address: '대구광역시 북구 대학로 80 (41566), 공과대학 9호관',
 };
 
 const joinEntries = await getCollection('joinus');
@@ -15,10 +15,10 @@ const renderedJoin = activeJoin ? await render(activeJoin) : null;
 const JoinContent = renderedJoin?.Content;
 ---
 
-<BaseLayout title="Join Us — AUX Lab">
+<BaseLayout title="모집 안내 — AUX Lab">
   <section class="page-hero">
     <div class="wrap">
-      <h1 class="display">Join Us</h1>
+      <h1 class="display">모집 안내</h1>
     </div>
   </section>
 
@@ -31,16 +31,16 @@ const JoinContent = renderedJoin?.Content;
           </div>
         ) : (
           <div class="join-content">
-            <h2 class="head">Open Positions</h2>
+            <h2 class="head">모집 분야</h2>
             <p class="lead">
-              We are looking for motivated Graduate Students (M.S., Ph.D., and Integrated M.S./Ph.D.) and Undergraduate Researchers interested in Haptics, HCI, Virtual Reality, and Multisensory AI.
+              햅틱, HCI, 가상현실, 멀티센서리 AI에 관심 있는 대학원생(석사, 박사, 석박사통합과정)과 학부연구생을 찾고 있습니다.
             </p>
             <p class="body-copy muted">
-              If you are interested in building interactive prototypes, designing haptic interfaces, or conducting user experience studies, please contact Prof. Gyeore Yun with your CV and brief research interests.
+              인터랙티브 프로토타입 제작, 햅틱 인터페이스 설계, 사용자 경험 연구에 관심이 있다면 이력서와 간단한 연구 관심사를 함께 Gyeore Yun 교수에게 연락해 주세요.
             </p>
             <div class="join-action">
               <a href={`mailto:${lab.email}`} class="button">
-                Contact: {lab.email}
+                문의: {lab.email}
               </a>
             </div>
           </div>

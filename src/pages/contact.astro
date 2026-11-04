@@ -6,34 +6,34 @@ const labEntries = await getCollection('lab');
 const lab = labEntries[0]?.data ?? {
   name: 'AUX Lab',
   fullName: 'Augmented User eXperience Laboratory',
-  affiliation: 'School of Computer Science and Engineering, Kyungpook National University',
-  address: 'IT College Bldg (E9), 80 Daehak-ro, Buk-gu, Daegu 41566, Republic of Korea',
+  affiliation: '경북대학교 공과대학',
+  address: '대구광역시 북구 대학로 80 (41566), 공과대학 9호관',
   email: 'gyeoreyun@knu.ac.kr',
-  phone: '+82-53-950-7554',
+  phone: '053-950-7554',
 };
 ---
 
-<BaseLayout title="Contact — AUX Lab">
+<BaseLayout title="연락처 — AUX Lab">
   <section class="page-hero">
     <div class="wrap">
-      <h1 class="display">Contact</h1>
+      <h1 class="display">연락처</h1>
     </div>
   </section>
 
   <section class="chapter chapter-white">
     <div class="wrap contact-grid">
       <div class="contact-card">
-        <p class="small muted">Email</p>
+        <p class="small muted">이메일</p>
         <a href={`mailto:${lab.email}`} class="lead text-link">{lab.email}</a>
       </div>
 
       <div class="contact-card">
-        <p class="small muted">Phone</p>
-        <p class="lead nums">{lab.phone ?? '+82-53-950-7554'}</p>
+        <p class="small muted">전화</p>
+        <p class="lead nums">{lab.phone ?? '053-950-7554'}</p>
       </div>
 
       <div class="contact-card">
-        <p class="small muted">Location</p>
+        <p class="small muted">위치</p>
         <p class="body-copy">
           <strong>{lab.affiliation}</strong><br />
           {lab.address}
