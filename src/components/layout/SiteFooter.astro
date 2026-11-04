@@ -1,6 +1,7 @@
 ---
 import TextLink from '../ui/TextLink.astro';
 import { getLabInfo } from '../../utils/lab';
+import { withBase } from '../../utils/url';
 
 const lab = await getLabInfo();
 ---
@@ -9,7 +10,7 @@ const lab = await getLabInfo();
   <div class="wrap footer-inner">
     <div class="footer-left">
       <div class="footer-brand-row">
-        <img src="/logo.png" alt="AUX Lab 로고" class="footer-logo" width="96" height="40" />
+        <img src={withBase('/logo.png')} alt="AUX Lab 로고" class="footer-logo" width="96" height="40" />
         <p class="footer-brand">{lab.name} — {lab.fullName}</p>
       </div>
       <p class="muted">{lab.affiliation}</p>

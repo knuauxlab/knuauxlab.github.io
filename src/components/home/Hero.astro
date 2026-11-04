@@ -3,6 +3,7 @@
 import HapticDotCanvas from '../HapticDotCanvas.astro';
 import Button from '../ui/Button.astro';
 import TextLink from '../ui/TextLink.astro';
+import { withBase } from '../../utils/url';
 
 interface Props {
   affiliation: string;
@@ -19,7 +20,7 @@ const { affiliation, fullName, intro } = Astro.props;
   <div class="wrap hero-inner">
     <div class="hero-content" data-haptic-avoid>
       <p class="hero-affiliation muted">{affiliation}</p>
-      <img src="/logo.png" alt="AUX Lab 로고" class="hero-logo" width="180" height="74" />
+      <img src={withBase('/logo.png')} alt="AUX Lab 로고" class="hero-logo" width="180" height="74" />
       <h1 class="hero-headline">{fullName}</h1>
       <p class="lead">{intro}</p>
       <div class="hero-actions">
