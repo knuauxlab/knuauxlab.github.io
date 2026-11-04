@@ -1,5 +1,5 @@
 ---
-title: From Perception to Emotion
-summary: Investigating how humans perceive and interpret sensory stimuli, uncovering the mechanisms linking tactile perception to emotional experience.
+title: 지각에서 감정까지
+summary: 사람이 감각 자극을 어떻게 지각하고 해석하는지, 촉각 지각과 감정 경험을 잇는 메커니즘을 연구합니다.
 order: 1
 ---

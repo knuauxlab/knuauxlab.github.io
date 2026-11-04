@@ -1,5 +1,5 @@
 ---
 date: "2026-04"
-title: Started a funded project with bHaptics on real-time haptic feedback for FPS games
+title: bHaptics와 FPS 게임용 실시간 햅틱 피드백 과제 시작
 category: project
 ---
