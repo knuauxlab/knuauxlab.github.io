@@ -57,6 +57,14 @@ AUX Lab 사이트의 색, 글자, 간격, 컴포넌트 규칙. 새 페이지나 
 | `TextLink` | `components/ui/` | 밑줄 링크. 보조 동작은 버튼 대신 이걸 쓴다 |
 | `Tag` | `components/ui/` | 분류 표시. 배경 없이 붉은 글자 |
 | `NewsItem`, `ProjectItem` | `components/content/` | 목록의 항목 |
+| `NewsTimeline` | `components/content/` | 점과 세로선을 따라 소식이 이어지는 목록. 홈과 소식 페이지가 같이 쓴다 |
+| `PublicationItem` | `components/content/` | 논문 한 편. 제목이 링크이고 항목 전체가 클릭된다 |
+| `MemberCard` | `components/content/` | 구성원 한 명. 사진, 이름, 직위, 관심 분야, 연락처 |
+| `ResearchAreaItem` | `components/content/` | 연구 분야 한 항목 |
+| `Avatar` | `components/ui/` | 구성원 사진. 사진이 없으면 이니셜 |
+| `PdfViewer` | `components/ui/` | 페이지 안 PDF 미리보기. 화면 근처에 올 때까지 불러오지 않는다 |
+| `WithToc`, `YearNav`, `YearSection` | `components/layout/` | 오른쪽에 연도 목차가 붙는 2단 레이아웃. 소식과 논문이 같이 쓴다 |
+| `Hero` | `components/home/` | 홈 히어로. 도트 캔버스가 배경이고 글 주변은 옅게 처리한다 |
 
 ## 새 컴포넌트를 만들 때
 
