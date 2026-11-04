@@ -1,0 +1,41 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  # PR에서는 빌드만 돌려 main이 항상 빌드되는 상태를 지킨다. 배포는 하지 않는다.
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 배포가 겹치면 먼저 시작한 배포는 끝까지 두고, 대기 중인 것만 최신으로 교체한다.
+# PR 빌드는 PR별 그룹으로 분리해 대기 중인 배포를 밀어내지 않게 한다.
+concurrency:
+  group: ${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.number) || 'pages' }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Install, build, and upload site
+        uses: withastro/action@v6
+
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
