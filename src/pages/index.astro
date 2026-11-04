@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { newsCategoryLabels } from '../utils/labels';
+import { withBase } from '../utils/url';
 import HapticDotCanvas from '../components/HapticDotCanvas.astro';
 import { getCollection } from 'astro:content';
 
@@ -35,13 +36,13 @@ const newsList = (await getCollection('news', ({ data }) => !data.draft)).sort((
       <div class="hero-content">
         <p class="small muted hero-affiliation">{lab.affiliation}</p>
         <div class="hero-title-row">
-          <img src="/logo.png" alt="AUX Lab 로고" class="hero-logo" width="180" height="74" />
+          <img src={withBase('/logo.png')} alt="AUX Lab 로고" class="hero-logo" width="180" height="74" />
           <h1 class="display hero-headline">{lab.fullName}</h1>
         </div>
         <p class="lead hero-supporting">{lab.intro}</p>
         <div class="hero-actions">
           <a href="#lab-slides" class="button">연구실 소개 자료</a>
-          <a href="/publications" class="button button-ink">논문 보기</a>
+          <a href={withBase('/publications')} class="button button-ink">논문 보기</a>
         </div>
       </div>
     </div>
@@ -73,10 +74,10 @@ const newsList = (await getCollection('news', ({ data }) => !data.draft)).sort((
           <p class="body-copy muted">AUX Lab의 연구 방향, 소리-햅틱 변환 시스템, 프로토타입을 소개합니다.</p>
         </div>
         <div class="slides-actions">
-          <a href="/AUX_Lab_Introduction.pdf" target="_blank" rel="noopener noreferrer" class="button button-ink">
+          <a href={withBase('/AUX_Lab_Introduction.pdf')} target="_blank" rel="noopener noreferrer" class="button button-ink">
             전체 화면으로 보기
           </a>
-          <a href="/AUX_Lab_Introduction.pdf" download class="button button-surface">
+          <a href={withBase('/AUX_Lab_Introduction.pdf')} download class="button button-surface">
             PDF 내려받기
           </a>
         </div>
@@ -84,14 +85,14 @@ const newsList = (await getCollection('news', ({ data }) => !data.draft)).sort((
 
       <div class="pdf-viewer-frame" data-reveal>
         <object
-          data="/AUX_Lab_Introduction.pdf#view=FitH"
+          data={`${withBase('/AUX_Lab_Introduction.pdf')}#view=FitH`}
           type="application/pdf"
           class="pdf-object"
           aria-label="AUX Lab 소개 자료"
         >
           <div class="pdf-fallback">
             <p class="lead">이 브라우저에서는 PDF를 바로 볼 수 없습니다.</p>
-            <a href="/AUX_Lab_Introduction.pdf" target="_blank" rel="noopener noreferrer" class="button">
+            <a href={withBase('/AUX_Lab_Introduction.pdf')} target="_blank" rel="noopener noreferrer" class="button">
               연구실 소개 PDF 보기 / 내려받기
             </a>
           </div>
@@ -105,7 +106,7 @@ const newsList = (await getCollection('news', ({ data }) => !data.draft)).sort((
     <div class="wrap">
       <div class="section-bar" data-reveal>
         <h2 id="news-heading" class="head">최신 소식</h2>
-        <a href="/news" class="text-link">소식 전체 보기 →</a>
+        <a href={withBase('/news')} class="text-link">소식 전체 보기 →</a>
       </div>
 
       <ul class="news-list" data-reveal>
