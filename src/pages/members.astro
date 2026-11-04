@@ -24,18 +24,18 @@ const undergrads = currentMembers.filter((m) => m.entry.data.role === 'undergrad
 const alumni = renderedMembers.filter((m) => m.entry.data.status === 'alumni');
 
 const roleLabels: Record<string, string> = {
-  professor: 'Principal Investigator · Assistant Professor',
-  phd: 'Ph.D. Student',
-  ms: 'M.S. Student',
-  integrated: 'M.S./Ph.D. Integrated Student',
-  undergraduate: 'Undergraduate Researcher',
+  professor: '지도교수 · 조교수',
+  phd: '박사과정',
+  ms: '석사과정',
+  integrated: '학석사 연계과정',
+  undergraduate: '학부연구생',
 };
 ---
 
-<BaseLayout title="Members — AUX Lab">
+<BaseLayout title="구성원 — AUX Lab">
   <section class="page-hero">
     <div class="wrap">
-      <h1 class="display">Members</h1>
+      <h1 class="display">구성원</h1>
     </div>
   </section>
 
@@ -44,7 +44,7 @@ const roleLabels: Record<string, string> = {
     professors.length > 0 && (
       <section class="chapter chapter-white">
         <div class="wrap">
-          <h2 class="head group-heading">Principal Investigator</h2>
+          <h2 class="head group-heading">지도교수</h2>
           {professors.map(({ entry, Content, hasBody }) => (
             <article class="pi-card">
               <div class="pi-main">
@@ -57,7 +57,7 @@ const roleLabels: Record<string, string> = {
                 )}
                 {entry.data.interests.length > 0 && (
                   <p class="small muted">
-                    <strong>Research Interests:</strong> {entry.data.interests.join(', ')}
+                    <strong>연구 관심사:</strong> {entry.data.interests.join(', ')}
                   </p>
                 )}
                 <div class="member-links">
@@ -68,7 +68,7 @@ const roleLabels: Record<string, string> = {
                   )}
                   {entry.data.links.homepage && (
                     <a href={entry.data.links.homepage} target="_blank" rel="noopener noreferrer" class="text-link">
-                      Website
+                      웹사이트
                     </a>
                   )}
                   {entry.data.links.scholar && (
@@ -90,7 +90,7 @@ const roleLabels: Record<string, string> = {
     graduateStudents.length > 0 && (
       <section class="chapter chapter-surface">
         <div class="wrap">
-          <h2 class="head group-heading">Graduate Students</h2>
+          <h2 class="head group-heading">대학원생</h2>
           <ul class="member-grid">
             {graduateStudents.map(({ entry, Content, hasBody }) => (
               <li class="member-card">
@@ -125,7 +125,7 @@ const roleLabels: Record<string, string> = {
     undergrads.length > 0 && (
       <section class="chapter chapter-white">
         <div class="wrap">
-          <h2 class="head group-heading">Undergraduate Researchers</h2>
+          <h2 class="head group-heading">학부연구생</h2>
           <ul class="member-grid">
             {undergrads.map(({ entry, Content, hasBody }) => (
               <li class="member-card member-card-surface">
@@ -160,7 +160,7 @@ const roleLabels: Record<string, string> = {
     alumni.length > 0 && (
       <section class="chapter chapter-surface">
         <div class="wrap">
-          <h2 class="head group-heading">Alumni</h2>
+          <h2 class="head group-heading">졸업생</h2>
           <ul class="member-grid">
             {alumni.map(({ entry }) => (
               <li class="member-card">
