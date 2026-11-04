@@ -1,0 +1,43 @@
+---
+// 소식 목록. 점과 세로선을 따라 월, 분류, 제목이 이어지는 타임라인.
+import NewsItem from './NewsItem.astro';
+
+interface Item {
+  date: string;
+  title: string;
+  category: string;
+  Content?: any;
+}
+
+interface Props {
+  items: Item[];
+}
+
+const { items } = Astro.props;
+---
+
+<ol class="timeline">
+  {
+    items.map(({ Content, ...item }) => (
+      <NewsItem {...item}>{Content && <Content />}</NewsItem>
+    ))
+  }
+</ol>
+
+<style>
+  .timeline {
+    --timeline-col: 1.5rem;
+    position: relative;
+  }
+
+  /* 점 열의 가운데를 지나는 세로선 */
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: calc(var(--timeline-col) / 2 - 1px);
+    top: var(--space-5);
+    bottom: var(--space-5);
+    width: 2px;
+    background: var(--surface-strong);
+  }
+</style>

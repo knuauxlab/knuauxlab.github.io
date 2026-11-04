@@ -1,0 +1,42 @@
+---
+// 연도별 묶음 하나. YearNav의 링크(#y2026)가 가리키는 대상이다.
+interface Props {
+  year: string;
+  count: number;
+}
+
+const { year, count } = Astro.props;
+---
+
+<section class="year-section" id={`y${year}`} aria-labelledby={`y${year}-heading`}>
+  <h2 class="year-heading" id={`y${year}-heading`}>
+    {year}<span class="year-heading-count nums">{count}</span>
+  </h2>
+  <slot />
+</section>
+
+<style>
+  /* 고정 헤더에 가리지 않도록 스크롤 위치를 띄운다 */
+  .year-section {
+    scroll-margin-top: 7rem;
+  }
+
+  .year-section + .year-section {
+    margin-top: var(--space-8);
+  }
+
+  .year-heading {
+    margin-bottom: var(--space-5);
+    font-size: var(--fs-heading);
+    line-height: var(--lh-tight);
+    letter-spacing: var(--ls-heading);
+  }
+
+  .year-heading-count {
+    margin-left: var(--space-2);
+    font-size: var(--fs-small);
+    font-weight: var(--fw-medium);
+    color: var(--muted);
+    letter-spacing: 0;
+  }
+</style>

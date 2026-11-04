@@ -1,0 +1,145 @@
+---
+// 연도별 이동 목차. 연도를 누르면 해당 연도 섹션(id="y2026")으로 이동하고,
+// 스크롤하면 지금 보고 있는 연도가 강조된다.
+interface Props {
+  years: { year: string; count: number }[];
+}
+
+const { years } = Astro.props;
+---
+
+<aside class="year-nav">
+  <nav aria-label="연도별 이동">
+    <p class="year-nav-title">연도별</p>
+    <ol>
+      {
+        years.map(({ year, count }) => (
+          <li>
+            <a href={`#y${year}`} data-year-link>
+              {year}
+              <span class="year-count nums">{count}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+  </nav>
+</aside>
+
+<script>
+  function setupYearNav() {
+    const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-year-link]'));
+    if (links.length === 0) return;
+    const heads = links.map((a) => document.getElementById(a.getAttribute('href')!.slice(1)));
+
+    const update = () => {
+      let current = 0;
+      heads.forEach((head, i) => {
+        if (head && head.getBoundingClientRect().top < 140) current = i;
+      });
+      // 문서 맨 아래에서는 마지막 연도를 강조한다
+      if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 2) {
+        current = heads.length - 1;
+      }
+      links.forEach((a, i) => {
+        if (i === current) a.setAttribute('aria-current', 'true');
+        else a.removeAttribute('aria-current');
+      });
+    };
+
+    let queued = false;
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (queued) return;
+        queued = true;
+        requestAnimationFrame(() => {
+          queued = false;
+          update();
+        });
+      },
+      { passive: true }
+    );
+    update();
+  }
+
+  setupYearNav();
+  document.addEventListener('astro:page-load', setupYearNav);
+</script>
+
+<style>
+  .year-nav {
+    position: sticky;
+    top: 7rem;
+    align-self: start;
+  }
+
+  .year-nav-title {
+    margin-bottom: var(--space-3);
+    font-size: var(--fs-small);
+    font-weight: var(--fw-bold);
+    color: var(--muted);
+  }
+
+  .year-nav ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* 현재 연도만 붉은 막대와 붉은 글자로 표시한다 */
+  .year-nav a {
+    display: block;
+    padding: var(--space-2) 0 var(--space-2) var(--space-4);
+    border-left: 2px solid transparent;
+    font-family: var(--font-display);
+    font-size: var(--fs-body);
+    font-weight: var(--fw-semibold);
+    color: var(--muted);
+    transition: color var(--t-hover) ease;
+  }
+
+  .year-nav a:hover {
+    color: var(--accent);
+  }
+
+  .year-nav a[aria-current] {
+    border-left-color: var(--accent);
+    color: var(--ink);
+  }
+
+  .year-count {
+    margin-left: var(--space-1);
+    font-size: var(--fs-small);
+    font-weight: var(--fw-medium);
+    color: var(--muted);
+  }
+
+  @media (max-width: 56em) {
+    .year-nav {
+      position: static;
+    }
+
+    .year-nav-title {
+      display: none;
+    }
+
+    .year-nav ol {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: var(--space-2) var(--space-5);
+    }
+
+    .year-nav a {
+      padding: var(--space-1) 0;
+      border-left: 0;
+      border-bottom: 2px solid transparent;
+    }
+
+    .year-nav a[aria-current] {
+      border-bottom-color: var(--accent);
+    }
+  }
+</style>

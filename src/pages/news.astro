@@ -1,7 +1,9 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
-import Section from '../components/layout/Section.astro';
-import NewsItem from '../components/content/NewsItem.astro';
+import WithToc from '../components/layout/WithToc.astro';
+import YearNav from '../components/layout/YearNav.astro';
+import YearSection from '../components/layout/YearSection.astro';
+import NewsTimeline from '../components/content/NewsTimeline.astro';
 import { getCollection, render } from 'astro:content';
 import { groupBy } from '../utils/group';
 import { yearOf } from '../utils/date';
@@ -14,35 +16,29 @@ const items = await Promise.all(
   entries.map(async (entry) => {
     const { Content } = await render(entry);
     const hasBody = Boolean(entry.body && entry.body.trim().length > 0);
-    return { entry, Content, hasBody };
+    return {
+      date: entry.data.date,
+      title: entry.data.title,
+      category: entry.data.category,
+      Content: hasBody ? Content : undefined,
+    };
   })
 );
 
 // 연도별로 묶는다. 이미 최신순이라 순서가 유지된다.
-const years = groupBy(items, ({ entry }) => yearOf(entry.data.date));
+const years = groupBy(items, (item) => yearOf(item.date));
+const toc = years.map(([year, group]) => ({ year, count: group.length }));
 ---
 
 <PageLayout title="소식">
-  {
-    years.map(([year, group]) => (
-      <Section heading={year} large>
-        <Fragment slot="aside">{group.length}건</Fragment>
-        <ul class="news-list">
-          {group.map(({ entry, Content, hasBody }) => (
-            <NewsItem date={entry.data.date} title={entry.data.title} category={entry.data.category}>
-              {hasBody && <Content />}
-            </NewsItem>
-          ))}
-        </ul>
-      </Section>
-    ))
-  }
+  <WithToc>
+    {
+      years.map(([year, group]) => (
+        <YearSection year={year} count={group.length}>
+          <NewsTimeline items={group} />
+        </YearSection>
+      ))
+    }
+    <YearNav slot="toc" years={toc} />
+  </WithToc>
 </PageLayout>
-
-<style>
-  .news-list {
-    display: flex;
-    flex-direction: column;
-    gap: clamp(1.5rem, 2.5vw, 2.25rem);
-  }
-</style>
