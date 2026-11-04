@@ -1,0 +1,13 @@
+---
+// 배경 상자 없이 색 글자로만 분류를 표시한다.
+---
+
+<span class="category-label"><slot /></span>
+
+<style>
+  .category-label {
+    font-size: var(--step-small);
+    font-weight: 600;
+    color: var(--accent);
+  }
+</style>

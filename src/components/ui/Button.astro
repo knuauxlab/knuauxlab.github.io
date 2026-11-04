@@ -1,0 +1,51 @@
+---
+interface Props {
+  href: string;
+  variant?: 'primary' | 'secondary';
+  external?: boolean;
+  download?: boolean;
+}
+
+const { href, variant = 'primary', external = false, download = false } = Astro.props;
+const externalAttrs = external ? { target: '_blank', rel: 'noopener noreferrer' } : {};
+---
+
+<a href={href} class:list={['button', `button-${variant}`]} download={download || undefined} {...externalAttrs}>
+  <slot />
+</a>
+
+<style>
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 3.1rem;
+    padding: 0 1.45rem;
+    font-weight: 700;
+    font-size: var(--step-small);
+    white-space: nowrap;
+    transition: transform var(--t-press) var(--ease-out), background-color var(--t-hover) ease,
+      color var(--t-hover) ease;
+  }
+
+  .button:active {
+    transform: scale(0.98);
+  }
+
+  /* 평소에는 차분하게, 마우스를 올렸을 때만 강조색 */
+  .button-primary {
+    background: var(--ink);
+    color: var(--bg);
+  }
+
+  .button-secondary {
+    background: var(--surface-strong);
+    color: var(--ink);
+  }
+
+  .button:hover {
+    background: var(--accent);
+    color: var(--accent-ink);
+  }
+</style>

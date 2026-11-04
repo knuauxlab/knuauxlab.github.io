@@ -1,50 +1,20 @@
 ---
 import '../styles/global.css';
-import { getCollection } from 'astro:content';
+import SiteHeader from '../components/layout/SiteHeader.astro';
+import SiteFooter from '../components/layout/SiteFooter.astro';
+import { getLabInfo } from '../utils/lab';
 
 interface Props {
   title?: string;
   description?: string;
-  currentPath?: string;
 }
 
-const labEntries = await getCollection('lab');
-const labInfo = labEntries[0]?.data ?? {
-  name: 'AUX Lab',
-  fullName: 'Augmented User eXperience Laboratory',
-  tagline: '멀티센서리 미디어, 햅틱, HCI, 가상현실',
-  intro:
-    'AUX Lab은 경북대학교에서 멀티센서리 미디어와 인간-컴퓨터 상호작용을 연구합니다.',
-  affiliation: '경북대학교 공과대학',
-  address: '대구광역시 북구 대학로 80 (41566), 공과대학 9호관',
-  email: 'gyeoreyun@knu.ac.kr',
-  phone: '053-950-7554',
-};
-
-const {
-  title = `${labInfo.name} — 경북대학교`,
-  description = labInfo.tagline,
-  currentPath = Astro.url.pathname,
-} = Astro.props;
-
-const navLinks = [
-  { href: '/', label: '홈' },
-  { href: '/news', label: '소식' },
-  { href: '/members', label: '구성원' },
-  { href: '/publications', label: '논문' },
-  { href: '/projects', label: '프로젝트' },
-  { href: '/joinus', label: '모집' },
-  { href: '/contact', label: '연락처' },
-];
-
-const isActive = (href: string) => {
-  if (href === '/') return currentPath === '/';
-  return currentPath.startsWith(href);
-};
+const lab = await getLabInfo();
+const { title = `${lab.name} — 경북대학교`, description = lab.tagline } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="ko" class="js">
+<html lang="ko">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -52,6 +22,11 @@ const isActive = (href: string) => {
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
+
+    <!-- 스크립트가 실행될 때만 등장 효과용 숨김 상태가 적용되도록 js 클래스를 여기서 붙인다 -->
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -61,80 +36,17 @@ const isActive = (href: string) => {
     />
   </head>
   <body>
-    <header class="site-header">
-      <div class="wrap header-inner">
-        <a href="/" class="brand-mark" aria-label="AUX Lab 홈">
-          <img src="/logo.png" alt="AUX Lab 로고" class="brand-logo" width="110" height="45" />
-          <span class="brand-name">{labInfo.name}</span>
-        </a>
-
-        <button
-          type="button"
-          class="menu-toggle"
-          aria-expanded="false"
-          aria-controls="primary-navigation"
-          data-menu-toggle
-        >
-          <span class="menu-toggle-label">메뉴</span>
-        </button>
-
-        <nav id="primary-navigation" class="site-nav" aria-label="주 메뉴" data-site-nav>
-          <ul class="nav-list">
-            {
-              navLinks.map((item) => (
-                <li>
-                  <a
-                    href={item.href}
-                    class:list={['nav-link', { 'is-current': isActive(item.href) }]}
-                    aria-current={isActive(item.href) ? 'page' : undefined}
-                  >
-                    {item.label}
-                  </a>
-                </li>
-              ))
-            }
-          </ul>
-        </nav>
-      </div>
-    </header>
+    <SiteHeader />
 
     <main id="main-content">
       <slot />
     </main>
 
-    <footer class="site-footer">
-      <div class="wrap footer-inner">
-        <div class="footer-left">
-          <div class="footer-brand-row">
-            <img src="/logo.png" alt="AUX Lab 로고" class="footer-logo" width="96" height="40" />
-            <p class="footer-brand">{labInfo.name} — {labInfo.fullName}</p>
-          </div>
-          <p class="small muted">{labInfo.affiliation}</p>
-          <p class="small muted">{labInfo.address}</p>
-        </div>
-
-        <div class="footer-right">
-          <a href={`mailto:${labInfo.email}`} class="text-link">{labInfo.email}</a>
-          {labInfo.phone && <p class="small muted nums">{labInfo.phone}</p>}
-        </div>
-      </div>
-    </footer>
+    <SiteFooter />
 
     <script>
-      function setupNavigation() {
-        const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
-        const nav = document.querySelector<HTMLElement>('[data-site-nav]');
-        if (toggle && nav) {
-          toggle.addEventListener('click', () => {
-            const expanded = toggle.getAttribute('aria-expanded') === 'true';
-            toggle.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-            nav.classList.toggle('is-open', !expanded);
-            const label = toggle.querySelector('.menu-toggle-label');
-            if (label) label.textContent = expanded ? '메뉴' : '닫기';
-          });
-        }
-
-        const items = document.querySelectorAll<HTMLElement>('[data-reveal]');
+      function setupReveal() {
+        const items = document.querySelectorAll<HTMLElement>('[data-reveal]:not(.is-in)');
         if ('IntersectionObserver' in window) {
           const io = new IntersectionObserver(
             (entries) => {
@@ -153,172 +65,8 @@ const isActive = (href: string) => {
         }
       }
 
-      setupNavigation();
-      document.addEventListener('astro:page-load', setupNavigation);
+      setupReveal();
+      document.addEventListener('astro:page-load', setupReveal);
     </script>
   </body>
 </html>
-
-<style>
-  .site-header {
-    position: sticky;
-    top: 0;
-    z-index: 40;
-    background: var(--bg);
-    color: var(--ink);
-  }
-
-  .header-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    min-height: 5rem;
-    gap: 1.5rem;
-  }
-
-  .brand-mark {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  .brand-logo {
-    height: 2.4rem;
-    width: auto;
-    object-fit: contain;
-  }
-
-  .brand-name {
-    font-family: var(--font-display);
-    font-size: 1.6rem;
-    font-weight: 700;
-    letter-spacing: -0.03em;
-  }
-
-  .nav-list {
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-  }
-
-  .nav-link {
-    display: inline-block;
-    padding: 0.6rem 1rem;
-    font-family: var(--font-display);
-    font-size: 1.0625rem;
-    font-weight: 600;
-    transition: background-color 150ms ease, color 150ms ease;
-  }
-
-  .nav-link:hover {
-    background: var(--surface);
-  }
-
-  .nav-link.is-current {
-    background: var(--ink);
-    color: var(--bg);
-  }
-
-  .menu-toggle {
-    display: none;
-    padding: 0.5rem 0.9rem;
-    background: var(--ink);
-    color: var(--bg);
-    font-family: var(--font-display);
-    font-size: var(--step-small);
-    font-weight: 700;
-  }
-
-  @media (max-width: 60em) {
-    .menu-toggle {
-      display: inline-flex;
-      align-items: center;
-    }
-
-    .site-nav {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      background: var(--ink);
-      color: var(--bg);
-      padding: 1rem var(--margin) 1.5rem;
-    }
-
-    .site-nav.is-open {
-      display: block;
-    }
-
-    .nav-list {
-      flex-direction: column;
-      align-items: stretch;
-      gap: 0.2rem;
-    }
-
-    .nav-link {
-      padding: 0.7rem 0.9rem;
-      font-size: var(--step-body);
-    }
-
-    .nav-link:hover {
-      background: #232730;
-    }
-
-    .nav-link.is-current {
-      background: var(--accent);
-      color: var(--accent-ink);
-    }
-  }
-
-  .site-footer {
-    background: var(--surface-strong);
-    color: var(--ink);
-    padding-block: 3.5rem;
-  }
-
-  .footer-inner {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: 2rem;
-  }
-
-  .footer-brand-row {
-    display: flex;
-    align-items: center;
-    gap: 0.85rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .footer-logo {
-    height: 1.9rem;
-    width: auto;
-    object-fit: contain;
-  }
-
-  .footer-brand {
-    font-family: var(--font-display);
-    font-size: var(--step-lead);
-    font-weight: 700;
-  }
-
-  .footer-left .muted,
-  .footer-right .muted {
-    color: var(--muted);
-  }
-
-  .footer-right {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 0.25rem;
-  }
-
-  @media (max-width: 48em) {
-    .footer-right {
-      align-items: flex-start;
-    }
-  }
-</style>
