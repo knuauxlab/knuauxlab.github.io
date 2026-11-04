@@ -58,9 +58,10 @@ const extra = (await Astro.slots.render('default')).trim();
     gap: var(--space-1);
   }
 
+  /* 월과 분류를 글자 밑선이 아니라 세로 가운데로 맞춘다 */
   .news-meta {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     gap: var(--space-3);
   }
 
