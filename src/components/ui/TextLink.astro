@@ -2,20 +2,21 @@
 interface Props {
   href: string;
   external?: boolean;
+  download?: boolean;
 }
 
-const { href, external = false } = Astro.props;
+const { href, external = false, download = false } = Astro.props;
 const externalAttrs = external ? { target: '_blank', rel: 'noopener noreferrer' } : {};
 ---
 
-<a href={href} class="text-link" {...externalAttrs}><slot /></a>
+<a href={href} class="text-link" download={download || undefined} {...externalAttrs}><slot /></a>
 
 <style>
   .text-link {
     display: inline-flex;
     align-items: center;
-    gap: 0.35rem;
-    font-weight: 600;
+    gap: var(--space-1);
+    font-weight: var(--fw-semibold);
     text-decoration: underline;
     text-underline-offset: 0.22em;
     text-decoration-thickness: 1.5px;

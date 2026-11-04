@@ -30,6 +30,7 @@
   --fs-title: clamp(2.5rem, 1.6rem + 3.6vw, 4.25rem); /* 40-68px 페이지 제목 */
   --fs-display: clamp(2.75rem, 1.6rem + 4vw, 5rem); /* 44-80px 연도 같은 큰 숫자 */
   --fs-hero: clamp(1.9rem, 0.9rem + 3.6vw, 4.5rem); /* 홈 히어로 제목 */
+  --size-hero-logo: clamp(3.2rem, 5.5vw, 4.6rem); /* 히어로의 로고 높이 */
 
   --fw-regular: 400;
   --fw-medium: 500;

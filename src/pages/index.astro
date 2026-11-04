@@ -1,296 +1,65 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { newsCategoryLabels } from '../utils/labels';
-import HapticDotCanvas from '../components/HapticDotCanvas.astro';
+import Hero from '../components/home/Hero.astro';
+import Section from '../components/layout/Section.astro';
+import ResearchAreaItem from '../components/content/ResearchAreaItem.astro';
+import NewsTimeline from '../components/content/NewsTimeline.astro';
+import Button from '../components/ui/Button.astro';
+import TextLink from '../components/ui/TextLink.astro';
 import { getCollection } from 'astro:content';
+import { getLabInfo } from '../utils/lab';
 
-const labEntries = await getCollection('lab');
-const lab = labEntries[0]?.data ?? {
-  name: 'AUX Lab',
-  fullName: 'Augmented User eXperience Laboratory',
-  tagline: '멀티센서리 미디어, 햅틱, HCI, 가상현실',
-  intro:
-    'AUX Lab은 경북대학교에서 멀티센서리 미디어와 인간-컴퓨터 상호작용을 연구하며, AI로 소리와 시각 자극에서 실시간 햅틱 효과를 만드는 데 집중합니다.',
-  affiliation: '경북대학교 공과대학',
-  address: '대구광역시 북구 대학로 80 (41566), 공과대학 9호관',
-  email: 'gyeoreyun@knu.ac.kr',
-  phone: '053-950-7554',
-};
+const lab = await getLabInfo();
 
 const researchAreas = (await getCollection('researchAreas', ({ data }) => !data.draft)).sort(
   (a, b) => a.data.order - b.data.order
 );
 
-const newsList = (await getCollection('news', ({ data }) => !data.draft)).sort((a, b) =>
-  b.data.date.localeCompare(a.data.date)
-);
+const latestNews = (await getCollection('news', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.localeCompare(a.data.date))
+  .slice(0, 5)
+  .map(({ data }) => ({ date: data.date, title: data.title, category: data.category }));
 ---
 
-<BaseLayout title={`${lab.name} — 경북대학교`} description={lab.tagline}>
-  <!-- Hero with Interactive Repulsion Dot Field -->
-  <section class="hero-chapter" aria-label="AUX Lab 소개">
-    <HapticDotCanvas />
+<BaseLayout>
+  <Hero affiliation={lab.affiliation} fullName={lab.fullName ?? lab.name} intro={lab.intro} />
 
-    <div class="wrap hero-inner">
-      <div class="hero-content">
-        <p class="small muted hero-affiliation">{lab.affiliation}</p>
-        <div class="hero-title-row">
-          <img src="/logo.png" alt="AUX Lab 로고" class="hero-logo" width="180" height="74" />
-          <h1 class="display hero-headline">{lab.fullName}</h1>
-        </div>
-        <p class="lead hero-supporting">{lab.intro}</p>
-        <div class="hero-actions">
-          <a href="#lab-slides" class="button">연구실 소개 자료</a>
-          <a href="/publications" class="text-link">논문 보기 →</a>
-        </div>
-      </div>
+  <Section heading="연구 분야">
+    <div class="research-list">
+      {
+        researchAreas.map((area) => (
+          <ResearchAreaItem title={area.data.title} summary={area.data.summary} />
+        ))
+      }
     </div>
-  </section>
+  </Section>
 
-  <!-- Research Focus (3 Clean Columns) -->
-  <section class="chapter chapter-surface" aria-labelledby="research-heading">
-    <div class="wrap">
-      <h2 id="research-heading" class="head section-heading" data-reveal>연구 분야</h2>
-      <div class="research-grid grid" data-reveal>
-        {
-          researchAreas.map((area) => (
-            <article class="research-item">
-              <h3 class="lead research-title">{area.data.title}</h3>
-              <p class="body-copy muted">{area.data.summary}</p>
-            </article>
-          ))
-        }
-      </div>
+  <Section heading="연구실 소개" id="lab-intro">
+    <p class="lead">AUX Lab의 연구 방향, 소리-햅틱 변환 시스템, 프로토타입을 소개합니다.</p>
+    <div class="intro-actions">
+      <Button href="/AUX_Lab_Introduction.pdf" external>소개 자료 보기</Button>
+      <TextLink href="/AUX_Lab_Introduction.pdf" download>PDF 내려받기</TextLink>
     </div>
-  </section>
+  </Section>
 
-  <!-- Lab Introduction Slides (Embedded PDF + Download) -->
-  <section id="lab-slides" class="chapter chapter-white" aria-labelledby="slides-heading">
-    <div class="wrap">
-      <div class="section-bar" data-reveal>
-        <div>
-          <h2 id="slides-heading" class="head">연구실 소개</h2>
-          <p class="body-copy muted">AUX Lab의 연구 방향, 소리-햅틱 변환 시스템, 프로토타입을 소개합니다.</p>
-        </div>
-        <div class="slides-actions">
-          <a href="/AUX_Lab_Introduction.pdf" target="_blank" rel="noopener noreferrer" class="button">
-            전체 화면으로 보기
-          </a>
-          <a href="/AUX_Lab_Introduction.pdf" download class="button button-surface">
-            PDF 내려받기
-          </a>
-        </div>
-      </div>
-
-      <div class="pdf-viewer-frame" data-reveal>
-        <object
-          data="/AUX_Lab_Introduction.pdf#view=FitH"
-          type="application/pdf"
-          class="pdf-object"
-          aria-label="AUX Lab 소개 자료"
-        >
-          <div class="pdf-fallback">
-            <p class="lead">이 브라우저에서는 PDF를 바로 볼 수 없습니다.</p>
-            <a href="/AUX_Lab_Introduction.pdf" target="_blank" rel="noopener noreferrer" class="button">
-              연구실 소개 PDF 보기 / 내려받기
-            </a>
-          </div>
-        </object>
-      </div>
-    </div>
-  </section>
-
-  <!-- Latest News -->
-  <section class="chapter chapter-surface" aria-labelledby="news-heading">
-    <div class="wrap">
-      <div class="section-bar" data-reveal>
-        <h2 id="news-heading" class="head">최신 소식</h2>
-        <a href="/news" class="text-link">소식 전체 보기 →</a>
-      </div>
-
-      <ul class="news-list" data-reveal>
-        {
-          newsList.slice(0, 5).map((item) => (
-            <li class="news-row">
-              <span class="news-date nums">{item.data.date}</span>
-              <span class="news-title">{item.data.title}</span>
-              <span class="tag tag-surface">{newsCategoryLabels[item.data.category]}</span>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-  </section>
+  <Section heading="최신 소식">
+    <TextLink slot="aside" href="/news">소식 전체 보기 →</TextLink>
+    <NewsTimeline items={latestNews} />
+  </Section>
 </BaseLayout>
 
 <style>
-  .hero-chapter {
-    position: relative;
-    min-height: 78svh;
-    display: flex;
-    align-items: center;
-    background: var(--bg);
-    padding-block: clamp(4rem, 8vw, 7rem);
-    overflow: hidden;
-  }
-
-  .hero-inner {
-    position: relative;
-    z-index: 2;
-    width: 100%;
-    pointer-events: none;
-  }
-
-  /* 글은 박스 없이 흰 배경에 두고, 도트는 오른쪽 패널에 따로 둔다 */
-  .hero-content {
-    max-width: 58%;
-    pointer-events: auto;
-  }
-
-  .hero-chapter :global(.haptic-field-shell[data-haptic-shell]) {
-    inset: 0 0 0 auto;
-    width: 36%;
-    height: 100%;
-    background: var(--surface-strong);
-  }
-
-  .hero-affiliation {
-    font-weight: 600;
-    margin-bottom: 1rem;
-  }
-
-  .hero-title-row {
+  .research-list {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-    margin-bottom: 1.25rem;
+    gap: var(--space-6);
   }
 
-  .hero-logo {
-    height: clamp(3.2rem, 5.5vw, 4.6rem);
-    width: auto;
-    object-fit: contain;
-  }
-
-  .hero-headline {
-    margin: 0;
-    /* 영문 이름이 데스크톱 2줄, 모바일 3줄 이내로 들어오도록 기본 display보다 작게 */
-    font-size: var(--fs-hero);
-  }
-
-  .hero-supporting {
-    margin-bottom: 2rem;
-  }
-
-  .hero-actions {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-  }
-
-  .section-heading {
-    margin-bottom: 2.25rem;
-  }
-
-  .section-bar {
+  .intro-actions {
     display: flex;
     flex-wrap: wrap;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-  }
-
-  .research-item {
-    grid-column: span 4;
-    background: var(--bg);
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .research-title {
-    font-weight: 700;
-  }
-
-  .slides-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  .pdf-viewer-frame {
-    width: 100%;
-    height: clamp(420px, 68vh, 760px);
-    background: var(--surface);
-  }
-
-  .pdf-object {
-    width: 100%;
-    height: 100%;
-    border: 0;
-    display: block;
-  }
-
-  .pdf-fallback {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 1.25rem;
-    padding: 2rem;
-    text-align: center;
-  }
-
-  .news-list {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  .news-row {
-    display: grid;
-    grid-template-columns: 120px 1fr auto;
-    align-items: center;
-    gap: 1.25rem;
-    padding: 1.1rem 1.4rem;
-    background: var(--bg);
-  }
-
-  .news-date {
-    font-family: var(--font-display);
-    font-weight: 700;
-    color: var(--muted);
-  }
-
-  .news-title {
-    font-weight: 600;
-  }
-
-  @media (max-width: 56em) {
-    /* 좁은 화면에서는 위쪽에 낮은 도트 띠를 두고 그 아래에 글을 놓는다 */
-    .hero-chapter {
-      align-items: flex-start;
-      padding-top: calc(9rem + 2rem);
-    }
-    .hero-chapter :global(.haptic-field-shell[data-haptic-shell]) {
-      inset: 0 0 auto 0;
-      width: 100%;
-      height: 9rem;
-    }
-    .hero-content {
-      max-width: none;
-    }
-    .research-item {
-      grid-column: 1 / -1;
-    }
-    .news-row {
-      grid-template-columns: 1fr;
-      gap: 0.35rem;
-    }
+    gap: var(--space-5);
+    margin-top: var(--space-5);
   }
 </style>
