@@ -176,7 +176,7 @@ const newsList = (await getCollection('news', ({ data }) => !data.draft)).sort((
   .hero-headline {
     margin: 0;
     /* 영문 이름이 데스크톱 2줄, 모바일 3줄 이내로 들어오도록 기본 display보다 작게 */
-    font-size: clamp(1.9rem, 0.9rem + 3.6vw, 4.5rem);
+    font-size: var(--fs-hero);
   }
 
   .hero-supporting {

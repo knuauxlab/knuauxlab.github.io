@@ -1,33 +1,6 @@
 /* AUX Lab — Minimalist & Clean Global Design System */
 
-:root {
-  --bg: #ffffff;
-  --surface: #f5f6f7;
-  --surface-strong: #eceef1;
-  --ink: #0f1115;
-  --muted: #4b515b;
-  --accent: #b82020; /* AUX Lab 로고의 붉은색 */
-  --accent-ink: #ffffff;
-
-  --font-display: 'Jost', 'Noto Sans KR', 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-  --font-text: 'Jost', 'Noto Sans KR', 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-
-  /* Clean 5-step type scale */
-  --step-small: clamp(0.9375rem, 0.91rem + 0.1vw, 1rem);
-  --step-body: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
-  --step-lead: clamp(1.25rem, 1.12rem + 0.5vw, 1.5rem);
-  --step-head: clamp(1.85rem, 1.4rem + 2.2vw, 3rem);
-  --step-display: clamp(2.85rem, 1.8rem + 4.5vw, 5.25rem);
-
-  --margin: clamp(1.25rem, 4vw, 4rem);
-  --gutter: clamp(1rem, 2vw, 2rem);
-  --section: clamp(4.5rem, 8vw, 7.5rem);
-  --radius: 0px;
-
-  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-  --t-press: 140ms;
-  --t-hover: 180ms;
-}
+@import './tokens.css';
 
 /* ---------- reset ---------- */
 *, *::before, *::after {
@@ -50,8 +23,8 @@ body {
   background: var(--bg);
   color: var(--ink);
   font-family: var(--font-text);
-  font-size: var(--step-body);
-  line-height: 1.7;
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   -webkit-font-smoothing: antialiased;
   /* 한글은 어절 단위로 줄바꿈하고, 긴 영문/이메일만 필요할 때 끊는다 */
   word-break: keep-all;
