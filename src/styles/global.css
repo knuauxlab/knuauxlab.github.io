@@ -11,6 +11,8 @@ html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   scroll-behavior: smooth;
+  /* 화면 아래에 붙은 푸터에 포커스된 요소가 가려지지 않게. 값은 SiteFooter의 스크립트가 채운다 */
+  scroll-padding-bottom: var(--footer-h, 9rem);
 }
 
 @media (prefers-reduced-motion: reduce) {
