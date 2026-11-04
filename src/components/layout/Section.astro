@@ -10,6 +10,8 @@ interface Props {
 
 const { heading, id, large = false } = Astro.props;
 const hasAside = Astro.slots.has('aside');
+// 기준선 아래에 전체 폭으로 놓을 내용 (예: 넓게 보여줄 PDF 미리보기)
+const hasBelow = Astro.slots.has('below');
 ---
 
 <section class="section" id={id} aria-labelledby={id ? `${id}-heading` : undefined}>
@@ -24,6 +26,13 @@ const hasAside = Astro.slots.has('aside');
       <slot />
     </div>
   </div>
+  {
+    hasBelow && (
+      <div class="wrap section-below" data-reveal>
+        <slot name="below" />
+      </div>
+    )
+  }
 </section>
 
 <style>
@@ -46,5 +55,9 @@ const hasAside = Astro.slots.has('aside');
   .section-aside {
     margin-top: var(--space-2);
     font-size: var(--fs-body);
+  }
+
+  .section-below {
+    margin-top: var(--space-6);
   }
 </style>
