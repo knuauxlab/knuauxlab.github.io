@@ -9,8 +9,8 @@
   --accent: #fe7141;
   --accent-ink: #0f1115;
 
-  --font-display: 'Jost', 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-  --font-text: 'Jost', 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-display: 'Jost', 'Noto Sans KR', 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-text: 'Jost', 'Noto Sans KR', 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
 
   /* Clean 5-step type scale */
   --step-small: clamp(0.84375rem, 0.82rem + 0.1vw, 0.9375rem);
@@ -46,8 +46,11 @@ body {
   color: var(--ink);
   font-family: var(--font-text);
   font-size: var(--step-body);
-  line-height: 1.55;
+  line-height: 1.7;
   -webkit-font-smoothing: antialiased;
+  /* 한글은 어절 단위로 줄바꿈하고, 긴 영문/이메일만 필요할 때 끊는다 */
+  word-break: keep-all;
+  overflow-wrap: break-word;
   text-rendering: optimizeLegibility;
 }
 
@@ -115,20 +118,20 @@ h1, h2, h3 {
 
 .lead {
   font-size: var(--step-lead);
-  line-height: 1.42;
+  line-height: 1.55;
   font-weight: 500;
-  max-width: 50ch;
+  max-width: 56ch;
 }
 
 .body-copy {
   font-size: var(--step-body);
-  line-height: 1.6;
+  line-height: 1.75;
   max-width: 62ch;
 }
 
 .small {
   font-size: var(--step-small);
-  line-height: 1.45;
+  line-height: 1.6;
 }
 
 .muted {
