@@ -7,6 +7,7 @@ interests:
   - 인간-컴퓨터 상호작용(HCI)
   - 가상현실(VR)
   - 멀티센서리 미디어
+photo: ../../assets/members/gyeore-yun.jpg
 order: 1
 ---
 
