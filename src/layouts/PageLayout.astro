@@ -1,0 +1,17 @@
+---
+// 서브페이지 공통 틀: 공통 셸 + 페이지 제목.
+import BaseLayout from './BaseLayout.astro';
+import PageHeader from '../components/layout/PageHeader.astro';
+
+interface Props {
+  title: string;
+  lead?: string;
+}
+
+const { title, lead } = Astro.props;
+---
+
+<BaseLayout title={`${title} — AUX Lab`}>
+  <PageHeader heading={title} lead={lead} />
+  <slot />
+</BaseLayout>

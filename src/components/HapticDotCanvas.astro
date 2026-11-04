@@ -59,6 +59,31 @@
 
       let time = 0;
 
+      // [data-haptic-avoid] 요소 주변의 도트는 옅게 그린다. 글 뒤에 도트가 비쳐 읽기 어려워지는 것을 막되,
+      // 박스처럼 경계가 생기지 않도록 거리에 따라 부드럽게 변한다.
+      const AVOID_FADE = 150;
+      const AVOID_MIN_ALPHA = 0.08;
+      let avoid: { left: number; top: number; right: number; bottom: number } | null = null;
+
+      function updateAvoid() {
+        const target = (shell.parentElement ?? document.body).querySelector<HTMLElement>('[data-haptic-avoid]');
+        if (!target) {
+          avoid = null;
+          return;
+        }
+        const s = shell.getBoundingClientRect();
+        const r = target.getBoundingClientRect();
+        avoid = { left: r.left - s.left, top: r.top - s.top, right: r.right - s.left, bottom: r.bottom - s.top };
+      }
+
+      function clearance(x: number, y: number) {
+        if (!avoid) return 1;
+        const dx = Math.max(avoid.left - x, 0, x - avoid.right);
+        const dy = Math.max(avoid.top - y, 0, y - avoid.bottom);
+        const t = Math.min(1, Math.hypot(dx, dy) / AVOID_FADE);
+        return AVOID_MIN_ALPHA + (1 - AVOID_MIN_ALPHA) * (t * t * (3 - 2 * t));
+      }
+
       function buildGrid() {
         const rect = shell.getBoundingClientRect();
         width = Math.max(rect.width, 300);
@@ -91,6 +116,7 @@
             });
           }
         }
+        updateAvoid();
       }
 
       function updatePointer(clientX: number, clientY: number) {
@@ -186,14 +212,15 @@
           const baseRadius = width < 640 ? 1.65 : 1.85;
           const r = baseRadius + norm * 2.25;
 
+          ctx!.globalAlpha = clearance(d.ox, d.oy);
           ctx!.beginPath();
           ctx!.arc(d.x, d.y, r, 0, Math.PI * 2);
 
           if (norm > 0.14) {
             const t = Math.min(1, (norm - 0.14) / 0.7);
-            const red = Math.round(15 + (254 - 15) * t);
-            const green = Math.round(17 + (113 - 17) * t);
-            const blue = Math.round(21 + (65 - 21) * t);
+            const red = Math.round(15 + (184 - 15) * t);
+            const green = Math.round(17 + (32 - 17) * t);
+            const blue = Math.round(21 + (32 - 21) * t);
             const alpha = 0.28 + t * 0.72;
             ctx!.fillStyle = `rgba(${red}, ${green}, ${blue}, ${alpha.toFixed(2)})`;
           } else {
@@ -202,6 +229,7 @@
 
           ctx!.fill();
         }
+        ctx!.globalAlpha = 1;
 
         if (!prefersReducedMotion) {
           requestAnimationFrame(renderFrame);
@@ -210,6 +238,8 @@
 
       buildGrid();
       renderFrame();
+      window.addEventListener('load', updateAvoid);
+      document.fonts?.ready.then(updateAvoid);
 
       let resizeTimer: number | undefined;
       window.addEventListener('resize', () => {

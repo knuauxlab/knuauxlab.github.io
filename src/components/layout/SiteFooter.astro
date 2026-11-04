@@ -1,0 +1,74 @@
+---
+import TextLink from '../ui/TextLink.astro';
+import { getLabInfo } from '../../utils/lab';
+import { withBase } from '../../utils/url';
+
+const lab = await getLabInfo();
+---
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <div class="footer-left">
+      <div class="footer-brand-row">
+        <img src={withBase('/logo.png')} alt="AUX Lab 로고" class="footer-logo" width="96" height="40" />
+        <p class="footer-brand">{lab.name} — {lab.fullName}</p>
+      </div>
+      <p class="muted">{lab.affiliation}</p>
+      <p class="muted">{lab.address}</p>
+    </div>
+
+    <div class="footer-right">
+      <TextLink href={`mailto:${lab.email}`}>{lab.email}</TextLink>
+      {lab.phone && <p class="muted nums">{lab.phone}</p>}
+    </div>
+  </div>
+</footer>
+
+<style>
+  /* 페이지의 끝을 알리는 띠. 글 덩어리마다 까는 회색 상자와는 다르게, 푸터만 예외로 둔다 */
+  .site-footer {
+    background: var(--surface-strong);
+    padding-block: var(--space-7);
+    font-size: var(--fs-small);
+  }
+
+  .footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: var(--space-6);
+  }
+
+  .footer-brand-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-2);
+  }
+
+  .footer-logo {
+    height: 1.9rem;
+    width: auto;
+    object-fit: contain;
+  }
+
+  .footer-brand {
+    font-family: var(--font-display);
+    font-size: var(--fs-lead);
+    font-weight: var(--fw-bold);
+  }
+
+  .footer-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: var(--space-1);
+  }
+
+  @media (max-width: 48em) {
+    .footer-right {
+      align-items: flex-start;
+    }
+  }
+</style>

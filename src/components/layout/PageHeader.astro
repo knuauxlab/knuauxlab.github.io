@@ -1,0 +1,34 @@
+---
+interface Props {
+  heading: string;
+  lead?: string;
+}
+
+const { heading, lead } = Astro.props;
+---
+
+<header class="page-header">
+  <div class="wrap axis">
+    <h1 class="page-title">{heading}</h1>
+    {lead && <p class="lead page-lead">{lead}</p>}
+  </div>
+</header>
+
+<style>
+  .page-header {
+    padding-top: clamp(3rem, 7vw, 6rem);
+    padding-bottom: var(--space-4);
+  }
+
+  .page-title {
+    font-size: var(--fs-title);
+    line-height: var(--lh-tight);
+    letter-spacing: var(--ls-tight);
+    font-weight: var(--fw-bold);
+  }
+
+  .page-lead {
+    align-self: end;
+    color: var(--muted);
+  }
+</style>

@@ -25,6 +25,13 @@ Home, News, Members, Publications, Projects, Join Us, Contact
 - 디자인은 템플릿처럼 보이지 않게 한다. 기본 그라디언트, 과한 카드 그리드, 의미 없는 아이콘을 피한다.
 - 변경 후에는 빌드가 통과하는지 확인한다.
 
+## 디자인 시스템
+
+색, 글자 크기, 간격은 `src/styles/tokens.css`의 토큰만 쓴다. 컴포넌트와 페이지에서 값을 직접 쓰지 않는다. 규칙과 컴포넌트 목록은 `docs/design-system.md`에 있다.
+
+- 글자는 16px보다 작게 쓰지 않는다. 텍스트 뒤에 회색 배경을 깔지 않는다. 붉은색은 hover와 포인트에만 쓴다.
+- 새 UI를 만들기 전에 같은 역할의 컴포넌트가 있는지 먼저 확인하고, 반복되는 마크업은 컴포넌트로 뺀다.
+
 ## 스킬
 
 출처와 업데이트 방법은 `.claude/THIRD_PARTY.md`에 있다.
@@ -53,4 +60,7 @@ Home, News, Members, Publications, Projects, Join Us, Contact
 
 ## 배포
 
-GitHub Pages. 배포는 콘텐츠와 디자인이 잡힌 뒤에 설정한다. 그때 `astro.config.mjs`의 `site`와 `base`를 맞춘다.
+GitHub Pages(`https://knuauxlab.github.io/lab_website/`). `main`에 푸시하면 `.github/workflows/deploy.yml`이 빌드, 링크 검사, 배포를 한다. PR에서는 배포 없이 빌드와 링크 검사만 돈다.
+
+- 사이트는 `/lab_website/` 아래에 놓이므로 내부 경로(`/news`, `/logo.png`)는 `withBase`(`src/utils/url.ts`)를 거쳐야 한다. `Button`과 `TextLink`는 안에서 처리하니 `href="/news"`처럼 그대로 써도 된다. 이미지나 `<a>`를 직접 쓸 때만 `withBase`를 붙인다.
+- 링크를 추가하거나 바꾼 뒤에는 `npm run build && npm run check:links`로 확인한다. 이 검사는 CI에서도 돌아서, 통과하지 못하면 배포되지 않는다.

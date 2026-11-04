@@ -1,0 +1,84 @@
+---
+import Tag from '../ui/Tag.astro';
+import { monthLabel } from '../../utils/date';
+import { newsCategoryLabels } from '../../utils/labels';
+
+interface Props {
+  date: string;
+  title: string;
+  category: string;
+}
+
+const { date, title, category } = Astro.props;
+// 본문이 비어 있으면 빈 상자를 그리지 않는다
+const extra = (await Astro.slots.render('default')).trim();
+---
+
+<li class="news-item">
+  <span class="news-dot" aria-hidden="true"></span>
+  <div class="news-body">
+    <p class="news-meta">
+      <time class="news-date nums" datetime={date}>{monthLabel(date)}</time>
+      <Tag>{newsCategoryLabels[category] ?? category}</Tag>
+    </p>
+    <h3 class="news-title">{title}</h3>
+    {extra && <div class="news-extra muted" set:html={extra} />}
+  </div>
+</li>
+
+<style>
+  .news-item {
+    display: grid;
+    grid-template-columns: var(--timeline-col, 1.5rem) minmax(0, 1fr);
+    column-gap: var(--space-4);
+    padding-block: var(--space-4);
+  }
+
+  /* 점은 세로선 위에 놓이고, 같은 색의 고리로 선을 끊어 보이게 한다 */
+  .news-dot {
+    position: relative;
+    z-index: 1; /* 세로선 위에 오도록 */
+    justify-self: center;
+    width: 0.875rem;
+    height: 0.875rem;
+    margin-top: 0.6rem;
+    border-radius: 50%;
+    background: var(--ink);
+    outline: 0.375rem solid var(--bg);
+    transition: background-color var(--t-hover) ease;
+  }
+
+  .news-item:hover .news-dot {
+    background: var(--accent);
+  }
+
+  .news-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .news-meta {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-3);
+  }
+
+  .news-date {
+    font-family: var(--font-display);
+    font-size: var(--fs-lead);
+    font-weight: var(--fw-semibold);
+    color: var(--muted);
+  }
+
+  .news-title {
+    font-size: var(--fs-subtitle);
+    line-height: var(--lh-snug);
+    font-weight: var(--fw-semibold);
+    letter-spacing: -0.01em;
+  }
+
+  .news-extra {
+    margin-top: var(--space-1);
+  }
+</style>

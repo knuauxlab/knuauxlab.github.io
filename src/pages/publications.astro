@@ -1,120 +1,49 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { getCollection, render } from 'astro:content';
+import PageLayout from '../layouts/PageLayout.astro';
+import WithToc from '../components/layout/WithToc.astro';
+import YearNav from '../components/layout/YearNav.astro';
+import YearSection from '../components/layout/YearSection.astro';
+import PublicationItem from '../components/content/PublicationItem.astro';
+import { getCollection } from 'astro:content';
+import { groupBy } from '../utils/group';
+import { primaryLink } from '../utils/publication';
 
-const rawPubs = (await getCollection('publications', ({ data }) => !data.draft)).sort(
+// 최신 연도가 위로, 같은 연도 안에서는 입력한 순서를 유지한다.
+const publications = (await getCollection('publications', ({ data }) => !data.draft)).sort(
   (a, b) => b.data.year - a.data.year
 );
 
-const publications = await Promise.all(
-  rawPubs.map(async (entry) => {
-    const { Content } = await render(entry);
-    const hasBody = Boolean(entry.body && entry.body.trim().length > 0);
-    return { entry, Content, hasBody };
-  })
-);
+const years = groupBy(publications, ({ data }) => String(data.year));
+const toc = years.map(([year, group]) => ({ year, count: group.length }));
 ---
 
-<BaseLayout title="논문 — AUX Lab">
-  <section class="page-hero">
-    <div class="wrap">
-      <h1 class="display">논문</h1>
-    </div>
-  </section>
-
-  <section class="chapter chapter-white">
-    <div class="wrap">
-      <ul class="pub-list">
-        {
-          publications.map(({ entry, Content, hasBody }) => (
-            <li class="pub-item">
-              <div class="pub-year nums">{entry.data.year}</div>
-              <div class="pub-main">
-                <h2 class="pub-title">{entry.data.title}</h2>
-                <p class="pub-authors">{entry.data.authors.join(', ')}</p>
-                <p class="small muted">{entry.data.venue}</p>
-                {entry.data.award && (
-                  <p class="pub-award">
-                    <span class="tag tag-orange">{entry.data.award}</span>
-                  </p>
-                )}
-                {hasBody && (
-                  <div class="small muted">
-                    <Content />
-                  </div>
-                )}
-              </div>
-              <div class="pub-links">
-                {entry.data.links.doi && (
-                  <a href={entry.data.links.doi} target="_blank" rel="noopener noreferrer" class="button button-ink">
-                    DOI
-                  </a>
-                )}
-                {entry.data.links.pdf && (
-                  <a href={entry.data.links.pdf} target="_blank" rel="noopener noreferrer" class="button">
-                    PDF
-                  </a>
-                )}
-                {entry.data.links.arxiv && (
-                  <a href={entry.data.links.arxiv} target="_blank" rel="noopener noreferrer" class="button button-surface">
-                    arXiv
-                  </a>
-                )}
-              </div>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-  </section>
-</BaseLayout>
+<PageLayout title="논문">
+  <WithToc>
+    {
+      years.map(([year, group]) => (
+        <YearSection year={year} count={group.length}>
+          <ul class="pub-list">
+            {group.map(({ data }) => (
+              <PublicationItem
+                title={data.title}
+                authors={data.authors}
+                venue={data.venue}
+                award={data.award}
+                href={primaryLink(data.links)}
+              />
+            ))}
+          </ul>
+        </YearSection>
+      ))
+    }
+    <YearNav slot="toc" years={toc} />
+  </WithToc>
+</PageLayout>
 
 <style>
   .pub-list {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-  }
-
-  .pub-item {
-    display: grid;
-    grid-template-columns: 90px 1fr auto;
-    align-items: start;
-    gap: 1.5rem;
-    padding: 1.5rem;
-    background: var(--surface);
-  }
-
-  .pub-year {
-    font-family: var(--font-display);
-    font-size: var(--step-lead);
-    font-weight: 700;
-    color: var(--muted);
-  }
-
-  .pub-title {
-    font-size: var(--step-lead);
-    font-weight: 700;
-    margin-bottom: 0.35rem;
-  }
-
-  .pub-authors {
-    margin-bottom: 0.2rem;
-  }
-
-  .pub-award {
-    margin-top: 0.5rem;
-  }
-
-  .pub-links {
-    display: flex;
-    gap: 0.5rem;
-  }
-
-  @media (max-width: 52em) {
-    .pub-item {
-      grid-template-columns: 1fr;
-      gap: 0.65rem;
-    }
+    gap: var(--space-7);
   }
 </style>

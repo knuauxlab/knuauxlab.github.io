@@ -84,6 +84,8 @@ const publications = defineCollection({
         doi: url.optional(),
         arxiv: url.optional(),
         pdf: url.optional(),
+        // DOI가 없을 때 쓰는 논문 소개 페이지(저자 사이트 등)
+        page: url.optional(),
       })
       .default({}),
     draft,

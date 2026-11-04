@@ -1,0 +1,87 @@
+---
+import Tag from '../ui/Tag.astro';
+
+interface Props {
+  title: string;
+  authors: string[];
+  venue: string;
+  award?: string;
+  /** 논문 페이지 주소. 있으면 제목이 링크가 되고 항목 전체가 클릭된다 */
+  href?: string;
+}
+
+const { title, authors, venue, award, href } = Astro.props;
+---
+
+<li class:list={['pub-item', { 'has-link': href }]}>
+  <h3 class="pub-title">
+    {
+      href ? (
+        <a href={href} target="_blank" rel="noopener noreferrer">
+          {title}
+          <span class="pub-arrow" aria-hidden="true">↗</span>
+          <span class="sr-only"> (새 창에서 열림)</span>
+        </a>
+      ) : (
+        title
+      )
+    }
+  </h3>
+  <p class="pub-authors">{authors.join(', ')}</p>
+  <p class="pub-venue muted">{venue}</p>
+  {award && <Tag>{award}</Tag>}
+</li>
+
+<style>
+  .pub-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-1);
+  }
+
+  .pub-title {
+    font-size: var(--fs-subtitle);
+    line-height: var(--lh-snug);
+    font-weight: var(--fw-semibold);
+    letter-spacing: -0.01em;
+  }
+
+  .pub-title a {
+    transition: color var(--t-hover) ease;
+  }
+
+  /* 제목 링크를 항목 전체로 넓혀 어디를 눌러도 이동한다 */
+  .pub-title a::after {
+    content: '';
+    position: absolute;
+    inset: calc(var(--space-3) * -1) calc(var(--space-4) * -1);
+  }
+
+  .pub-item.has-link:hover .pub-title a {
+    color: var(--accent);
+  }
+
+  .pub-arrow {
+    margin-left: var(--space-2);
+    font-weight: var(--fw-regular);
+  }
+
+  .pub-item:focus-within {
+    outline: 2px solid var(--accent);
+    outline-offset: var(--space-3);
+  }
+
+  .pub-title a:focus-visible {
+    outline: none;
+  }
+
+  .pub-authors {
+    font-size: var(--fs-body);
+  }
+
+  .pub-venue {
+    font-size: var(--fs-small);
+  }
+</style>

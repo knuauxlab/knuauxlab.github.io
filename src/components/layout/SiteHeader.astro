@@ -1,0 +1,184 @@
+---
+import { withBase, stripBase } from '../../utils/url';
+
+const navLinks = [
+  { href: '/', label: '홈' },
+  { href: '/news', label: '소식' },
+  { href: '/members', label: '구성원' },
+  { href: '/publications', label: '논문' },
+  { href: '/projects', label: '프로젝트' },
+  { href: '/joinus', label: '모집' },
+  { href: '/contact', label: '연락처' },
+];
+
+const currentPath = stripBase(Astro.url.pathname);
+const isActive = (href: string) =>
+  href === '/' ? currentPath === '/' : currentPath.startsWith(href);
+---
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a href={withBase('/')} class="brand-mark" aria-label="AUX Lab 홈">
+      <img src={withBase('/logo.png')} alt="AUX Lab 로고" class="brand-logo" width="110" height="45" />
+      <span class="brand-name">AUX Lab</span>
+    </a>
+
+    <button
+      type="button"
+      class="menu-toggle"
+      aria-expanded="false"
+      aria-controls="primary-navigation"
+      data-menu-toggle
+    >
+      <span class="menu-toggle-label">메뉴</span>
+    </button>
+
+    <nav id="primary-navigation" class="site-nav" aria-label="주 메뉴" data-site-nav>
+      <ul class="nav-list">
+        {
+          navLinks.map((item) => (
+            <li>
+              <a
+                href={withBase(item.href)}
+                class:list={['nav-link', { 'is-current': isActive(item.href) }]}
+                aria-current={isActive(item.href) ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<script>
+  function setupNavigation() {
+    const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+    const nav = document.querySelector<HTMLElement>('[data-site-nav]');
+    if (!toggle || !nav || toggle.dataset.bound === 'true') return;
+    toggle.dataset.bound = 'true';
+    toggle.addEventListener('click', () => {
+      const expanded = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+      nav.classList.toggle('is-open', !expanded);
+      const label = toggle.querySelector('.menu-toggle-label');
+      if (label) label.textContent = expanded ? '메뉴' : '닫기';
+    });
+  }
+
+  setupNavigation();
+  document.addEventListener('astro:page-load', setupNavigation);
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: var(--bg);
+    color: var(--ink);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 5rem;
+    gap: var(--space-5);
+  }
+
+  .brand-mark {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .brand-logo {
+    height: 2.4rem;
+    width: auto;
+    object-fit: contain;
+  }
+
+  .brand-name {
+    font-family: var(--font-display);
+    font-size: var(--fs-subtitle);
+    font-weight: var(--fw-bold);
+    letter-spacing: var(--ls-tight);
+  }
+
+  .nav-list {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  /* 배경 없이 글자만. 붉은색은 hover 때만 나타나고, 현재 페이지는 밑줄로 표시한다 */
+  .nav-link {
+    display: inline-block;
+    padding: var(--space-2) var(--space-3);
+    font-family: var(--font-display);
+    font-size: var(--fs-body);
+    font-weight: var(--fw-semibold);
+    transition: color var(--t-hover) ease;
+  }
+
+  .nav-link:hover {
+    color: var(--accent);
+  }
+
+  .nav-link.is-current {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.4em;
+  }
+
+  .menu-toggle {
+    display: none;
+    padding: var(--space-2) 0;
+    font-family: var(--font-display);
+    font-size: var(--fs-body);
+    font-weight: var(--fw-semibold);
+    transition: color var(--t-hover) ease;
+  }
+
+  .menu-toggle:hover {
+    color: var(--accent);
+  }
+
+  @media (max-width: 62em) {
+    .menu-toggle {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    /* 화면 위에 떠 있는 메뉴라 그림자를 쓴다 */
+    .site-nav {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--bg);
+      color: var(--ink);
+      padding: var(--space-3) var(--margin) var(--space-5);
+      box-shadow: 0 16px 32px rgba(15, 17, 21, 0.08);
+    }
+
+    .site-nav.is-open {
+      display: block;
+    }
+
+    .nav-list {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-1);
+    }
+
+    .nav-link {
+      padding: var(--space-3) 0;
+      font-size: var(--fs-lead);
+    }
+  }
+</style>

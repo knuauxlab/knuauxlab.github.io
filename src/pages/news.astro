@@ -1,87 +1,44 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { newsCategoryLabels } from '../utils/labels';
+import PageLayout from '../layouts/PageLayout.astro';
+import WithToc from '../components/layout/WithToc.astro';
+import YearNav from '../components/layout/YearNav.astro';
+import YearSection from '../components/layout/YearSection.astro';
+import NewsTimeline from '../components/content/NewsTimeline.astro';
 import { getCollection, render } from 'astro:content';
+import { groupBy } from '../utils/group';
+import { yearOf } from '../utils/date';
 
-const rawNews = (await getCollection('news', ({ data }) => !data.draft)).sort((a, b) =>
+const entries = (await getCollection('news', ({ data }) => !data.draft)).sort((a, b) =>
   b.data.date.localeCompare(a.data.date)
 );
 
-const newsItems = await Promise.all(
-  rawNews.map(async (entry) => {
+const items = await Promise.all(
+  entries.map(async (entry) => {
     const { Content } = await render(entry);
     const hasBody = Boolean(entry.body && entry.body.trim().length > 0);
-    return { entry, Content, hasBody };
+    return {
+      date: entry.data.date,
+      title: entry.data.title,
+      category: entry.data.category,
+      Content: hasBody ? Content : undefined,
+    };
   })
 );
+
+// 연도별로 묶는다. 이미 최신순이라 순서가 유지된다.
+const years = groupBy(items, (item) => yearOf(item.date));
+const toc = years.map(([year, group]) => ({ year, count: group.length }));
 ---
 
-<BaseLayout title="소식 — AUX Lab">
-  <section class="page-hero">
-    <div class="wrap">
-      <h1 class="display">소식</h1>
-    </div>
-  </section>
-
-  <section class="chapter chapter-white">
-    <div class="wrap">
-      <ul class="news-list">
-        {
-          newsItems.map(({ entry, Content, hasBody }) => (
-            <li class="news-item">
-              <span class="news-date nums">{entry.data.date}</span>
-              <div class="news-body">
-                <h2 class="news-title">{entry.data.title}</h2>
-                {hasBody && (
-                  <div class="small muted news-extra">
-                    <Content />
-                  </div>
-                )}
-              </div>
-              <span class="tag tag-surface">{newsCategoryLabels[entry.data.category]}</span>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-  </section>
-</BaseLayout>
-
-<style>
-  .news-list {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .news-item {
-    display: grid;
-    grid-template-columns: 120px 1fr auto;
-    align-items: center;
-    gap: 1.5rem;
-    padding: 1.25rem 1.5rem;
-    background: var(--surface);
-  }
-
-  .news-date {
-    font-family: var(--font-display);
-    font-weight: 700;
-    color: var(--muted);
-  }
-
-  .news-title {
-    font-size: var(--step-body);
-    font-weight: 600;
-  }
-
-  .news-extra {
-    margin-top: 0.35rem;
-  }
-
-  @media (max-width: 48em) {
-    .news-item {
-      grid-template-columns: 1fr;
-      gap: 0.4rem;
+<PageLayout title="소식">
+  <WithToc>
+    {
+      years.map(([year, group]) => (
+        <YearSection year={year} count={group.length}>
+          <NewsTimeline items={group} />
+        </YearSection>
+      ))
     }
-  }
-</style>
+    <YearNav slot="toc" years={toc} />
+  </WithToc>
+</PageLayout>

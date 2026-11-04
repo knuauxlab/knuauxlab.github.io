@@ -1,0 +1,28 @@
+---
+interface Props {
+  title: string;
+  summary: string;
+}
+
+const { title, summary } = Astro.props;
+---
+
+<article class="research-item">
+  <h3 class="research-title">{title}</h3>
+  <p class="body-copy muted">{summary}</p>
+</article>
+
+<style>
+  .research-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .research-title {
+    font-size: var(--fs-subtitle);
+    line-height: var(--lh-snug);
+    font-weight: var(--fw-bold);
+    letter-spacing: -0.01em;
+  }
+</style>

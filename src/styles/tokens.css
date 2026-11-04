@@ -1,0 +1,76 @@
+/*
+ * 디자인 토큰: 색, 글자, 간격은 이 파일에서만 정의한다.
+ * 컴포넌트와 페이지는 값을 직접 쓰지 않고 항상 토큰을 가져다 쓴다.
+ * 규칙과 사용법은 docs/design-system.md에 있다.
+ */
+
+:root {
+  /* ---------- 색 ---------- */
+  --bg: #ffffff; /* 바탕 */
+  --ink: #0f1115; /* 제목, 본문 */
+  --muted: #4b515b; /* 보조 텍스트. 바탕 대비 7.9:1 */
+  --accent: #b82020; /* AUX Lab 로고의 붉은색. hover와 포인트에만 쓴다 */
+  --accent-ink: #ffffff; /* 강조색 위의 글자 */
+
+  /* 영역 구분용. 텍스트 뒤 배경으로는 쓰지 않는다 */
+  --surface: #f5f6f7;
+  --surface-strong: #eceef1;
+
+  /* ---------- 글꼴 ---------- */
+  --font-display: 'Jost', 'Noto Sans KR', 'Pretendard Variable', Pretendard, -apple-system,
+    BlinkMacSystemFont, system-ui, sans-serif;
+  --font-text: var(--font-display);
+
+  /* ---------- 글자 크기: 값이 아니라 역할로 고른다 ---------- */
+  --fs-small: clamp(1rem, 0.97rem + 0.1vw, 1.0625rem); /* 16-17px 날짜, 분류, 캡션. 이보다 작게 쓰지 않는다 */
+  --fs-body: clamp(1.0625rem, 1rem + 0.2vw, 1.1875rem); /* 17-19px 본문, 내비게이션 */
+  --fs-lead: clamp(1.25rem, 1.1rem + 0.5vw, 1.5rem); /* 20-24px 리드 문장, 월 */
+  --fs-subtitle: clamp(1.375rem, 1.15rem + 0.8vw, 1.75rem); /* 22-28px 항목 제목(소식, 논문, 프로젝트) */
+  --fs-heading: clamp(1.75rem, 1.35rem + 1.4vw, 2.375rem); /* 28-38px 섹션 제목 */
+  --fs-title: clamp(2.5rem, 1.6rem + 3.6vw, 4.25rem); /* 40-68px 페이지 제목 */
+  --fs-display: clamp(2.75rem, 1.6rem + 4vw, 5rem); /* 44-80px 연도 같은 큰 숫자 */
+  --fs-hero: clamp(1.9rem, 0.9rem + 3.6vw, 4.5rem); /* 홈 히어로 제목 */
+  --size-hero-logo: clamp(3.2rem, 5.5vw, 4.6rem); /* 히어로의 로고 높이 */
+  --avatar-md: 6rem; /* 구성원 사진 96px */
+  --avatar-lg: 8.75rem; /* 지도교수 사진 140px */
+
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  --lh-tight: 1.1; /* 큰 제목 */
+  --lh-snug: 1.4; /* 항목 제목, 리드 */
+  --lh-body: 1.7; /* 본문. 한글은 영문보다 넉넉하게 */
+
+  --ls-tight: -0.03em; /* 큰 제목 */
+  --ls-heading: -0.02em;
+
+  /* ---------- 간격 ---------- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4.5rem;
+
+  --margin: clamp(1.25rem, 4vw, 4rem); /* 화면 양쪽 바깥 여백 */
+  --gutter: clamp(1rem, 2vw, 2rem);
+  --section: clamp(4.5rem, 8vw, 7.5rem); /* 큰 섹션 사이 */
+  --section-tight: clamp(2rem, 4vw, 3.25rem); /* 서브페이지 섹션 사이 */
+  --radius: 0px;
+
+  /* ---------- 동작 ---------- */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --t-press: 140ms;
+  --t-hover: 180ms;
+
+  /* 이전 이름. 새 코드는 --fs-* 를 쓴다 */
+  --step-small: var(--fs-small);
+  --step-body: var(--fs-body);
+  --step-lead: var(--fs-lead);
+  --step-head: var(--fs-heading);
+  --step-display: var(--fs-display);
+}

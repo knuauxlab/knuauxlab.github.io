@@ -1,0 +1,31 @@
+---
+import { withBase } from '../../utils/url';
+
+interface Props {
+  href: string;
+  external?: boolean;
+  download?: boolean;
+}
+
+const { href, external = false, download = false } = Astro.props;
+const externalAttrs = external ? { target: '_blank', rel: 'noopener noreferrer' } : {};
+---
+
+<a href={withBase(href)} class="text-link" download={download || undefined} {...externalAttrs}><slot /></a>
+
+<style>
+  .text-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    font-weight: var(--fw-semibold);
+    text-decoration: underline;
+    text-underline-offset: 0.22em;
+    text-decoration-thickness: 1.5px;
+    transition: color var(--t-hover) ease;
+  }
+
+  .text-link:hover {
+    color: var(--accent);
+  }
+</style>

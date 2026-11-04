@@ -1,0 +1,92 @@
+---
+// 홈 히어로. 도트 캔버스가 배경이고, 글 주변의 도트는 캔버스가 알아서 옅게 그린다.
+import HapticDotCanvas from '../HapticDotCanvas.astro';
+import Button from '../ui/Button.astro';
+import TextLink from '../ui/TextLink.astro';
+import { withBase } from '../../utils/url';
+
+interface Props {
+  affiliation: string;
+  fullName: string;
+  intro: string;
+}
+
+const { affiliation, fullName, intro } = Astro.props;
+---
+
+<section class="hero" aria-label="AUX Lab 소개">
+  <HapticDotCanvas />
+
+  <div class="wrap hero-inner">
+    <div class="hero-content" data-haptic-avoid>
+      <p class="hero-affiliation muted">{affiliation}</p>
+      <img src={withBase('/logo.png')} alt="AUX Lab 로고" class="hero-logo" width="180" height="74" />
+      <h1 class="hero-headline">{fullName}</h1>
+      <p class="lead">{intro}</p>
+      <div class="hero-actions">
+        <Button href="#lab-intro">연구실 소개 자료</Button>
+        <TextLink href="/publications">논문 보기 →</TextLink>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: 78svh;
+    padding-block: clamp(4rem, 8vw, 7rem);
+    overflow: hidden;
+  }
+
+  /* 도트는 마우스에 반응해야 하므로, 글이 없는 곳은 이벤트를 통과시킨다 */
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    pointer-events: none;
+  }
+
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-4);
+    max-width: 58%;
+    pointer-events: auto;
+  }
+
+  .hero-affiliation {
+    font-size: var(--fs-body);
+    font-weight: var(--fw-semibold);
+  }
+
+  .hero-logo {
+    height: var(--size-hero-logo);
+    width: auto;
+    object-fit: contain;
+  }
+
+  .hero-headline {
+    font-size: var(--fs-hero);
+    line-height: var(--lh-tight);
+    letter-spacing: var(--ls-tight);
+    font-weight: var(--fw-bold);
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-5);
+    margin-top: var(--space-3);
+  }
+
+  @media (max-width: 56em) {
+    .hero-content {
+      max-width: none;
+    }
+  }
+</style>

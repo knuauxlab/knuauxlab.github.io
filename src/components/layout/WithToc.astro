@@ -1,0 +1,33 @@
+---
+// 본문과 오른쪽 목차(연도별 이동)가 함께 있는 2단 레이아웃.
+// 좁은 화면에서는 목차가 본문 위로 올라간다.
+---
+
+<div class="wrap with-toc">
+  <div class="toc-main">
+    <slot />
+  </div>
+  <slot name="toc" />
+</div>
+
+<style>
+  .with-toc {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 14rem;
+    column-gap: clamp(2rem, 5vw, 5rem);
+    align-items: start;
+    padding-block: var(--space-6) var(--space-8);
+  }
+
+  @media (max-width: 56em) {
+    .with-toc {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: var(--space-5);
+    }
+
+    /* 목차를 본문 위로 */
+    .with-toc :global(.year-nav) {
+      order: -1;
+    }
+  }
+</style>
