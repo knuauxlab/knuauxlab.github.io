@@ -52,16 +52,33 @@ const JoinContent = renderedJoin?.Content;
 
 <style>
   .join-box {
-    max-width: 860px;
-    margin-inline: 0;
   }
 
   .join-content {
     background: var(--surface);
     padding: clamp(2rem, 4vw, 3rem);
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.25rem 4rem;
+    align-content: start;
+  }
+
+  /* 넓은 화면에서는 제목과 모집 대상을 왼쪽, 연락 안내를 오른쪽에 둔다 */
+  @media (min-width: 56em) {
+    .join-content {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .join-content > .head,
+    .join-content > .lead {
+      grid-column: 1;
+    }
+    .join-content > .body-copy {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+    }
+    .join-content > .join-action {
+      grid-column: 1;
+    }
   }
 
   .join-action {
