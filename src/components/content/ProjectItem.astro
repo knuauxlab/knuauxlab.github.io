@@ -18,13 +18,13 @@ const hasBody = Astro.slots.has('default');
   .project-item {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: var(--space-3);
   }
 
   .project-title {
-    font-size: var(--step-lead);
-    line-height: 1.35;
-    font-weight: 700;
+    font-size: var(--fs-subtitle);
+    line-height: var(--lh-snug);
+    font-weight: var(--fw-bold);
     letter-spacing: -0.01em;
   }
 </style>

@@ -15,8 +15,10 @@ const hasAside = Astro.slots.has('aside');
 <section class="section" id={id} aria-labelledby={id ? `${id}-heading` : undefined}>
   <div class="wrap axis" data-reveal>
     <div class="axis-aside">
-      <h2 class:list={["section-label", { "is-large": large }]} id={id ? `${id}-heading` : undefined}>{heading}</h2>
-      {hasAside && <div class="section-aside small muted nums"><slot name="aside" /></div>}
+      <h2 class:list={['section-label', { 'is-large': large }]} id={id ? `${id}-heading` : undefined}>
+        {heading}
+      </h2>
+      {hasAside && <div class="section-aside muted nums"><slot name="aside" /></div>}
     </div>
     <div class="axis-main">
       <slot />
@@ -26,22 +28,23 @@ const hasAside = Astro.slots.has('aside');
 
 <style>
   .section {
-    padding-block: clamp(2rem, 4vw, 3.25rem);
+    padding-block: var(--section-tight);
   }
 
   .section-label {
-    font-size: clamp(1.5rem, 1.2rem + 1vw, 2.1rem);
-    line-height: 1.2;
-    letter-spacing: -0.02em;
+    font-size: var(--fs-heading);
+    line-height: var(--lh-tight);
+    letter-spacing: var(--ls-heading);
   }
 
   .section-label.is-large {
-    font-size: clamp(2.75rem, 1.6rem + 4vw, 5rem);
+    font-size: var(--fs-display);
     line-height: 1;
-    letter-spacing: -0.04em;
+    letter-spacing: var(--ls-tight);
   }
 
   .section-aside {
-    margin-top: 0.4rem;
+    margin-top: var(--space-2);
+    font-size: var(--fs-body);
   }
 </style>
