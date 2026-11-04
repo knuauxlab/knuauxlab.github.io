@@ -172,7 +172,7 @@ const isActive = (href: string) => {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    min-height: 4.5rem;
+    min-height: 5rem;
     gap: 1.5rem;
   }
 
@@ -183,14 +183,14 @@ const isActive = (href: string) => {
   }
 
   .brand-logo {
-    height: 2.1rem;
+    height: 2.4rem;
     width: auto;
     object-fit: contain;
   }
 
   .brand-name {
     font-family: var(--font-display);
-    font-size: 1.45rem;
+    font-size: 1.6rem;
     font-weight: 700;
     letter-spacing: -0.03em;
   }
@@ -203,9 +203,9 @@ const isActive = (href: string) => {
 
   .nav-link {
     display: inline-block;
-    padding: 0.45rem 0.8rem;
+    padding: 0.6rem 1rem;
     font-family: var(--font-display);
-    font-size: var(--step-small);
+    font-size: 1.0625rem;
     font-weight: 600;
     transition: background-color 150ms ease, color 150ms ease;
   }
@@ -229,7 +229,7 @@ const isActive = (href: string) => {
     font-weight: 700;
   }
 
-  @media (max-width: 52em) {
+  @media (max-width: 60em) {
     .menu-toggle {
       display: inline-flex;
       align-items: center;
@@ -272,8 +272,8 @@ const isActive = (href: string) => {
   }
 
   .site-footer {
-    background: var(--ink);
-    color: var(--bg);
+    background: var(--surface-strong);
+    color: var(--ink);
     padding-block: 3.5rem;
   }
 
@@ -296,8 +296,6 @@ const isActive = (href: string) => {
     height: 1.9rem;
     width: auto;
     object-fit: contain;
-    background: #ffffff;
-    padding: 0.25rem 0.5rem;
   }
 
   .footer-brand {
@@ -308,7 +306,7 @@ const isActive = (href: string) => {
 
   .footer-left .muted,
   .footer-right .muted {
-    color: #9da3ae;
+    color: var(--muted);
   }
 
   .footer-right {
