@@ -40,6 +40,11 @@ const hasBelow = Astro.slots.has('below');
     padding-block: var(--section-tight);
   }
 
+  /* 마지막 섹션의 아래 여백은 main이 주므로 겹치지 않게 뺀다 */
+  .section:last-child {
+    padding-bottom: 0;
+  }
+
   .section-label {
     font-size: var(--fs-heading);
     line-height: var(--lh-tight);

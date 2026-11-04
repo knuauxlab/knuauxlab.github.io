@@ -71,6 +71,8 @@ a {
 
 body > main {
   flex: 1 0 auto;
+  /* 본문 끝과 푸터 사이 간격은 여기서 한 번만 준다. 컴포넌트가 따로 아래 여백을 갖지 않는다 */
+  padding-bottom: var(--section);
 }
 
 ::selection {
