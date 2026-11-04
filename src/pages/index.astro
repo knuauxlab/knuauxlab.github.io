@@ -141,11 +141,17 @@ const newsList = (await getCollection('news', ({ data }) => !data.draft)).sort((
     pointer-events: none;
   }
 
+  /* 글은 박스 없이 흰 배경에 두고, 도트는 오른쪽 패널에 따로 둔다 */
   .hero-content {
-    max-width: 960px;
-    background: rgba(255, 255, 255, 0.9);
-    padding: clamp(1.5rem, 3vw, 2.5rem);
+    max-width: 58%;
     pointer-events: auto;
+  }
+
+  .hero-chapter :global(.haptic-field-shell[data-haptic-shell]) {
+    inset: 0 0 0 auto;
+    width: 36%;
+    height: 100%;
+    background: var(--surface-strong);
   }
 
   .hero-affiliation {
@@ -170,7 +176,7 @@ const newsList = (await getCollection('news', ({ data }) => !data.draft)).sort((
   .hero-headline {
     margin: 0;
     /* 영문 이름이 데스크톱 2줄, 모바일 3줄 이내로 들어오도록 기본 display보다 작게 */
-    font-size: clamp(1.9rem, 0.9rem + 4.2vw, 4.5rem);
+    font-size: clamp(1.9rem, 0.9rem + 3.6vw, 4.5rem);
   }
 
   .hero-supporting {
@@ -266,6 +272,19 @@ const newsList = (await getCollection('news', ({ data }) => !data.draft)).sort((
   }
 
   @media (max-width: 56em) {
+    /* 좁은 화면에서는 위쪽에 낮은 도트 띠를 두고 그 아래에 글을 놓는다 */
+    .hero-chapter {
+      align-items: flex-start;
+      padding-top: calc(9rem + 2rem);
+    }
+    .hero-chapter :global(.haptic-field-shell[data-haptic-shell]) {
+      inset: 0 0 auto 0;
+      width: 100%;
+      height: 9rem;
+    }
+    .hero-content {
+      max-width: none;
+    }
     .research-item {
       grid-column: 1 / -1;
     }
