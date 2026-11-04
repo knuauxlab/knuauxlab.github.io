@@ -1,5 +1,5 @@
 ---
 date: "2026-03"
-title: Selected for the Outstanding Young Scientist Grants by the National Research Foundation of Korea (NRF)
+title: 한국연구재단(NRF) Outstanding Young Scientist Grants 선정
 category: award
 ---

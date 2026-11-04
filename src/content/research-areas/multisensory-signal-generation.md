@@ -1,5 +1,5 @@
 ---
-title: Multisensory Signal Generation
-summary: Automatically generating synchronized haptic and tactile signals beyond conventional audio and visual media using AI.
+title: 멀티센서리 신호 생성
+summary: AI를 활용해 기존의 소리와 영상을 넘어, 서로 동기화된 햅틱·촉각 신호를 자동으로 생성합니다.
 order: 2
 ---

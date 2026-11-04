@@ -1,5 +1,5 @@
 ---
-title: Next-Generation Interfaces
-summary: Designing human-computer and XR interfaces that enhance both experiential immersion and manipulation performance.
+title: 차세대 인터페이스
+summary: 몰입감과 조작 성능을 함께 높이는 인간-컴퓨터 인터페이스와 XR 인터페이스를 설계합니다.
 order: 3
 ---
