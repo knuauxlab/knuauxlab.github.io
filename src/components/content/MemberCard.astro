@@ -1,0 +1,105 @@
+---
+// 구성원 한 명: 사진, 이름, 직위, 관심 분야, 연락처. 배경 상자 없이 사진과 글만 가로로 놓는다.
+import Avatar from '../ui/Avatar.astro';
+import TextLink from '../ui/TextLink.astro';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  name: string;
+  role: string;
+  photo?: ImageMetadata;
+  interests?: string[];
+  email?: string;
+  links?: { homepage?: string; github?: string; scholar?: string };
+  /** 지도교수처럼 크게 보여줄 때 */
+  large?: boolean;
+}
+
+const { name, role, photo, interests = [], email, links = {}, large = false } = Astro.props;
+// 본문(소개글)이 비어 있으면 빈 상자를 그리지 않는다
+const bio = (await Astro.slots.render('default')).trim();
+const hasLinks = Boolean(email || links.homepage || links.github || links.scholar);
+---
+
+<article class:list={['member', { 'is-large': large }]}>
+  <Avatar name={name} photo={photo} size={large ? 'lg' : 'md'} />
+  <div class="member-info">
+    <h3 class="member-name">{name}</h3>
+    <p class="member-role muted">{role}</p>
+    {interests.length > 0 && <p class="member-interests">{interests.join(', ')}</p>}
+    {bio && <div class="member-bio muted" set:html={bio} />}
+    {
+      hasLinks && (
+        <p class="member-links">
+          {email && <TextLink href={`mailto:${email}`}>{email}</TextLink>}
+          {links.homepage && (
+            <TextLink href={links.homepage} external>
+              홈페이지
+            </TextLink>
+          )}
+          {links.github && (
+            <TextLink href={links.github} external>
+              GitHub
+            </TextLink>
+          )}
+          {links.scholar && (
+            <TextLink href={links.scholar} external>
+              Google Scholar
+            </TextLink>
+          )}
+        </p>
+      )
+    }
+  </div>
+</article>
+
+<style>
+  .member {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-5);
+  }
+
+  .member-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    min-width: 0;
+  }
+
+  .member-name {
+    font-size: var(--fs-subtitle);
+    line-height: var(--lh-snug);
+    font-weight: var(--fw-bold);
+    letter-spacing: -0.01em;
+  }
+
+  .member-role {
+    font-size: var(--fs-small);
+  }
+
+  .member-interests {
+    margin-top: var(--space-1);
+    font-size: var(--fs-body);
+  }
+
+  .member-bio {
+    margin-top: var(--space-1);
+    font-size: var(--fs-body);
+  }
+
+  .member-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-4);
+    margin-top: var(--space-2);
+    font-size: var(--fs-small);
+  }
+
+  /* 사진이 큰 카드는 좁은 화면에서 사진을 위로 올린다 */
+  @media (max-width: 36em) {
+    .member.is-large {
+      flex-direction: column;
+    }
+  }
+</style>

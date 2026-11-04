@@ -1,0 +1,70 @@
+---
+// 구성원 사진. 사진이 없으면 이름의 머리글자를 원 안에 보여준다.
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  name: string;
+  photo?: ImageMetadata;
+  size?: 'md' | 'lg';
+}
+
+const { name, photo, size = 'md' } = Astro.props;
+// 화면 크기의 2배로 만들어 선명하게 보이게 한다
+const px = size === 'lg' ? 280 : 192;
+const initials = name
+  .split(/\s+/)
+  .map((part) => part[0])
+  .join('')
+  .slice(0, 2)
+  .toUpperCase();
+---
+
+<span class="avatar" data-size={size}>
+  {
+    photo ? (
+      <Image src={photo} alt={name} width={px} height={px} loading="lazy" />
+    ) : (
+      <span class="avatar-initials" aria-hidden="true">
+        {initials}
+      </span>
+    )
+  }
+</span>
+
+<style>
+  .avatar {
+    display: block;
+    flex-shrink: 0;
+    width: var(--avatar-md);
+    height: var(--avatar-md);
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--surface-strong);
+  }
+
+  .avatar[data-size='lg'] {
+    width: var(--avatar-lg);
+    height: var(--avatar-lg);
+  }
+
+  .avatar :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* 흰 배경 사진이 흰 페이지에 녹지 않도록 회색 원 위에 곱해서 얹는다 */
+    mix-blend-mode: multiply;
+  }
+
+  .avatar-initials {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    font-family: var(--font-display);
+    font-size: var(--fs-lead);
+    font-weight: var(--fw-bold);
+    color: var(--muted);
+  }
+</style>

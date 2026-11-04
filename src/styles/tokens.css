@@ -31,6 +31,8 @@
   --fs-display: clamp(2.75rem, 1.6rem + 4vw, 5rem); /* 44-80px 연도 같은 큰 숫자 */
   --fs-hero: clamp(1.9rem, 0.9rem + 3.6vw, 4.5rem); /* 홈 히어로 제목 */
   --size-hero-logo: clamp(3.2rem, 5.5vw, 4.6rem); /* 히어로의 로고 높이 */
+  --avatar-md: 6rem; /* 구성원 사진 96px */
+  --avatar-lg: 8.75rem; /* 지도교수 사진 140px */
 
   --fw-regular: 400;
   --fw-medium: 500;
