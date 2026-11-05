@@ -12,7 +12,8 @@
     "astro": "astro",
     "check:links": "node scripts/check-links.mjs",
     "build:ci": "astro build && node scripts/check-links.mjs && node scripts/check-cms-config.mjs",
-    "check:cms": "node scripts/check-cms-config.mjs"
+    "check:cms": "node scripts/check-cms-config.mjs",
+    "prepare": "node scripts/install-hooks.mjs"
   },
   "dependencies": {
     "astro": "^7.4.5"
