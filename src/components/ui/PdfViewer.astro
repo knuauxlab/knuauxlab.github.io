@@ -1,5 +1,8 @@
 ---
-// PDF를 페이지 안에서 미리 보여준다. 용량이 큰 파일이라 화면 근처에 올 때까지 불러오지 않는다.
+// PDF를 페이지 안에서 미리 보여준다.
+// 용량이 큰 파일(4MB대)이라 화면에 가까워질 때까지 받지 않는다. iframe의 loading="lazy"는
+// 화면 아래 1250px 안쪽이면 미리 불러서, 스크롤하지 않아도 PDF를 받아 버린다.
+// 또 일부 모바일 브라우저는 PDF를 페이지 안에서 보여주지 못해, 그때는 안내만 보여준다.
 interface Props {
   src: string;
   title: string;
@@ -8,9 +11,58 @@ interface Props {
 const { src, title } = Astro.props;
 ---
 
-<div class="pdf-viewer">
-  <iframe src={`${src}#view=FitH`} title={title} loading="lazy"></iframe>
+<div class="pdf-viewer" data-pdf-viewer data-src={`${src}#view=FitH`}>
+  <iframe title={title} hidden></iframe>
+  <p class="pdf-note muted" data-pdf-note hidden>
+    이 브라우저에서는 PDF를 이 화면에서 바로 볼 수 없습니다. 위의 버튼으로 열어보세요.
+  </p>
+  <noscript>
+    <p class="pdf-note muted">미리보기를 보려면 JavaScript가 필요합니다. 위의 버튼으로 열어보세요.</p>
+  </noscript>
 </div>
+
+<script>
+  function setupPdfViewers() {
+    document.querySelectorAll<HTMLElement>('[data-pdf-viewer]').forEach((box) => {
+      if (box.dataset.ready === 'true') return;
+      box.dataset.ready = 'true';
+
+      const iframe = box.querySelector<HTMLIFrameElement>('iframe');
+      const note = box.querySelector<HTMLElement>('[data-pdf-note]');
+      if (!iframe) return;
+
+      // PDF를 페이지 안에서 못 보여주는 브라우저
+      if (navigator.pdfViewerEnabled === false) {
+        if (note) note.hidden = false;
+        return;
+      }
+
+      const load = () => {
+        iframe.src = box.dataset.src ?? '';
+        iframe.hidden = false;
+      };
+
+      if (!('IntersectionObserver' in window)) {
+        load();
+        return;
+      }
+
+      const io = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((e) => e.isIntersecting)) {
+            load();
+            io.disconnect();
+          }
+        },
+        { rootMargin: '200px' }
+      );
+      io.observe(box);
+    });
+  }
+
+  setupPdfViewers();
+  document.addEventListener('astro:page-load', setupPdfViewers);
+</script>
 
 <style>
   .pdf-viewer {
@@ -23,5 +75,9 @@ const { src, title } = Astro.props;
     width: 100%;
     height: 100%;
     border: 0;
+  }
+
+  .pdf-note {
+    padding-block: var(--space-6);
   }
 </style>
