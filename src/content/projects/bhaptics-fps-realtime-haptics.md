@@ -1,6 +1,6 @@
 ---
 title: Real-Time Haptic Feedback Generation for FPS Games
-funder: bHaptics!
+funder: bHaptics
 pi: ''
 start: 2026-04
 end: ''
