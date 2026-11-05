@@ -41,10 +41,25 @@ const url = z.url({ error: 'https:// 로 시작하는 올바른 주소를 입력
 // 작성 중인 항목은 draft: true로 두면 사이트에 표시하지 않는다.
 const draft = z.boolean().default(false);
 
+// 관리 화면(CMS)은 비워 둔 선택 항목을 ''(빈 문자열)로 저장하기도 한다.
+// 빈 값은 "없음"으로 보고 지운 뒤 검사한다. 안 그러면 종료일을 비운 과제처럼 정상 입력이 빌드를 깨뜨린다.
+const withoutBlanks = (value: unknown): unknown => {
+  if (Array.isArray(value)) return value;
+  if (value && typeof value === 'object' && !(value instanceof Date)) {
+    return Object.fromEntries(
+      Object.entries(value)
+        .filter(([, v]) => v !== '')
+        .map(([k, v]) => [k, withoutBlanks(v)]),
+    );
+  }
+  return value;
+};
+const object = <T extends z.ZodRawShape>(shape: T) => z.preprocess(withoutBlanks, z.object(shape));
+
 const members = defineCollection({
   loader: glob({ base: './src/content/members', pattern: '**/[^_]*.md' }),
   schema: ({ image }) =>
-    z.object({
+    object({
       name: z.string().min(1, '이름을 입력하세요.'),
       nameKo: z.string().optional(),
       role: z.enum(['professor', 'phd', 'ms', 'integrated', 'undergraduate'], {
@@ -70,7 +85,7 @@ const members = defineCollection({
 
 const publications = defineCollection({
   loader: glob({ base: './src/content/publications', pattern: '**/[^_]*.md' }),
-  schema: z.object({
+  schema: object({
     title: z.string().min(1, '논문 제목을 입력하세요.'),
     authors: z.array(z.string()).min(1, '저자를 한 명 이상 입력하세요.'),
     venue: z.string().min(1, '게재된 학회/저널 이름을 입력하세요.'),
@@ -94,7 +109,7 @@ const publications = defineCollection({
 
 const projects = defineCollection({
   loader: glob({ base: './src/content/projects', pattern: '**/[^_]*.md' }),
-  schema: z.object({
+  schema: object({
     title: z.string().min(1, '과제명을 입력하세요.'),
     funder: z.string().min(1, '지원 기관을 입력하세요.'),
     pi: z.string().optional(),
@@ -109,7 +124,7 @@ const projects = defineCollection({
 const news = defineCollection({
   loader: glob({ base: './src/content/news', pattern: '**/[^_]*.md' }),
   schema: ({ image }) =>
-    z.object({
+    object({
       date: dateText,
       dateLabel: z.string().optional(),
       title: z.string().min(1, '제목을 입력하세요.'),
@@ -126,7 +141,7 @@ const news = defineCollection({
 
 const researchAreas = defineCollection({
   loader: glob({ base: './src/content/research-areas', pattern: '**/[^_]*.md' }),
-  schema: z.object({
+  schema: object({
     title: z.string().min(1, '연구 분야 이름을 입력하세요.'),
     summary: z.string().min(1, '한두 문장으로 요약을 입력하세요.'),
     order: z.number().default(100),
@@ -137,7 +152,7 @@ const researchAreas = defineCollection({
 // 연구실 기본 정보. 홈과 연락처에서 쓴다. 파일은 lab/info.yaml 하나.
 const lab = defineCollection({
   loader: glob({ base: './src/content/lab', pattern: '**/[^_]*.yaml' }),
-  schema: z.object({
+  schema: object({
     name: z.string().min(1),
     fullName: z.string().optional(),
     tagline: z.string().min(1, '홈 화면에 쓸 한 줄 소개를 입력하세요.'),
@@ -152,7 +167,7 @@ const lab = defineCollection({
 // 학부연구생 모집 안내. 파일은 joinus/index.md 하나.
 const joinus = defineCollection({
   loader: glob({ base: './src/content/joinus', pattern: '**/[^_]*.md' }),
-  schema: z.object({
+  schema: object({
     recruiting: z.boolean({ error: 'recruiting은 true 또는 false여야 합니다.' }),
     draft,
   }),
