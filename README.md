@@ -43,6 +43,13 @@ PR에서는 빌드와 링크 검사만 돌고 배포는 하지 않는다. 링크
 저장소 Settings → Pages → Build and deployment의 Source가 **GitHub Actions**여야 한다.
 커스텀 도메인으로 옮기면 `astro.config.mjs`의 `site`를 바꾸고 `base` 줄을 지운다.
 
+## 검색과 공유
+
+- 모든 페이지에 검색 결과용 `description`, 완전한 주소의 `canonical`, 링크 공유 미리보기용 Open Graph 태그(`public/og-image.png`, 1200×630)가 들어간다. 새 서브페이지는 `PageLayout`에 `description`을 꼭 넘긴다.
+- `sitemap-index.xml`이 빌드 때 자동 생성된다(404 제외). 검색에 노출하려면 Google Search Console과 네이버 서치어드바이저에 `https://knuauxlab.github.io/lab_website/sitemap-index.xml`을 등록한다.
+- `robots.txt`는 두지 않았다. 프로젝트 페이지는 `knuauxlab.github.io/robots.txt`(도메인 루트)만 크롤러가 읽는데 그 파일은 이 저장소 소관이 아니다. 관리 화면(`/admin/`)은 페이지의 `noindex`로 막혀 있다.
+- `npm run check:seo`가 빠진 메타 태그, 없는 og:image, sitemap 누락을 찾고 CI에서도 돈다.
+
 ## 더 알아보기
 
 - 색, 글자 크기, 컴포넌트 규칙: [docs/design-system.md](docs/design-system.md)

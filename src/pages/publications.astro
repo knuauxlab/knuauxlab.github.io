@@ -20,7 +20,7 @@ const categories = [
 }).filter((cat) => cat.total > 0);
 ---
 
-<PageLayout title="Publications">
+<PageLayout title="Publications" description="Papers, demonstrations, and posters from AUX Lab. Select a title to open the paper.">
   <div class="pub-categories">
     {
       categories.map(({ heading, years, total }) => (

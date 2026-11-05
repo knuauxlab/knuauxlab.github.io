@@ -11,11 +11,13 @@
     "preview": "astro preview",
     "astro": "astro",
     "check:links": "node scripts/check-links.mjs",
-    "build:ci": "astro build && node scripts/check-links.mjs && node scripts/check-cms-config.mjs",
+    "build:ci": "astro build && node scripts/check-links.mjs && node scripts/check-cms-config.mjs && node scripts/check-seo.mjs",
     "check:cms": "node scripts/check-cms-config.mjs",
+    "check:seo": "node scripts/check-seo.mjs",
     "prepare": "node scripts/install-hooks.mjs"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
     "astro": "^7.4.5"
   },
   "private": "true",

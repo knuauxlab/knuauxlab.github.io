@@ -17,7 +17,7 @@ const projects = await Promise.all(
 );
 ---
 
-<PageLayout title="Projects">
+<PageLayout title="Projects" description="Funded research projects at AUX Lab, listed by funder and period.">
   {
     projects.map(({ entry, Content, hasBody }) => (
       <Section heading={entry.data.funder}>
