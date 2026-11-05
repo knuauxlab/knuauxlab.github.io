@@ -20,29 +20,29 @@ const members = await Promise.all(
 const current = members.filter(({ entry }) => entry.data.status === 'current');
 const groups = [
   {
-    heading: '지도교수',
+    heading: 'Principal Investigator',
     large: true,
     people: current.filter(({ entry }) => entry.data.role === 'professor'),
   },
   {
-    heading: '대학원생',
+    heading: 'Graduate Students',
     large: false,
     people: current.filter(({ entry }) => ['phd', 'ms', 'integrated'].includes(entry.data.role)),
   },
   {
-    heading: '학부연구생',
+    heading: 'Undergraduate Researchers',
     large: false,
     people: current.filter(({ entry }) => entry.data.role === 'undergraduate'),
   },
   {
-    heading: '졸업생',
+    heading: 'Alumni',
     large: false,
     people: members.filter(({ entry }) => entry.data.status === 'alumni'),
   },
 ].filter((group) => group.people.length > 0);
 ---
 
-<PageLayout title="구성원">
+<PageLayout title="Members">
   {
     groups.map(({ heading, large, people }) => (
       <Section heading={heading}>

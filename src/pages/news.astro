@@ -30,7 +30,7 @@ const years = groupBy(items, (item) => yearOf(item.date));
 const toc = years.map(([year, group]) => ({ year, count: group.length }));
 ---
 
-<PageLayout title="소식">
+<PageLayout title="News">
   <WithToc>
     {
       years.map(([year, group]) => (

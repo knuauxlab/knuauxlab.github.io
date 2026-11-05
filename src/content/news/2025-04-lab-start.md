@@ -1,5 +1,5 @@
 ---
 date: "2025-04"
-title: 경북대학교 AUX Lab 공식 출범
+title: AUX Lab officially launched at Kyungpook National University
 category: other
 ---

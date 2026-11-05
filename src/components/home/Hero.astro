@@ -14,18 +14,18 @@ interface Props {
 const { affiliation, fullName, intro } = Astro.props;
 ---
 
-<section class="hero" aria-label="AUX Lab 소개">
+<section class="hero" aria-label="About AUX Lab">
   <HapticDotCanvas />
 
   <div class="wrap hero-inner">
     <div class="hero-content" data-haptic-avoid>
       <p class="hero-affiliation muted">{affiliation}</p>
-      <img src={withBase('/logo.png')} alt="AUX Lab 로고" class="hero-logo" width="180" height="74" />
+      <img src={withBase('/logo.png')} alt="AUX Lab logo" class="hero-logo" width="180" height="74" />
       <h1 class="hero-headline">{fullName}</h1>
       <p class="lead">{intro}</p>
       <div class="hero-actions">
-        <Button href="#lab-intro">연구실 소개 자료</Button>
-        <TextLink href="/publications">논문 보기 →</TextLink>
+        <Button href="#lab-intro">Lab Introduction</Button>
+        <TextLink href="/publications">View Publications →</TextLink>
       </div>
     </div>
   </div>

@@ -7,20 +7,20 @@ import { getLabInfo } from '../utils/lab';
 const lab = await getLabInfo();
 ---
 
-<PageLayout title="연락처">
-  <Section heading="이메일">
+<PageLayout title="Contact">
+  <Section heading="Email">
     <p class="lead"><TextLink href={`mailto:${lab.email}`}>{lab.email}</TextLink></p>
   </Section>
 
   {
     lab.phone && (
-      <Section heading="전화">
+      <Section heading="Phone">
         <p class="lead nums">{lab.phone}</p>
       </Section>
     )
   }
 
-  <Section heading="위치">
+  <Section heading="Location">
     <p class="lead">{lab.affiliation}</p>
     <p class="body-copy muted">{lab.address}</p>
   </Section>

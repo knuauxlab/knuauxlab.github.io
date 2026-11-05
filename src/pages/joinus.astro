@@ -13,8 +13,8 @@ const renderedJoin = activeJoin ? await render(activeJoin) : null;
 const JoinContent = renderedJoin?.Content;
 ---
 
-<PageLayout title="모집 안내">
-  <Section heading="모집 분야">
+<PageLayout title="Join Us">
+  <Section heading="Open Positions">
     {
       JoinContent ? (
         <div class="body-copy">
@@ -23,13 +23,13 @@ const JoinContent = renderedJoin?.Content;
       ) : (
         <div class="join-content">
           <p class="lead">
-            햅틱, HCI, 가상현실, 멀티센서리 AI에 관심 있는 대학원생(석사, 박사, 석박사통합과정)과 학부연구생을 찾고 있습니다.
+            We are looking for motivated graduate students (M.S., Ph.D., and B.S./M.S. Integrated) and undergraduate interns interested in haptics, HCI, virtual reality, and multisensory AI.
           </p>
           <p class="body-copy muted">
-            인터랙티브 프로토타입 제작, 햅틱 인터페이스 설계, 사용자 경험 연구에 관심이 있다면 이력서와 간단한 연구 관심사를 함께 Gyeore Yun 교수에게 연락해 주세요.
+            If you are interested in building interactive prototypes, designing haptic interfaces, and conducting user experience research, please contact Prof. Gyeore Yun with your CV and a brief summary of your research interests.
           </p>
           <div>
-            <Button href={`mailto:${lab.email}`}>문의: {lab.email}</Button>
+            <Button href={`mailto:${lab.email}`}>Contact: {lab.email}</Button>
           </div>
         </div>
       )

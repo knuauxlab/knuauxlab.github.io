@@ -20,7 +20,7 @@ const { title, authors, venue, award, href } = Astro.props;
         <a href={href} target="_blank" rel="noopener noreferrer">
           {title}
           <span class="pub-arrow" aria-hidden="true">↗</span>
-          <span class="sr-only"> (새 창에서 열림)</span>
+          <span class="sr-only"> (opens in a new tab)</span>
         </a>
       ) : (
         title

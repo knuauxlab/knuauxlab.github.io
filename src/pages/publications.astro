@@ -17,7 +17,7 @@ const years = groupBy(publications, ({ data }) => String(data.year));
 const toc = years.map(([year, group]) => ({ year, count: group.length }));
 ---
 
-<PageLayout title="논문">
+<PageLayout title="Publications">
   <WithToc>
     {
       years.map(([year, group]) => (

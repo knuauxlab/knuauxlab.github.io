@@ -26,7 +26,7 @@ const latestNews = (await getCollection('news', ({ data }) => !data.draft))
 <BaseLayout>
   <Hero affiliation={lab.affiliation} fullName={lab.fullName ?? lab.name} intro={lab.intro} />
 
-  <Section heading="연구 분야">
+  <Section heading="Research Areas">
     <div class="research-list">
       {
         researchAreas.map((area) => (
@@ -36,21 +36,21 @@ const latestNews = (await getCollection('news', ({ data }) => !data.draft))
     </div>
   </Section>
 
-  <Section heading="연구실 소개" id="lab-intro">
-    <p class="lead">AUX Lab의 연구 방향, 소리-햅틱 변환 시스템, 프로토타입을 소개합니다.</p>
+  <Section heading="Lab Introduction" id="lab-intro">
+    <p class="lead">An overview of AUX Lab’s research directions, sound-to-haptic conversion systems, and prototypes.</p>
     <div class="intro-actions">
-      <Button href="/AUX_Lab_Introduction.pdf" external>전체 화면으로 보기</Button>
-      <TextLink href="/AUX_Lab_Introduction.pdf" download>PDF 내려받기</TextLink>
+      <Button href="/AUX_Lab_Introduction.pdf" external>View Fullscreen</Button>
+      <TextLink href="/AUX_Lab_Introduction.pdf" download>Download PDF</TextLink>
     </div>
     <PdfViewer
       slot="below"
       src={withBase('/AUX_Lab_Introduction.pdf')}
-      title="AUX Lab 소개 자료"
+      title="AUX Lab Introduction"
     />
   </Section>
 
-  <Section heading="최신 소식">
-    <TextLink slot="aside" href="/news">소식 전체 보기 →</TextLink>
+  <Section heading="Latest News">
+    <TextLink slot="aside" href="/news">View All News →</TextLink>
     <NewsTimeline items={latestNews} />
   </Section>
 </BaseLayout>
