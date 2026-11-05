@@ -2,14 +2,16 @@
 import Tag from '../ui/Tag.astro';
 import { monthLabel } from '../../utils/date';
 import { newsCategoryLabels } from '../../utils/labels';
+import { withBase } from '../../utils/url';
 
 interface Props {
+  href?: string;
   date: string;
   title: string;
   category: string;
 }
 
-const { date, title, category } = Astro.props;
+const { href, date, title, category } = Astro.props;
 // 본문이 비어 있으면 빈 상자를 그리지 않는다
 const extra = (await Astro.slots.render('default')).trim();
 ---
@@ -21,7 +23,9 @@ const extra = (await Astro.slots.render('default')).trim();
       <time class="news-date nums" datetime={date}>{monthLabel(date)}</time>
       <Tag>{newsCategoryLabels[category] ?? category}</Tag>
     </p>
-    <h3 class="news-title">{title}</h3>
+    <h3 class="news-title">
+      {href ? <a href={withBase(href)} class="news-link">{title}</a> : title}
+    </h3>
     {extra && <div class="news-extra muted" set:html={extra} />}
   </div>
 </li>
@@ -77,6 +81,14 @@ const extra = (await Astro.slots.render('default')).trim();
     line-height: var(--lh-snug);
     font-weight: var(--fw-semibold);
     letter-spacing: -0.01em;
+  }
+
+  .news-link {
+    transition: color var(--t-hover) ease;
+  }
+
+  .news-link:hover {
+    color: var(--accent);
   }
 
   .news-extra {

@@ -20,61 +20,62 @@ const members = await Promise.all(
 const current = members.filter(({ entry }) => entry.data.status === 'current');
 const groups = [
   {
-    heading: '지도교수',
+    heading: 'Principal Investigator',
     large: true,
     people: current.filter(({ entry }) => entry.data.role === 'professor'),
   },
   {
-    heading: '대학원생',
+    heading: 'Graduate Students',
     large: false,
     people: current.filter(({ entry }) => ['phd', 'ms', 'integrated'].includes(entry.data.role)),
   },
   {
-    heading: '학부연구생',
+    heading: 'Undergraduate Researchers',
     large: false,
     people: current.filter(({ entry }) => entry.data.role === 'undergraduate'),
   },
   {
-    heading: '졸업생',
+    heading: 'Alumni',
     large: false,
     people: members.filter(({ entry }) => entry.data.status === 'alumni'),
   },
 ].filter((group) => group.people.length > 0);
 ---
 
-<PageLayout title="구성원" description="AUX Lab의 지도교수, 대학원생, 학부연구생을 소개합니다.">
-  {
-    groups.map(({ heading, large, people }) => (
-      <Section heading={heading}>
-        <div class:list={['member-grid', { 'is-large': large }]}>
-          {people.map(({ entry, Content }) => (
-            <MemberCard
-              name={entry.data.name}
-              role={memberRoleLabels[entry.data.role] ?? entry.data.role}
-              photo={entry.data.photo}
-              interests={entry.data.interests}
-              email={entry.data.email}
-              links={entry.data.links}
-              large={large}
-            >
-              {Content && <Content />}
-            </MemberCard>
-          ))}
-        </div>
-      </Section>
-    ))
-  }
+<PageLayout title="Members" description="The principal investigator, graduate students, and undergraduate researchers of AUX Lab.">
+  <div class="members-sections">
+    {
+      groups.map(({ heading, large, people }) => (
+        <Section heading={heading}>
+          <div class:list={['member-grid', { 'is-large': large }]}>
+            {people.map(({ entry, Content }) => (
+              <MemberCard
+                name={entry.data.name}
+                role={memberRoleLabels[entry.data.role] ?? entry.data.role}
+                photo={entry.data.photo}
+                interests={entry.data.interests}
+                email={entry.data.email}
+                links={entry.data.links}
+                large={large}
+              >
+                {Content && <Content />}
+              </MemberCard>
+            ))}
+          </div>
+        </Section>
+      ))
+    }
+  </div>
 </PageLayout>
 
 <style>
-  .member-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
-    gap: var(--space-6) var(--space-5);
+  .members-sections :global(.section) {
+    padding-block: clamp(2.75rem, 5vw, 4rem);
   }
 
-  /* 지도교수는 한 줄에 한 명 */
-  .member-grid.is-large {
+  .member-grid {
+    display: grid;
     grid-template-columns: minmax(0, 1fr);
+    gap: clamp(2.75rem, 4.5vw, 3.75rem);
   }
 </style>

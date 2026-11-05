@@ -16,8 +16,9 @@ interface Props {
 
 const lab = await getLabInfo();
 const {
-  title = `${lab.name} — 경북대학교`,
-  description = lab.intro,
+  title = `${lab.name} — Kyungpook National University`,
+  // 홈의 기본 설명. 콘텐츠(info.yaml)에서 만들어 영어 사이트와 같은 언어로 유지한다.
+  description = `${lab.name} — ${lab.tagline}. ${lab.affiliation}.`,
   image = '/og-image.png',
   noindex = false,
 } = Astro.props;
@@ -28,11 +29,11 @@ const ogImage = new URL(withBase(image), Astro.site);
 ---
 
 <!doctype html>
-<html lang="ko">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/png" href={withBase('/logo.png')} />
+    <link rel="icon" type="image/png" href={withBase('/favicon.png')} />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -43,14 +44,14 @@ const ogImage = new URL(withBase(image), Astro.site);
     <!-- 카카오톡, 슬랙, 페이스북 등에 링크를 붙였을 때 보이는 미리보기 -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={lab.name} />
-    <meta property="og:locale" content="ko_KR" />
+    <meta property="og:locale" content="en_US" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content={`${lab.name} 로고와 ${lab.fullName}`} />
+    <meta property="og:image:alt" content={`${lab.name} logo and ${lab.fullName}`} />
     <meta name="twitter:card" content="summary_large_image" />
 
     <!-- 스크립트가 실행될 때만 등장 효과용 숨김 상태가 적용되도록 js 클래스를 여기서 붙인다 -->

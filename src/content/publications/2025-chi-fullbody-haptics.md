@@ -3,7 +3,7 @@ title: Real-time Semantic Full-Body Haptic Feedback Converted from Sound for Vir
 authors:
   - Gyeore Yun
   - Seungmoon Choi
-venue: Proceedings of the ACM CHI Conference on Human Factors in Computing Systems (CHI 2025)
+venue: In Proceedings of the 2025 CHI Conference on Human Factors in Computing Systems (CHI '25)
 year: 2025
 type: conference
 links:

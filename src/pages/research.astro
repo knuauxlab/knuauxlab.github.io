@@ -1,0 +1,78 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import Section from '../components/layout/Section.astro';
+import { getCollection, render } from 'astro:content';
+
+const entries = (await getCollection('researchAreas', ({ data }) => !data.draft)).sort(
+  (a, b) => a.data.order - b.data.order
+);
+
+const areas = await Promise.all(
+  entries.map(async (entry) => {
+    const { Content } = await render(entry);
+    const hasBody = Boolean(entry.body && entry.body.trim().length > 0);
+    return { entry, Content, hasBody };
+  })
+);
+---
+
+<PageLayout
+  title="Research"
+  description="AUX Lab research on haptics, human-computer interaction, virtual reality, and multisensory AI."
+  lead="We explore the intersection of haptics, human-computer interaction, virtual reality, and multisensory AI to augment how people perceive and interact with digital and physical worlds."
+>
+  <div class="research-sections">
+    {
+      areas.map(({ entry, Content, hasBody }, index) => (
+        <Section heading={entry.data.title}>
+          <Fragment slot="aside">Area 0{index + 1}</Fragment>
+          <div class="research-area-content">
+            <p class="lead">{entry.data.summary}</p>
+            {hasBody && (
+              <div class="body-copy research-body muted">
+                <Content />
+              </div>
+            )}
+          </div>
+        </Section>
+      ))
+    }
+  </div>
+</PageLayout>
+
+<style>
+  .research-sections :global(.section) {
+    padding-block: clamp(2.75rem, 5.5vw, 4.5rem);
+    border-bottom: 1px solid var(--surface-strong);
+  }
+
+  .research-sections :global(.section:last-child) {
+    border-bottom: 0;
+  }
+
+  .research-area-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .research-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .research-body :global(ul) {
+    margin: 0;
+    padding-left: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .research-body :global(strong) {
+    color: var(--ink);
+    font-weight: var(--fw-semibold);
+  }
+</style>
+

@@ -5,11 +5,11 @@ authors:
   - Hyoseung Lee
   - Sangyoon Han
   - Seungmoon Choi
-venue: Proceedings of the ACM CHI Conference on Human Factors in Computing Systems (CHI 2021)
+venue: In Proceedings of the 2021 CHI Conference on Human Factors in Computing Systems (CHI '21)
 year: 2021
 type: conference
 links:
-  doi: https://doi.org/10.1145/3411764.3445358
+  doi: https://dl.acm.org/doi/10.1145/3411764.3445358
 draft: false
 ---
 
