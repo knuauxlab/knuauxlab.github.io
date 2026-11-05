@@ -7,6 +7,8 @@ Astro로 만든 정적 사이트이고 GitHub Pages로 배포한다. 주소는 h
 
 Node 22.23.4 이상이 필요하다.
 
+`npm install`을 하면 git 훅이 자동으로 설치된다. 이후 커밋할 때마다 빌드, 링크 검사, CMS 설정 검사(`npm run build:ci`)가 먼저 실행되고, 하나라도 실패하면 커밋이 막힌다. 문서만 바뀐 커밋은 건너뛴다. 급할 때는 `git commit --no-verify`로 건너뛸 수 있지만 CI에서는 그대로 걸린다.
+
 ```
 npm install
 npm run dev          # 개발 서버
