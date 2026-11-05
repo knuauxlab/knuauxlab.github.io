@@ -14,10 +14,10 @@ const { src, title } = Astro.props;
 <div class="pdf-viewer" data-pdf-viewer data-src={`${src}#view=FitH`}>
   <iframe title={title} hidden></iframe>
   <p class="pdf-note muted" data-pdf-note hidden>
-    이 브라우저에서는 PDF를 이 화면에서 바로 볼 수 없습니다. 위의 버튼으로 열어보세요.
+    This browser cannot show the PDF on this page. Use the buttons above to open it.
   </p>
   <noscript>
-    <p class="pdf-note muted">미리보기를 보려면 JavaScript가 필요합니다. 위의 버튼으로 열어보세요.</p>
+    <p class="pdf-note muted">JavaScript is required for the preview. Use the buttons above to open the PDF.</p>
   </noscript>
 </div>
 
@@ -54,7 +54,9 @@ const { src, title } = Astro.props;
             io.disconnect();
           }
         },
-        { rootMargin: '200px' }
+        // 화면에 실제로 들어올 때 불러온다. 앞당겨 불러오면(예: 200px 앞) 뷰어가 첫 화면 바로 아래에
+        // 놓인 레이아웃에서는 스크롤하기 전에 4MB를 받게 된다.
+        { rootMargin: '0px' }
       );
       io.observe(box);
     });
