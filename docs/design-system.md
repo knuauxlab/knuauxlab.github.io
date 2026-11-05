@@ -62,7 +62,7 @@ AUX Lab 사이트의 색, 글자, 간격, 컴포넌트 규칙. 새 페이지나 
 | `MemberCard` | `components/content/` | 구성원 한 명. 사진, 이름, 직위, 관심 분야, 연락처 |
 | `ResearchAreaItem` | `components/content/` | 연구 분야 한 항목 |
 | `Avatar` | `components/ui/` | 구성원 사진. 사진이 없으면 이니셜 |
-| `PdfViewer` | `components/ui/` | 페이지 안 PDF 미리보기. 화면 근처에 올 때까지 불러오지 않는다 |
+| `PdfViewer` | `components/ui/` | 페이지 안 PDF 미리보기. 화면에 200px 앞까지 와야 불러오고, 페이지 안 PDF를 못 보여주는 브라우저에서는 안내를 보여준다 |
 | `WithToc`, `YearNav`, `YearSection` | `components/layout/` | 오른쪽에 연도 목차가 붙는 2단 레이아웃. 소식과 논문이 같이 쓴다 |
 | `Hero` | `components/home/` | 홈 히어로. 도트 캔버스가 배경이고 글 주변은 옅게 처리한다 |
 
@@ -72,3 +72,11 @@ AUX Lab 사이트의 색, 글자, 간격, 컴포넌트 규칙. 새 페이지나 
 2. 스타일은 컴포넌트 안(`<style>`)에 두고 토큰만 쓴다.
 3. 콘텐츠 데이터가 아니라 값(`title`, `date`)을 props로 받는다. 그래야 다른 곳에서도 재사용된다.
 4. 페이지에서 반복되는 마크업이 3번 보이면 컴포넌트로 뺀다.
+
+## 접근성
+
+- **본문 바로가기**: 모든 페이지 맨 앞에 `본문으로 건너뛰기` 링크가 있고, 키보드 포커스가 올 때만 보인다. `BaseLayout`의 `<main>`은 `tabindex="-1"`이어야 이동한 뒤 포커스가 본문으로 간다.
+- **포커스 표시**: `:focus-visible`에 2px 붉은 윤곽선을 쓴다. `outline: none`으로 지우지 않는다(바로가기로 이동한 `main`만 예외).
+- **글자 크기와 대비**: 글자는 16px 이상, 본문 대비는 4.5:1 이상. 새 색을 쓰기 전에 대비를 확인한다.
+- **이미지와 iframe**: 모든 `<img>`에 `alt`, 모든 `<iframe>`에 `title`을 쓴다. 장식용 이미지는 `alt=""`.
+- **큰 파일은 미리 받지 않는다**: PDF처럼 용량이 큰 것은 화면에 가까워질 때 불러온다(`PdfViewer`). iframe의 `loading="lazy"`는 화면 아래 1250px 안쪽이면 미리 불러서 충분하지 않다.
