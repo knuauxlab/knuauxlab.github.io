@@ -7,11 +7,11 @@ authors:
   - Dong-Geun Kim
   - Hong Z Tan
   - Seungmoon Choi
-venue: Proceedings of the ACM CHI Conference on Human Factors in Computing Systems (CHI 2023)
+venue: In Proceedings of the 2023 CHI Conference on Human Factors in Computing Systems (CHI '23)
 year: 2023
 type: conference
 links:
-  doi: https://doi.org/10.1145/3544548.3580787
+  doi: https://dl.acm.org/doi/10.1145/3544548.3580787
 draft: false
 ---
 

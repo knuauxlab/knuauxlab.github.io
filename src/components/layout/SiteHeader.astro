@@ -2,13 +2,13 @@
 import { withBase, stripBase } from '../../utils/url';
 
 const navLinks = [
-  { href: '/', label: '홈' },
-  { href: '/news', label: '소식' },
-  { href: '/members', label: '구성원' },
-  { href: '/publications', label: '논문' },
-  { href: '/projects', label: '프로젝트' },
-  { href: '/joinus', label: '모집' },
-  { href: '/contact', label: '연락처' },
+  { href: '/', label: 'Home' },
+  { href: '/research', label: 'Research' },
+  { href: '/members', label: 'Members' },
+  { href: '/publications', label: 'Publications' },
+  { href: '/projects', label: 'Projects' },
+  { href: '/news', label: 'Album' },
+  { href: '/contact', label: 'Contact' },
 ];
 
 const currentPath = stripBase(Astro.url.pathname);
@@ -18,9 +18,8 @@ const isActive = (href: string) =>
 
 <header class="site-header">
   <div class="wrap header-inner">
-    <a href={withBase('/')} class="brand-mark" aria-label="AUX Lab 홈">
-      <img src={withBase('/logo.png')} alt="AUX Lab 로고" class="brand-logo" width="110" height="45" />
-      <span class="brand-name">AUX Lab</span>
+    <a href={withBase('/')} class="brand-mark" aria-label="AUX Lab Home">
+      <img src={withBase('/logo.png')} alt="AUX Lab" class="brand-logo" width="110" height="45" />
     </a>
 
     <button
@@ -30,10 +29,10 @@ const isActive = (href: string) =>
       aria-controls="primary-navigation"
       data-menu-toggle
     >
-      <span class="menu-toggle-label">메뉴</span>
+      <span class="menu-toggle-label">Menu</span>
     </button>
 
-    <nav id="primary-navigation" class="site-nav" aria-label="주 메뉴" data-site-nav>
+    <nav id="primary-navigation" class="site-nav" aria-label="Primary navigation" data-site-nav>
       <ul class="nav-list">
         {
           navLinks.map((item) => (
@@ -64,7 +63,7 @@ const isActive = (href: string) =>
       toggle.setAttribute('aria-expanded', expanded ? 'false' : 'true');
       nav.classList.toggle('is-open', !expanded);
       const label = toggle.querySelector('.menu-toggle-label');
-      if (label) label.textContent = expanded ? '메뉴' : '닫기';
+      if (label) label.textContent = expanded ? 'Menu' : 'Close';
     });
   }
 
@@ -99,13 +98,6 @@ const isActive = (href: string) =>
     height: 2.4rem;
     width: auto;
     object-fit: contain;
-  }
-
-  .brand-name {
-    font-family: var(--font-display);
-    font-size: var(--fs-subtitle);
-    font-weight: var(--fw-bold);
-    letter-spacing: var(--ls-tight);
   }
 
   .nav-list {

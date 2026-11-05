@@ -1,27 +1,65 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
 import Section from '../components/layout/Section.astro';
-import TextLink from '../components/ui/TextLink.astro';
+import Button from '../components/ui/Button.astro';
+import { getCollection, render } from 'astro:content';
 import { getLabInfo } from '../utils/lab';
 
 const lab = await getLabInfo();
+
+const joinEntries = await getCollection('joinus');
+const activeJoin = joinEntries.find((e) => !e.data.draft);
+const renderedJoin = activeJoin ? await render(activeJoin) : null;
+const JoinContent = renderedJoin?.Content;
 ---
 
-<PageLayout title="연락처">
-  <Section heading="이메일">
-    <p class="lead"><TextLink href={`mailto:${lab.email}`}>{lab.email}</TextLink></p>
-  </Section>
+<PageLayout title="Contact">
+  <div class="contact-sections">
+    <Section heading="Open Positions">
+      {
+        JoinContent ? (
+          <div class="body-copy">
+            <JoinContent />
+          </div>
+        ) : (
+          <div class="join-content">
+            <p class="lead">
+              We are looking for motivated graduate students (M.S., Ph.D., and B.S./M.S. Integrated) and undergraduate interns interested in haptics, HCI, virtual reality, and multisensory AI.
+            </p>
+            <p class="body-copy muted">
+              If you are interested in building interactive prototypes, designing haptic interfaces, and conducting user experience research, please contact Prof. Gyeore Yun with your CV and a brief summary of your research interests.
+            </p>
+            <div>
+              <Button href={`mailto:${lab.email}`}>Contact: {lab.email}</Button>
+            </div>
+          </div>
+        )
+      }
+    </Section>
 
-  {
-    lab.phone && (
-      <Section heading="전화">
-        <p class="lead nums">{lab.phone}</p>
-      </Section>
-    )
+    {
+      lab.phone && (
+        <Section heading="Phone">
+          <p class="lead nums">{lab.phone}</p>
+        </Section>
+      )
+    }
+
+    <Section heading="Location">
+      <p class="lead">{lab.affiliation}</p>
+      <p class="body-copy muted">{lab.address}</p>
+    </Section>
+  </div>
+</PageLayout>
+
+<style>
+  .contact-sections :global(.section) {
+    padding-block: clamp(3rem, 5.5vw, 4.5rem);
   }
 
-  <Section heading="위치">
-    <p class="lead">{lab.affiliation}</p>
-    <p class="body-copy muted">{lab.address}</p>
-  </Section>
-</PageLayout>
+  .join-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+</style>

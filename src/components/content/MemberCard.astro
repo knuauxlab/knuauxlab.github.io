@@ -24,8 +24,10 @@ const hasLinks = Boolean(email || links.homepage || links.github || links.schola
 <article class:list={['member', { 'is-large': large }]}>
   <Avatar name={name} photo={photo} size={large ? 'lg' : 'md'} />
   <div class="member-info">
-    <h3 class="member-name">{name}</h3>
-    <p class="member-role muted">{role}</p>
+    <div class="member-header">
+      <h3 class="member-name">{name}</h3>
+      <span class="member-role muted">{role}</span>
+    </div>
     {interests.length > 0 && <p class="member-interests">{interests.join(', ')}</p>}
     {bio && <div class="member-bio muted" set:html={bio} />}
     {
@@ -34,7 +36,7 @@ const hasLinks = Boolean(email || links.homepage || links.github || links.schola
           {email && <TextLink href={`mailto:${email}`}>{email}</TextLink>}
           {links.homepage && (
             <TextLink href={links.homepage} external>
-              홈페이지
+              Website
             </TextLink>
           )}
           {links.github && (
@@ -67,6 +69,13 @@ const hasLinks = Boolean(email || links.homepage || links.github || links.schola
     min-width: 0;
   }
 
+  .member-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-1) var(--space-3);
+  }
+
   .member-name {
     font-size: var(--fs-subtitle);
     line-height: var(--lh-snug);
@@ -76,6 +85,7 @@ const hasLinks = Boolean(email || links.homepage || links.github || links.schola
 
   .member-role {
     font-size: var(--fs-small);
+    font-weight: var(--fw-medium);
   }
 
   .member-interests {

@@ -17,12 +17,12 @@ const projects = await Promise.all(
 );
 ---
 
-<PageLayout title="프로젝트">
+<PageLayout title="Projects">
   {
     projects.map(({ entry, Content, hasBody }) => (
       <Section heading={entry.data.funder}>
         <Fragment slot="aside">
-          {entry.data.start} — {entry.data.end ?? '진행 중'}
+          {entry.data.start} — {entry.data.end ?? 'Ongoing'}
         </Fragment>
         <ProjectItem title={entry.data.title} summary={entry.data.summary}>
           {hasBody && <Content />}

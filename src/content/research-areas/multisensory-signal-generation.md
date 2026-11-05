@@ -1,5 +1,11 @@
 ---
-title: 멀티센서리 신호 생성
-summary: AI를 활용해 기존의 소리와 영상을 넘어, 서로 동기화된 햅틱·촉각 신호를 자동으로 생성합니다.
+title: Multisensory Signal Generation
+summary: Leveraging AI to automatically generate synchronized haptic and tactile signals beyond traditional audio and video.
 order: 2
 ---
+
+Creating high-quality haptic effects for games, VR, and 4D films typically requires labor-intensive manual authoring. We develop intelligent, real-time cross-modal rendering algorithms that automatically synthesize context-aware haptic and motion feedback directly from audiovisual streams.
+
+- **Real-Time Sound-to-Haptic Conversion**: Deep learning and reinforcement learning approaches for extracting semantic and physical events from game audio to drive multimodal haptic vests and controllers in real time.
+- **Physical Interaction Inference & Human-in-the-Loop AI**: Inferring physical interactions from audiovisual media and aligning generated tactile feedback with human perceptual preferences.
+- **Automated 4D Motion & Full-Body Haptics**: Camera-space and content-driven synthesis of motion chair and full-body haptic effects for immersive gameplay and media viewing.

@@ -33,13 +33,18 @@ collections:
     slug: '{{year}}-{{month}}-{{uuid_short}}'
     summary: '{{date}} · {{title}}'
     sortable_fields: [date, title]
+    media_folder: /src/assets/news
+    public_folder: /src/assets/news
     fields:
       - label: 날짜
         name: date
         widget: string
         hint: '2026-04 처럼 월까지, 일을 알면 2026-04-15 처럼 입력하세요.'
         pattern: ['^\d{4}-\d{2}(-\d{2})?$', '2026-04 또는 2026-04-15 형식으로 입력하세요.']
+      - { label: 표시용 날짜(기간 등), name: dateLabel, widget: string, required: false }
       - { label: 제목, name: title, widget: string }
+      - { label: 참석자/부제, name: subtitle, widget: string, required: false }
+      - { label: 장소, name: location, widget: string, required: false }
       - label: 분류
         name: category
         widget: select
@@ -50,6 +55,12 @@ collections:
           - { label: 구성원, value: member }
           - { label: 행사, value: event }
           - { label: 일반, value: other }
+      - { label: 미리보기 사진, name: thumbnail, widget: image, required: false }
+      - label: 앨범 사진 목록
+        name: images
+        widget: list
+        required: false
+        field: { label: 사진, name: image, widget: image }
       - { label: 임시 저장(사이트에 표시하지 않음), name: draft, widget: boolean, default: false, required: false }
       - { label: 추가 설명, name: body, widget: markdown, required: false }
 
@@ -79,6 +90,7 @@ collections:
         options:
           - { label: 학회, value: conference }
           - { label: 저널, value: journal }
+          - { label: 데모 및 포스터, value: demo }
           - { label: 프리프린트, value: preprint }
       - { label: 수상, name: award, widget: string, required: false, hint: '수상한 논문이면 입력하세요.' }
       - label: 링크
@@ -190,6 +202,7 @@ collections:
       - { label: 한두 문장 요약, name: summary, widget: text }
       - { label: 표시 순서, name: order, widget: number, value_type: int, default: 100, hint: '작은 숫자가 먼저 나옵니다.' }
       - { label: 임시 저장(사이트에 표시하지 않음), name: draft, widget: boolean, default: false, required: false }
+      - { label: 상세 설명, name: body, widget: markdown, required: false }
 
   # ---------- 연구실 정보, 모집 안내 (파일 하나짜리) ----------
   - name: pages
