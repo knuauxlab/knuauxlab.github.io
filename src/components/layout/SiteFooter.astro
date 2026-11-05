@@ -24,31 +24,12 @@ const lab = await getLabInfo();
   </div>
 </footer>
 
-<script>
-  // 푸터가 화면 아래에 붙어 있으므로, 키보드로 이동한 요소가 푸터 뒤에 가려지지 않게
-  // 푸터의 실제 높이를 읽어 scroll-padding-bottom(global.css)에 반영한다.
-  function trackFooterHeight() {
-    const footer = document.querySelector<HTMLElement>('.site-footer');
-    if (!footer) return;
-    const update = () =>
-      document.documentElement.style.setProperty('--footer-h', `${footer.offsetHeight}px`);
-    update();
-    new ResizeObserver(update).observe(footer);
-  }
-
-  trackFooterHeight();
-</script>
-
 <style>
   /*
    * 페이지의 끝을 알리는 띠. 글 덩어리마다 까는 회색 상자와는 다르게, 푸터만 예외로 둔다.
-   * sticky + bottom: 0 이라 스크롤하는 동안 화면 아래에 항상 붙어 있고, 문서 끝에서는 본문을
-   * 가리지 않고 제자리에 놓인다. 화면을 덜 차지하도록 위아래 여백과 줄 간격만 줄였다.
+   * 문서 맨 끝에 놓인다. 내용이 짧은 페이지에서는 body의 flex 레이아웃 덕분에 화면 맨 아래에 붙는다.
    */
   .site-footer {
-    position: sticky;
-    bottom: 0;
-    z-index: 30;
     background: var(--surface-strong);
     padding-block: var(--space-4);
     font-size: var(--fs-small);
