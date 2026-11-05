@@ -27,11 +27,11 @@ AUX Lab 사이트의 색, 글자, 간격, 컴포넌트 규칙. 새 페이지나 
 |---|---|---|
 | `--fs-small` | 16-17px | 날짜, 분류, 캡션. 이보다 작게 쓰지 않는다 |
 | `--fs-body` | 17-19px | 본문, 내비게이션 |
-| `--fs-lead` | 20-24px | 리드 문장, 월 표시 |
+| `--fs-lead` | 18-21px | 리드 문장, 월 표시 |
 | `--fs-subtitle` | 22-28px | 항목 제목 (소식, 논문, 프로젝트) |
-| `--fs-heading` | 28-38px | 섹션 제목 |
-| `--fs-title` | 40-68px | 페이지 제목 |
-| `--fs-display` | 44-80px | 연도 같은 큰 숫자 |
+| `--fs-heading` | 24-30px | 섹션 제목 |
+| `--fs-title` | 36-52px | 페이지 제목 |
+| `--fs-display` | 40-64px | 연도 같은 큰 숫자 |
 | `--fs-hero` | 30-72px | 홈 히어로 제목 |
 
 굵기는 `--fw-regular/medium/semibold/bold`, 줄 간격은 `--lh-tight/snug/body`, 자간은 `--ls-tight/heading`.
