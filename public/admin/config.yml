@@ -79,6 +79,7 @@ collections:
         options:
           - { label: 학회, value: conference }
           - { label: 저널, value: journal }
+          - { label: 데모 및 포스터, value: demo }
           - { label: 프리프린트, value: preprint }
       - { label: 수상, name: award, widget: string, required: false, hint: '수상한 논문이면 입력하세요.' }
       - label: 링크

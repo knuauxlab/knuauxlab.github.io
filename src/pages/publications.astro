@@ -1,49 +1,132 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
-import WithToc from '../components/layout/WithToc.astro';
-import YearNav from '../components/layout/YearNav.astro';
-import YearSection from '../components/layout/YearSection.astro';
+import Section from '../components/layout/Section.astro';
 import PublicationItem from '../components/content/PublicationItem.astro';
 import { getCollection } from 'astro:content';
 import { groupBy } from '../utils/group';
 import { primaryLink } from '../utils/publication';
 
-// 최신 연도가 위로, 같은 연도 안에서는 입력한 순서를 유지한다.
 const publications = (await getCollection('publications', ({ data }) => !data.draft)).sort(
   (a, b) => b.data.year - a.data.year
 );
 
-const years = groupBy(publications, ({ data }) => String(data.year));
-const toc = years.map(([year, group]) => ({ year, count: group.length }));
+const categories = [
+  { types: ['conference', 'journal'], heading: 'Conferences & Journals' },
+  { types: ['demo'], heading: 'Demonstrations & Posters' },
+].map((cat) => {
+  const items = publications.filter(({ data }) => cat.types.includes(data.type));
+  const years = groupBy(items, ({ data }) => String(data.year));
+  return { ...cat, years, total: items.length };
+}).filter((cat) => cat.total > 0);
 ---
 
 <PageLayout title="Publications">
-  <WithToc>
+  <div class="pub-categories">
     {
-      years.map(([year, group]) => (
-        <YearSection year={year} count={group.length}>
-          <ul class="pub-list">
-            {group.map(({ data }) => (
-              <PublicationItem
-                title={data.title}
-                authors={data.authors}
-                venue={data.venue}
-                award={data.award}
-                href={primaryLink(data.links)}
-              />
+      categories.map(({ heading, years, total }) => (
+        <Section heading={heading}>
+          <Fragment slot="aside">{total} papers</Fragment>
+          <div class="year-toggles">
+            {years.map(([year, group]) => (
+              <details class="year-toggle" open>
+                <summary class="year-summary">
+                  <span class="year-label">
+                    {year}
+                    <span class="year-count nums">{group.length}</span>
+                  </span>
+                  <span class="toggle-indicator" aria-hidden="true"></span>
+                </summary>
+                <ul class="pub-list">
+                  {group.map(({ data }) => (
+                    <PublicationItem
+                      title={data.title}
+                      authors={data.authors}
+                      venue={data.venue}
+                      award={data.award}
+                      href={primaryLink(data.links)}
+                    />
+                  ))}
+                </ul>
+              </details>
             ))}
-          </ul>
-        </YearSection>
+          </div>
+        </Section>
       ))
     }
-    <YearNav slot="toc" years={toc} />
-  </WithToc>
+  </div>
 </PageLayout>
 
 <style>
+  .pub-categories :global(.section) {
+    padding-block: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .year-toggles {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .year-toggle {
+    border-bottom: 1px solid var(--surface-strong);
+    padding-bottom: var(--space-5);
+  }
+
+  .year-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+    padding-block: var(--space-1);
+    transition: color var(--t-hover) ease;
+  }
+
+  .year-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .year-summary:hover {
+    color: var(--accent);
+  }
+
+  .year-label {
+    font-family: var(--font-display);
+    font-size: var(--fs-heading);
+    font-weight: var(--fw-bold);
+    line-height: var(--lh-tight);
+    letter-spacing: var(--ls-heading);
+  }
+
+  .year-count {
+    margin-left: var(--space-2);
+    font-size: var(--fs-small);
+    font-weight: var(--fw-medium);
+    color: var(--muted);
+    letter-spacing: 0;
+  }
+
+  .toggle-indicator::before {
+    content: '−';
+    font-family: var(--font-display);
+    font-size: var(--fs-lead);
+    font-weight: var(--fw-semibold);
+    color: var(--muted);
+  }
+
+  .year-toggle:not([open]) .toggle-indicator::before {
+    content: '+';
+  }
+
+  .year-summary:hover .toggle-indicator::before {
+    color: var(--accent);
+  }
+
   .pub-list {
     display: flex;
     flex-direction: column;
-    gap: var(--space-7);
+    gap: var(--space-6);
+    margin-top: var(--space-5);
   }
 </style>

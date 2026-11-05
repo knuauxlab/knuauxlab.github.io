@@ -75,8 +75,8 @@ const publications = defineCollection({
     authors: z.array(z.string()).min(1, '저자를 한 명 이상 입력하세요.'),
     venue: z.string().min(1, '게재된 학회/저널 이름을 입력하세요.'),
     year,
-    type: z.enum(['conference', 'journal', 'preprint'], {
-      error: 'type은 conference, journal, preprint 중 하나여야 합니다.',
+    type: z.enum(['conference', 'journal', 'demo', 'preprint'], {
+      error: 'type은 conference, journal, demo, preprint 중 하나여야 합니다.',
     }),
     award: z.string().optional(),
     links: z
