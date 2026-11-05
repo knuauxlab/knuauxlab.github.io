@@ -1,6 +1,6 @@
 # AUX Lab 웹사이트
 
-경북대학교 AUX Lab(Augmented User eXperience Laboratory) 연구실 홈페이지. 한국어 단일 언어, GitHub Pages 정적 배포.
+경북대학교 AUX Lab(Augmented User eXperience Laboratory) 연구실 홈페이지. 사이트는 영어 단일 언어(교수님 동의, 팀원 결정), GitHub Pages 정적 배포. 개발 문서, 코드 주석, 커밋 메시지, 편집자가 보는 CMS 화면과 빌드 오류 메시지는 한국어로 쓴다.
 
 ## 스택
 
@@ -14,11 +14,12 @@
 - 콘텐츠 스키마에 필드를 추가하거나 바꾸면 `public/admin/config.yml`도 같이 바꾼다. 그래야 교수님이 폼에서 그 항목을 고칠 수 있다. `npm run check:cms`가 어긋난 곳을 알려주고 CI에서도 돈다. 설정과 사용법은 `docs/cms.md`에 있다.
 - 콘텐츠 스키마(필드, 날짜 형식)는 `src/content.config.ts`에서 검증한다. 형식이 틀리면 빌드가 실패해야 한다.
 - 구성원, 논문, 프로젝트, 뉴스는 각각 별도 컬렉션이다.
-- 화면에 보이는 문구는 한국어로 쓴다. 논문 제목, 저자, 학회/저널명, 사람 이름의 로마자 표기는 영어 원문을 그대로 둔다. enum 값(`paper`, `undergraduate` 등)을 화면에 그대로 보이지 말고 `src/utils/labels.ts`나 페이지의 라벨 맵으로 한국어로 바꿔 보여준다.
+- 사이트 방문자에게 보이는 문구(메뉴, 제목, 버튼, 안내문, `alt`와 `aria-label` 포함)는 영어로 쓴다. `<html lang="en">`이다. 논문 제목, 저자, 학회/저널명, 사람 이름은 원문 그대로 둔다. enum 값(`paper`, `undergraduate` 등)을 화면에 그대로 보이지 말고 `src/utils/labels.ts`나 페이지의 라벨 맵으로 영어 라벨로 바꿔 보여준다.
+- 한국어로 두는 것: 홈 연구실 소개 문장(`src/content/lab/info.yaml`의 `intro`)처럼 콘텐츠로 의도해서 넣은 한국어 문장, 그리고 위에 적은 개발자/편집자용 한국어.
 
 ## 페이지 구성
 
-Home, News, Members, Publications, Projects, Join Us, Contact
+Home, Research, Members, Publications, Projects, Album(`/news`), Contact. 모집 안내(`joinus` 콘텐츠)는 별도 페이지 없이 Contact의 "Open Positions" 섹션에 보인다.
 
 ## 작업 방식
 
