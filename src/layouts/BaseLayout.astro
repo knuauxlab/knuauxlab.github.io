@@ -37,9 +37,12 @@ const { title = `${lab.name} — 경북대학교`, description = lab.tagline } =
     />
   </head>
   <body>
+    <!-- 키보드 사용자가 매 페이지마다 메뉴를 지나치지 않고 본문으로 바로 가게 한다. 포커스가 올 때만 보인다 -->
+    <a class="skip-link" href="#main-content">본문으로 건너뛰기</a>
+
     <SiteHeader />
 
-    <main id="main-content">
+    <main id="main-content" tabindex="-1">
       <slot />
     </main>
 
