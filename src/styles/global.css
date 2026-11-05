@@ -87,6 +87,28 @@ body > main {
   outline-offset: 3px;
 }
 
+/* 본문 바로가기: 평소에는 화면 밖에 있다가 키보드 포커스가 오면 나타난다 */
+.skip-link {
+  position: absolute;
+  top: -5rem;
+  left: var(--space-4);
+  z-index: 100;
+  padding: var(--space-3) var(--space-4);
+  background: var(--ink);
+  color: var(--bg);
+  font-weight: var(--fw-semibold);
+  transition: top var(--t-hover) ease;
+}
+
+.skip-link:focus {
+  top: var(--space-4);
+}
+
+/* 바로가기로 이동한 본문에는 포커스 윤곽선을 그리지 않는다 (본문 전체를 감싸는 선이 되므로) */
+main:focus {
+  outline: none;
+}
+
 /* ---------- typography ---------- */
 h1, h2, h3 {
   font-family: var(--font-display);
