@@ -43,38 +43,39 @@ const groups = [
 ---
 
 <PageLayout title="Members">
-  {
-    groups.map(({ heading, large, people }) => (
-      <Section heading={heading}>
-        <div class:list={['member-grid', { 'is-large': large }]}>
-          {people.map(({ entry, Content }) => (
-            <MemberCard
-              name={entry.data.name}
-              role={memberRoleLabels[entry.data.role] ?? entry.data.role}
-              photo={entry.data.photo}
-              interests={entry.data.interests}
-              email={entry.data.email}
-              links={entry.data.links}
-              large={large}
-            >
-              {Content && <Content />}
-            </MemberCard>
-          ))}
-        </div>
-      </Section>
-    ))
-  }
+  <div class="members-sections">
+    {
+      groups.map(({ heading, large, people }) => (
+        <Section heading={heading}>
+          <div class:list={['member-grid', { 'is-large': large }]}>
+            {people.map(({ entry, Content }) => (
+              <MemberCard
+                name={entry.data.name}
+                role={memberRoleLabels[entry.data.role] ?? entry.data.role}
+                photo={entry.data.photo}
+                interests={entry.data.interests}
+                email={entry.data.email}
+                links={entry.data.links}
+                large={large}
+              >
+                {Content && <Content />}
+              </MemberCard>
+            ))}
+          </div>
+        </Section>
+      ))
+    }
+  </div>
 </PageLayout>
 
 <style>
-  .member-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
-    gap: var(--space-6) var(--space-5);
+  .members-sections :global(.section) {
+    padding-block: clamp(2.75rem, 5vw, 4rem);
   }
 
-  /* 지도교수는 한 줄에 한 명 */
-  .member-grid.is-large {
+  .member-grid {
+    display: grid;
     grid-template-columns: minmax(0, 1fr);
+    gap: clamp(2.75rem, 4.5vw, 3.75rem);
   }
 </style>

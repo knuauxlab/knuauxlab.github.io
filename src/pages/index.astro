@@ -2,7 +2,6 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/home/Hero.astro';
 import Section from '../components/layout/Section.astro';
-import ResearchAreaItem from '../components/content/ResearchAreaItem.astro';
 import NewsTimeline from '../components/content/NewsTimeline.astro';
 import Button from '../components/ui/Button.astro';
 import TextLink from '../components/ui/TextLink.astro';
@@ -13,28 +12,19 @@ import { getLabInfo } from '../utils/lab';
 
 const lab = await getLabInfo();
 
-const researchAreas = (await getCollection('researchAreas', ({ data }) => !data.draft)).sort(
-  (a, b) => a.data.order - b.data.order
-);
-
 const latestNews = (await getCollection('news', ({ data }) => !data.draft))
   .sort((a, b) => b.data.date.localeCompare(a.data.date))
   .slice(0, 5)
-  .map(({ data }) => ({ date: data.date, title: data.title, category: data.category }));
+  .map(({ data }) => ({
+    href: '/news',
+    date: data.date,
+    title: data.title,
+    category: data.category,
+  }));
 ---
 
 <BaseLayout>
   <Hero affiliation={lab.affiliation} fullName={lab.fullName ?? lab.name} intro={lab.intro} />
-
-  <Section heading="Research Areas">
-    <div class="research-list">
-      {
-        researchAreas.map((area) => (
-          <ResearchAreaItem title={area.data.title} summary={area.data.summary} />
-        ))
-      }
-    </div>
-  </Section>
 
   <Section heading="Lab Introduction" id="lab-intro">
     <p class="lead">An overview of AUX Lab’s research directions, sound-to-haptic conversion systems, and prototypes.</p>
@@ -50,18 +40,12 @@ const latestNews = (await getCollection('news', ({ data }) => !data.draft))
   </Section>
 
   <Section heading="Latest News">
-    <TextLink slot="aside" href="/news">View All News →</TextLink>
+    <TextLink slot="aside" href="/news">View Album →</TextLink>
     <NewsTimeline items={latestNews} />
   </Section>
 </BaseLayout>
 
 <style>
-  .research-list {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-6);
-  }
-
   .intro-actions {
     display: flex;
     flex-wrap: wrap;

@@ -108,14 +108,20 @@ const projects = defineCollection({
 
 const news = defineCollection({
   loader: glob({ base: './src/content/news', pattern: '**/[^_]*.md' }),
-  schema: z.object({
-    date: dateText,
-    title: z.string().min(1, '제목을 입력하세요.'),
-    category: z.enum(['award', 'paper', 'project', 'member', 'event', 'other'], {
-      error: 'category는 award, paper, project, member, event, other 중 하나여야 합니다.',
+  schema: ({ image }) =>
+    z.object({
+      date: dateText,
+      dateLabel: z.string().optional(),
+      title: z.string().min(1, '제목을 입력하세요.'),
+      subtitle: z.string().optional(),
+      location: z.string().optional(),
+      category: z.enum(['award', 'paper', 'project', 'member', 'event', 'other'], {
+        error: 'category는 award, paper, project, member, event, other 중 하나여야 합니다.',
+      }),
+      thumbnail: image().optional(),
+      images: z.array(image()).default([]),
+      draft,
     }),
-    draft,
-  }),
 });
 
 const researchAreas = defineCollection({

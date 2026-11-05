@@ -1,44 +1,48 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
-import WithToc from '../components/layout/WithToc.astro';
-import YearNav from '../components/layout/YearNav.astro';
-import YearSection from '../components/layout/YearSection.astro';
-import NewsTimeline from '../components/content/NewsTimeline.astro';
-import { getCollection, render } from 'astro:content';
-import { groupBy } from '../utils/group';
-import { yearOf } from '../utils/date';
+import AlbumItem from '../components/content/AlbumItem.astro';
+import { getCollection } from 'astro:content';
 
 const entries = (await getCollection('news', ({ data }) => !data.draft)).sort((a, b) =>
   b.data.date.localeCompare(a.data.date)
 );
-
-const items = await Promise.all(
-  entries.map(async (entry) => {
-    const { Content } = await render(entry);
-    const hasBody = Boolean(entry.body && entry.body.trim().length > 0);
-    return {
-      date: entry.data.date,
-      title: entry.data.title,
-      category: entry.data.category,
-      Content: hasBody ? Content : undefined,
-    };
-  })
-);
-
-// 연도별로 묶는다. 이미 최신순이라 순서가 유지된다.
-const years = groupBy(items, (item) => yearOf(item.date));
-const toc = years.map(([year, group]) => ({ year, count: group.length }));
 ---
 
-<PageLayout title="News">
-  <WithToc>
-    {
-      years.map(([year, group]) => (
-        <YearSection year={year} count={group.length}>
-          <NewsTimeline items={group} />
-        </YearSection>
-      ))
-    }
-    <YearNav slot="toc" years={toc} />
-  </WithToc>
+<PageLayout title="Album">
+  <section class="wrap album-section">
+    <div class="album-list">
+      {
+        entries.map(({ data }) => {
+          const imgs =
+            data.images && data.images.length > 0
+              ? data.images
+              : data.thumbnail
+                ? [data.thumbnail]
+                : [];
+          return (
+            <AlbumItem
+              title={data.title}
+              subtitle={data.subtitle}
+              date={data.date}
+              dateLabel={data.dateLabel}
+              location={data.location}
+              images={imgs}
+            />
+          );
+        })
+      }
+    </div>
+  </section>
 </PageLayout>
+
+<style>
+  .album-section {
+    padding-top: var(--space-4);
+    padding-bottom: var(--space-8);
+  }
+
+  .album-list {
+    display: flex;
+    flex-direction: column;
+  }
+</style>
