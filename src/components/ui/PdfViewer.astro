@@ -11,7 +11,7 @@ interface Props {
 const { src, title } = Astro.props;
 ---
 
-<div class="pdf-viewer" data-pdf-viewer data-src={`${src}#view=FitH`}>
+<div class="pdf-viewer" data-pdf-viewer data-src={`${src}#zoom=68`}>
   <iframe title={title} hidden></iframe>
   <p class="pdf-note muted" data-pdf-note hidden>
     This browser cannot show the PDF on this page. Use the buttons above to open it.
