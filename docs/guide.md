@@ -44,7 +44,7 @@
 1. GitHub에 **저장소에 쓸 수 있는 계정**(조직 `knuauxlab`의 owner 또는 Write 권한이 있는 계정)으로 로그인한다.
 2. 오른쪽 위 프로필 사진 → **Settings** → 왼쪽 맨 아래 **Developer settings** → **Personal access tokens** → **Fine-grained tokens** → **Generate new token**을 누른다.
 
-   > **[캡처 필요 01]** Developer settings에서 Fine-grained tokens 화면
+   ![Fine-grained tokens 목록. 오른쪽 위 Generate new token을 누른다](images/01-fine-grained-tokens.png)
 
 3. 아래처럼 입력한다.
 
@@ -56,18 +56,16 @@
    | Expiration | 가능한 가장 긴 기간(최대 약 1년) |
    | Repository access | **Only select repositories** → `knuauxlab/lab_website` 하나만 선택 |
 
-   > **[캡처 필요 02]** Resource owner, Expiration, Repository access를 채운 화면
+   ![토큰 이름, Resource owner(knuauxlab), 만료일, Only select repositories와 lab_website 선택](images/02-token-settings.png)
 
 4. **Permissions → Repository permissions**에서 **Contents**를 **Read and write**로 바꾼다. (Metadata는 자동으로 Read-only가 되며 그대로 둔다.)
 
    - 화면 가운데의 **Add permissions** 버튼을 누르고 `Contents`를 찾아 체크하면 줄이 추가된다. 그 줄의 드롭다운이 처음에는 Read-only이니 **Read and write**로 바꿔야 한다.
    - **이 단계를 빼먹으면 로그인은 되는데 저장할 때 "Resource not accessible by personal access token" 오류가 난다.**
 
-   > **[캡처 필요 03]** Contents 줄이 Read and write로 설정된 화면
+   ![Add permissions로 추가한 Contents를 Read and write로 설정한 화면](images/03-token-contents-permission.png)
 
 5. 맨 아래 **Generate token**을 누른다. 화면에 `github_pat_...`로 시작하는 문자열이 한 번만 나온다. **바로 복사한다.** 이 화면을 닫으면 다시 볼 수 없다.
-
-   > **[캡처 필요 04]** 토큰이 생성된 화면 (**토큰 값은 반드시 가리고** 캡처)
 
 6. 조직이 토큰 승인을 요구하면 상태가 "승인 대기"로 보인다. 조직 owner가 **조직 Settings → Personal access tokens → Pending requests**에서 승인해야 쓰기가 된다.
 
@@ -107,14 +105,14 @@
 1. https://knuauxlab.github.io/lab_website/admin/ 에 접속한다.
 2. **액세스 토큰으로 로그인**을 누른다. (`GitHub로 로그인` 버튼은 쓰지 않는다. 지금은 토큰 방식만 지원한다.)
 
-   > **[캡처 필요 05]** 관리 화면 첫 로그인 화면
+   ![관리 화면 로그인 화면. 두 번째 버튼 액세스 토큰으로 로그인을 누른다](images/05-admin-login.png)
 
 3. 복사해 둔 토큰(`github_pat_...`)을 붙여넣고 로그인한다.
 4. 토큰은 **그 브라우저에만 저장**되어 다음부터는 다시 입력하지 않아도 된다. 다른 컴퓨터에서는 토큰을 다시 넣어야 한다.
 
 로그인하면 왼쪽에 **소식, 논문, 프로젝트, 구성원, 연구 분야, 연구실 정보** 메뉴가 보인다.
 
-> **[캡처 필요 06]** 로그인 후 전체 화면 (왼쪽 메뉴가 보이게)
+> **[캡처 필요 04]** 로그인 후 전체 화면 (왼쪽 메뉴가 보이게)
 
 ---
 
@@ -129,7 +127,7 @@
 - **임시 저장:** 폼의 `임시 저장(사이트에 표시하지 않음)`을 체크하고 저장하면 사이트에 나타나지 않는다. 다 쓰고 나서 체크를 풀면 공개된다.
 - 필수 칸(제목 등)이 비면 저장되지 않는다. 형식이 틀린 칸은 빨간 안내가 뜬다.
 
-> **[캡처 필요 07]** 항목 편집 화면 (저장 버튼, 임시 저장 체크 위치가 보이게)
+> **[캡처 필요 05]** 항목 편집 화면 (저장 버튼, 임시 저장 체크 위치가 보이게)
 
 ### 4-2. 메뉴별 안내
 
@@ -146,8 +144,6 @@
 | 앨범 사진 목록 | 여러 장을 추가할 수 있다(선택) |
 | 장소, 참석자/부제, 표시용 날짜 | 필요할 때만 |
 
-> **[캡처 필요 08]** 소식 편집 화면 (날짜, 분류, 사진 칸)
-
 #### 논문 (Publications)
 
 | 칸 | 설명 |
@@ -161,8 +157,6 @@
 | 링크 | DOI, arXiv, 소개 페이지, PDF 중 있는 것(선택). **`https://`로 시작**해야 한다. |
 
 - 제목을 누르면 DOI → arXiv → 소개 페이지 → PDF 순으로 **먼저 있는 링크**로 이동한다.
-
-> **[캡처 필요 09]** 논문 편집 화면 (저자 목록, 링크 칸)
 
 #### 프로젝트 (Projects)
 
@@ -187,8 +181,6 @@
 
 - 새 구성원은 `새 글`로 추가하고, 떠난 구성원은 지우지 말고 **졸업생**으로 바꾼다.
 
-> **[캡처 필요 10]** 구성원 편집 화면 (직위, 상태, 사진 칸)
-
 #### 연구 분야 (Research 페이지, 홈)
 
 | 칸 | 설명 |
@@ -203,8 +195,6 @@
 
 - **연구실 기본 정보:** 연구실 이름, 한 줄 소개, 소개글, 소속, 주소, 이메일, 전화. 푸터와 Contact 화면에 그대로 보이므로 바꾸면 사이트 전체가 바뀐다. **홈 첫 화면의 소개 문장(`소개글`)은 의도적으로 한국어다.**
 - **모집 안내:** `지금 모집 중`을 체크하고, **임시 저장 체크를 풀고** 본문을 쓰면 Contact의 "Open Positions"에 그 글이 보인다. `임시 저장`이 체크된 채라면 기본 안내 문구가 대신 보인다.
-
-> **[캡처 필요 11]** 연구실 정보 > 모집 안내 편집 화면
 
 ### 4-3. 관리 화면으로 고칠 수 없는 것
 
@@ -227,7 +217,7 @@
 
 **배포가 끝났는지 확인하려면:** 저장소 https://github.com/knuauxlab/lab_website 의 **Actions** 탭을 본다. 가장 위의 실행이 초록색 체크면 끝, 빨간색 X면 실패(6장).
 
-> **[캡처 필요 12]** Actions 탭 (성공과 실패 표시가 보이게)
+![Actions 탭. 초록 체크는 배포 성공, 빨간 X는 실패](images/12-actions-tab.png)
 
 ---
 
@@ -256,8 +246,6 @@
    - `https:// 로 시작하는 올바른 주소를 입력하세요.` → 링크에 `https://`가 빠졌다.
 3. 해당 항목을 관리 화면에서 고치고 다시 저장한다. 성공하면 사이트가 갱신된다.
 4. 이유를 모르겠으면 오류 메시지를 복사해 개발자에게 전달한다.
-
-> **[캡처 필요 13]** 실패한 Actions 실행의 오류 메시지 화면
 
 ### 6-3. 날짜 형식 오류
 
@@ -314,12 +302,6 @@
 - [ ] 떠나는 사람의 토큰은 **Delete**했다.
 - [ ] 저장소에 `main` 삭제와 force push를 막는 규칙(Rulesets)이 켜져 있다. 단, **Require a pull request는 켜지 않는다.** 켜면 관리 화면에서 `main`에 바로 저장하는 것이 막힌다.
 
-### 알아둘 곳
-- [ ] 홈페이지: https://knuauxlab.github.io/lab_website/
-- [ ] 관리 화면: `/admin/` 주소를 즐겨찾기에 넣었다.
-- [ ] 저장소와 Actions 탭 주소를 안다.
-- [ ] 이 가이드(`docs/guide.md`)와 개발자용 문서(`docs/cms.md`, `docs/design-system.md`, `README.md`)의 위치를 안다.
-
 ### 정기적으로 할 일
 - [ ] **토큰 갱신**(만료 전)
 - [ ] 졸업, 입학이 있을 때 구성원 정보(직위, 상태) 갱신
@@ -335,22 +317,11 @@
 
 ---
 
-## 부록 A. 필요한 캡처 목록
+## 부록 A. 남은 캡처
 
-캡처할 때 **토큰 값, 이메일 주소(개인용), 계정 이름이 노출되면 가리고** 저장한다. 파일은 `docs/images/`에 아래 이름으로 넣는다.
+아래 두 장은 로그인해야 찍을 수 있다. 찍어서 `docs/images/`에 넣고, 위의 `[캡처 필요 04]`, `[캡처 필요 05]` 자리를 이미지로 바꾼다. 개인 이메일처럼 개인정보가 보이면 가리고 저장한다.
 
 | 번호 | 파일 이름 | 어떤 화면 |
 |---|---|---|
-| 01 | `01-fine-grained-tokens.png` | Developer settings → Fine-grained tokens 목록 화면 |
-| 02 | `02-token-settings.png` | 토큰 만들기: Resource owner, Expiration, Repository access를 채운 화면 |
-| 03 | `03-token-contents-permission.png` | Permissions에서 Contents가 Read and write인 화면 |
-| 04 | `04-token-generated.png` | 토큰이 생성된 화면 (**값은 가림**) |
-| 05 | `05-admin-login.png` | 관리 화면 로그인 화면 |
-| 06 | `06-admin-home.png` | 로그인 후 전체 화면 |
-| 07 | `07-edit-form.png` | 항목 편집 화면 (저장, 임시 저장 위치) |
-| 08 | `08-news-form.png` | 소식 편집 화면 |
-| 09 | `09-publication-form.png` | 논문 편집 화면 |
-| 10 | `10-member-form.png` | 구성원 편집 화면 |
-| 11 | `11-joinus-form.png` | 모집 안내 편집 화면 |
-| 12 | `12-actions-tab.png` | 저장소 Actions 탭 |
-| 13 | `13-actions-error.png` | 실패한 실행의 오류 메시지 |
+| 04 | `04-admin-home.png` | 로그인 후 전체 화면 (왼쪽 메뉴가 보이게) |
+| 05 | `05-edit-form.png` | 항목 편집 화면 (저장 버튼, 임시 저장 체크 위치가 보이게) |
