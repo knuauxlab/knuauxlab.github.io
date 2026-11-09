@@ -19,7 +19,7 @@ npm run check:links  # 빌드 결과의 내부 링크 검사 (build 다음에 �
 ## 콘텐츠 수정
 
 모든 콘텐츠는 `src/content/` 아래의 Markdown/YAML 파일이다. 코드를 건드리지 않고 파일만 고치면 된다.
-**비개발자(교수님)는 관리 화면에서 폼으로 수정한다.** https://knuauxlab.github.io/lab_website/admin/ 에 접속해 GitHub 토큰으로 로그인하면 되고, 저장하면 자동으로 커밋되어 몇 분 뒤 반영된다. 준비 방법과 사용법은 [docs/cms.md](docs/cms.md)에 있다.
+**비개발자(교수님)는 관리 화면에서 폼으로 수정한다.** https://knuauxlab.github.io/lab_website/admin/ 에 접속해 GitHub 토큰으로 로그인하면 되고, 저장하면 자동으로 커밋되어 몇 분 뒤 반영된다. 사용법과 토큰 갱신, 문제 해결은 **[관리 가이드(docs/guide.md)](docs/guide.md)**, 설정은 [docs/cms.md](docs/cms.md)에 있다.
 
 개발자는 GitHub 웹 화면에서 파일을 열어 연필 아이콘으로 수정하고 `main`에 커밋해도 같은 결과다.
 
