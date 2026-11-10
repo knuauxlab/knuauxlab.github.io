@@ -41,11 +41,13 @@ const url = z.url({ error: 'https:// 로 시작하는 올바른 주소를 입력
 // 작성 중인 항목은 draft: true로 두면 사이트에 표시하지 않는다.
 const draft = z.boolean().default(false);
 
-// 관리 화면(CMS)은 비워 둔 선택 항목을 ''(빈 문자열)로 저장하기도 한다.
-// 빈 값은 "없음"으로 보고 지운 뒤 검사한다. 안 그러면 종료일을 비운 과제처럼 정상 입력이 빌드를 깨뜨린다.
+// 관리 화면(CMS)은 비워 둔 선택 항목을 ''(빈 문자열)로 저장하기도 하고,
+// 따옴표 없는 날짜('2026-11-07')는 YAML 파서가 Date 객체로 바꾸기도 한다.
+// 빈 값은 "없음"으로 보고 지우고, Date 객체는 'YYYY-MM-DD' 문자열로 되돌린 뒤 검사한다.
 const withoutBlanks = (value: unknown): unknown => {
-  if (Array.isArray(value)) return value;
-  if (value && typeof value === 'object' && !(value instanceof Date)) {
+  if (value instanceof Date) return value.toISOString().slice(0, 10);
+  if (Array.isArray(value)) return value.map(withoutBlanks);
+  if (value && typeof value === 'object') {
     return Object.fromEntries(
       Object.entries(value)
         .filter(([, v]) => v !== '')
