@@ -6,6 +6,9 @@ import NewsTimeline from '../components/content/NewsTimeline.astro';
 import Button from '../components/ui/Button.astro';
 import TextLink from '../components/ui/TextLink.astro';
 import PdfViewer from '../components/ui/PdfViewer.astro';
+import { Image } from 'astro:assets';
+import posterPart1 from '../assets/poster-part1.png';
+import posterPart2 from '../assets/poster-part2.png';
 import { withBase } from '../utils/url';
 import { getCollection } from 'astro:content';
 import { getLabInfo } from '../utils/lab';
@@ -32,11 +35,33 @@ const latestNews = (await getCollection('news', ({ data }) => !data.draft))
       <Button href="/AUX_Lab_Introduction.pdf" external>View Fullscreen</Button>
       <TextLink href="/AUX_Lab_Introduction.pdf" download>Download PDF</TextLink>
     </div>
+
     <PdfViewer
       slot="below"
       src={withBase('/AUX_Lab_Introduction.pdf')}
       title="AUX Lab Introduction"
     />
+  </Section>
+
+  <Section heading="Open Lab Poster" id="open-lab-poster">
+    <p class="lead">A visual summary of our core research topics, prototypes, and recent achievements.</p>
+
+    <div slot="below" class="poster-split-grid">
+      <Image
+        src={posterPart1}
+        alt="AUX Lab Open Lab Poster — Overview and Sound-to-Haptic Research"
+        width={900}
+        loading="lazy"
+        class="poster-split-img"
+      />
+      <Image
+        src={posterPart2}
+        alt="AUX Lab Open Lab Poster — AI-Haptic Generation and Tactile Interface Research"
+        width={900}
+        loading="lazy"
+        class="poster-split-img"
+      />
+    </div>
   </Section>
 
   <Section heading="Latest News">
@@ -52,5 +77,30 @@ const latestNews = (await getCollection('news', ({ data }) => !data.draft))
     align-items: center;
     gap: var(--space-5);
     margin-top: var(--space-5);
+  }
+
+  /* PPT(PDF 뷰어)와 Open Lab Poster 섹션 사이에 충분한 여백을 둔다 */
+  #open-lab-poster {
+    padding-top: var(--section);
+  }
+
+  .poster-split-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-5);
+    align-items: start;
+  }
+
+  .poster-split-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 1px solid var(--surface-strong);
+  }
+
+  @media (max-width: 52em) {
+    .poster-split-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
   }
 </style>

@@ -1,8 +1,9 @@
 name: AUX Lab
 fullName: Augmented User eXperience Laboratory
 tagline: Multisensory Media, Haptics, HCI, Virtual Reality
-intro: >-
-  경북대학교 AUX Lab에서는 가상현실(VR), 인간-컴퓨터 상호작용(HCI), 햅틱스 (Haptics)와 관련된 연구를 진행하고 있습니다.
+intro: |
+  경북대학교 AUX Lab에서는 가상현실(VR), 인간-컴퓨터 상호작용(HCI),
+  햅틱스 (Haptics)와 관련된 연구를 진행하고 있습니다.
 affiliation: College of Engineering, Kyungpook National University
 address: Engineering Building 9, 80 Daehak-ro, Buk-gu, Daegu 41566, Republic of Korea
 email: gyeoreyun@knu.ac.kr

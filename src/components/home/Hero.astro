@@ -22,7 +22,7 @@ const { affiliation, fullName, intro } = Astro.props;
       <p class="hero-affiliation muted">{affiliation}</p>
       <img src={withBase('/logo.png')} alt="AUX Lab logo" class="hero-logo" width="180" height="74" />
       <h1 class="hero-headline">{fullName}</h1>
-      <p class="lead">{intro}</p>
+      <p class="lead hero-intro">{intro.trim()}</p>
       <div class="hero-actions">
         <Button href="#lab-intro">Lab Introduction</Button>
         <TextLink href="/publications">View Publications →</TextLink>
@@ -74,6 +74,10 @@ const { affiliation, fullName, intro } = Astro.props;
     line-height: var(--lh-tight);
     letter-spacing: var(--ls-tight);
     font-weight: var(--fw-bold);
+  }
+
+  .hero-intro {
+    white-space: pre-line;
   }
 
   .hero-actions {
