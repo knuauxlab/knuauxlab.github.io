@@ -36,7 +36,6 @@ const displayDate = dateLabel ?? date.replace(/-/g, '.');
                 src={img}
                 alt={`${title} (${idx + 1}/${images.length})`}
                 width={1080}
-                height={680}
                 loading={idx === 0 ? 'eager' : 'lazy'}
                 class="album-img"
               />
@@ -180,7 +179,7 @@ const displayDate = dateLabel ?? date.replace(/-/g, '.');
   .album-img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
   }
 
   .album-placeholder {
