@@ -43,14 +43,14 @@ const draft = z.boolean().default(false);
 
 // 관리 화면(CMS)은 비워 둔 선택 항목을 ''(빈 문자열)로 저장하기도 하고,
 // 따옴표 없는 날짜('2026-11-07')는 YAML 파서가 Date 객체로 바꾸기도 한다.
-// 빈 값은 "없음"으로 보고 지우고, Date 객체는 'YYYY-MM-DD' 문자열로 되돌린 뒤 검사한다.
+// 빈 문자열과 null(CMS가 빈 목록·객체를 null로 저장하기도 한다)은 "없음"으로 보고 지우고, Date 객체는 'YYYY-MM-DD' 문자열로 되돌린 뒤 검사한다.
 const withoutBlanks = (value: unknown): unknown => {
   if (value instanceof Date) return value.toISOString().slice(0, 10);
   if (Array.isArray(value)) return value.map(withoutBlanks);
   if (value && typeof value === 'object') {
     return Object.fromEntries(
       Object.entries(value)
-        .filter(([, v]) => v !== '')
+        .filter(([, v]) => v !== '' && v !== null)
         .map(([k, v]) => [k, withoutBlanks(v)]),
     );
   }
