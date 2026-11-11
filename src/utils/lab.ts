@@ -11,6 +11,7 @@ const defaults = {
   address: 'Engineering Building 9, 80 Daehak-ro, Buk-gu, Daegu 41566, Republic of Korea',
   email: 'gyeoreyun@knu.ac.kr',
   phone: '053-950-7554' as string | undefined,
+  instagram: '@aux_lab.knu' as string | undefined,
 };
 
 export const getLabInfo = async () => {

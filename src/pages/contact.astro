@@ -2,10 +2,12 @@
 import PageLayout from '../layouts/PageLayout.astro';
 import Section from '../components/layout/Section.astro';
 import Button from '../components/ui/Button.astro';
+import TextLink from '../components/ui/TextLink.astro';
 import { getCollection, render } from 'astro:content';
 import { getLabInfo } from '../utils/lab';
 
 const lab = await getLabInfo();
+const instagramHandle = lab.instagram?.replace(/^@/, '');
 
 const joinEntries = await getCollection('joinus');
 const activeJoin = joinEntries.find((e) => !e.data.draft);
@@ -41,6 +43,18 @@ const JoinContent = renderedJoin?.Content;
       lab.phone && (
         <Section heading="Phone">
           <p class="lead nums">{lab.phone}</p>
+        </Section>
+      )
+    }
+
+    {
+      instagramHandle && (
+        <Section heading="Instagram">
+          <p class="lead">
+            <TextLink href={`https://www.instagram.com/${instagramHandle}/`} external>
+              @{instagramHandle}
+            </TextLink>
+          </p>
         </Section>
       )
     }

@@ -4,6 +4,7 @@ import { getLabInfo } from '../../utils/lab';
 import { withBase } from '../../utils/url';
 
 const lab = await getLabInfo();
+const instagramHandle = lab.instagram?.replace(/^@/, '');
 ---
 
 <footer class="site-footer">
@@ -16,6 +17,16 @@ const lab = await getLabInfo();
 
     <div class="footer-right">
       <TextLink href={`mailto:${lab.email}`}>{lab.email}</TextLink>
+      {
+        instagramHandle && (
+          <p class="muted">
+            Instagram:{' '}
+            <TextLink href={`https://www.instagram.com/${instagramHandle}/`} external>
+              @{instagramHandle}
+            </TextLink>
+          </p>
+        )
+      }
       {lab.phone && <p class="muted nums">{lab.phone}</p>}
     </div>
   </div>

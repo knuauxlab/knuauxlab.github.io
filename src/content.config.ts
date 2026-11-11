@@ -163,6 +163,7 @@ const lab = defineCollection({
     address: z.string().min(1),
     email: z.email({ error: '올바른 이메일 주소를 입력하세요.' }),
     phone: z.string().optional(),
+    instagram: z.string().optional(),
   }),
 });
 
