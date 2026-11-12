@@ -63,7 +63,7 @@ Home, Research, Members, Publications, Projects, Album(`/news`), Contact. 모집
 
 ## 배포
 
-GitHub Pages(`https://knuauxlab.github.io/lab_website/`). `main`에 푸시하면 `.github/workflows/deploy.yml`이 빌드, 링크 검사, 배포를 한다. PR에서는 배포 없이 빌드와 링크 검사만 돈다.
+GitHub Pages(`https://knuauxlab.github.io/`, 저장소 이름이 `knuauxlab.github.io`인 조직 사이트라서 `base`가 없다). `main`에 푸시하면 `.github/workflows/deploy.yml`이 빌드, 링크 검사, 배포를 한다. PR에서는 배포 없이 빌드와 링크 검사만 돈다.
 
-- 사이트는 `/lab_website/` 아래에 놓이므로 내부 경로(`/news`, `/logo.png`)는 `withBase`(`src/utils/url.ts`)를 거쳐야 한다. `Button`과 `TextLink`는 안에서 처리하니 `href="/news"`처럼 그대로 써도 된다. 이미지나 `<a>`를 직접 쓸 때만 `withBase`를 붙인다.
+- 지금은 사이트가 루트에 있어 `base`가 비어 있지만, 주소가 다시 바뀔 수 있으므로 내부 경로(`/news`, `/logo.png`)는 `withBase`(`src/utils/url.ts`)를 거쳐야 한다. `Button`과 `TextLink`는 안에서 처리하니 `href="/news"`처럼 그대로 써도 된다. 이미지나 `<a>`를 직접 쓸 때만 `withBase`를 붙인다.
 - 링크를 추가하거나 바꾼 뒤에는 `npm run build && npm run check:links`로 확인한다. 이 검사는 CI에서도 돌아서, 통과하지 못하면 배포되지 않는다.

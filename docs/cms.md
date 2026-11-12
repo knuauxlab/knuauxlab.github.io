@@ -5,7 +5,7 @@
 
 > **편집하는 사람과 인수인계 받는 사람은 [docs/guide.md](guide.md)를 본다.** 토큰 만들기와 갱신, 항목별 입력법, 문제 해결을 캡처와 함께 설명한다. 이 문서는 설정과 개발자용 내용만 다룬다.
 
-- **관리 화면 주소**: https://knuauxlab.github.io/lab_website/admin/
+- **관리 화면 주소**: https://knuauxlab.github.io/admin/
 - **설정 파일**: `public/admin/config.yml` (필드는 `src/content.config.ts`와 맞춘다)
 
 ## 고칠 수 있는 것
@@ -13,7 +13,7 @@
 
 ## 사용 방법 요약
 
-1. 관리 화면에서 **액세스 토큰으로 로그인**하고 토큰(Contents: Read and write, `lab_website` 한 저장소)을 붙여넣는다. 토큰 만드는 방법과 갱신은 [가이드의 2장](guide.md#2-토큰-만들기와-갱신하기).
+1. 관리 화면에서 **액세스 토큰으로 로그인**하고 토큰(Contents: Read and write, `knuauxlab.github.io` 한 저장소)을 붙여넣는다. 토큰 만드는 방법과 갱신은 [가이드의 2장](guide.md#2-토큰-만들기와-갱신하기).
 2. 왼쪽 메뉴에서 항목을 고르고 입력한 뒤 **저장**하면 `main`에 바로 반영(커밋)된다.
 3. 1~2분 뒤 사이트에 나타난다. 진행 상황은 저장소의 Actions 탭에서 볼 수 있다.
 
@@ -38,7 +38,7 @@
 ### 내 컴퓨터에서 시험하기
 토큰 없이 로컬 파일을 고칠 수 있다. Chrome이나 Edge가 필요하다.
 1. `npm run dev`
-2. `http://localhost:<포트>/lab_website/admin/index.html` 접속 (개발 서버에서는 `index.html`까지 적어야 한다)
+2. `http://localhost:<포트>/admin/index.html` 접속 (개발 서버에서는 `index.html`까지 적어야 한다)
 3. **"로컬 저장소로 작업"**을 누르고 프로젝트 폴더를 고른다. 저장하면 파일이 바뀌고, 커밋은 직접 한다.
 
 ### 설정을 바꿀 때

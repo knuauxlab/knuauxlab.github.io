@@ -1,4 +1,4 @@
-// GitHub Pages에서는 사이트가 /lab_website/ 아래에 놓인다. 내부 경로(/news, /logo.png)에는
+// base는 astro.config의 base 값이다(지금은 루트라 비어 있다). 내부 경로(/news, /logo.png)에는
 // 항상 withBase를 거쳐 base를 붙인다. Button, TextLink는 이미 내부에서 처리한다.
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 

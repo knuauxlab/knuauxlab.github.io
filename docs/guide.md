@@ -18,9 +18,9 @@
 
 | 항목 | 내용 |
 |---|---|
-| 홈페이지 주소 | https://knuauxlab.github.io/lab_website/ |
-| 관리 화면 주소 | https://knuauxlab.github.io/lab_website/admin/ |
-| 저장소(코드와 내용이 있는 곳) | https://github.com/knuauxlab/lab_website |
+| 홈페이지 주소 | https://knuauxlab.github.io/ |
+| 관리 화면 주소 | https://knuauxlab.github.io/admin/ |
+| 저장소(코드와 내용이 있는 곳) | https://github.com/knuauxlab/knuauxlab.github.io |
 | 소유 계정 | `knuauxlab` (GitHub 조직) |
 | 로그인 방법 | GitHub **토큰**(아래 2장) |
 | 반영 시간 | 저장 후 **1~2분** |
@@ -52,9 +52,9 @@
    | Description | `AUX Lab 홈페이지 편집 화면(/admin/) 로그인용` |
    | **Resource owner** | **`knuauxlab`** (개인 계정이 아니다) |
    | Expiration | 가능한 가장 긴 기간(최대 약 1년) |
-   | Repository access | **Only select repositories** → `knuauxlab/lab_website` 하나만 선택 |
+   | Repository access | **Only select repositories** → `knuauxlab/knuauxlab.github.io` 하나만 선택 |
 
-   ![토큰 이름, Resource owner(knuauxlab), 만료일, Only select repositories와 lab_website 선택](images/02-token-settings.png)
+   ![토큰 이름, Resource owner(knuauxlab), 만료일, Only select repositories와 이 저장소 선택](images/02-token-settings.png)
 
 4. **Permissions → Repository permissions**에서 **Contents**를 **Read and write**로 바꾼다. (Metadata는 자동으로 Read-only가 되며 그대로 둔다.)
 
@@ -100,7 +100,7 @@
 
 ## 3. 관리 화면 로그인
 
-1. https://knuauxlab.github.io/lab_website/admin/ 에 접속한다.
+1. https://knuauxlab.github.io/admin/ 에 접속한다.
 2. **액세스 토큰으로 로그인**을 누른다. (`GitHub로 로그인` 버튼은 쓰지 않는다. 지금은 토큰 방식만 지원한다.)
 
    ![관리 화면 로그인 화면. 두 번째 버튼 액세스 토큰으로 로그인을 누른다](images/05-admin-login.png)
@@ -209,7 +209,7 @@
 
 **왜 바로 안 보이나?** 두 가지 대기 시간이 겹친다. (1) 사이트를 다시 만들고 올리는 시간 약 1~2분, (2) 브라우저가 옛 페이지를 최대 10분 보관하는 캐시. 저장 직후 일반 새로고침으로는 옛 화면이 보일 수 있으니 강력 새로고침을 쓴다.
 
-**배포가 끝났는지 확인하려면:** 저장소 https://github.com/knuauxlab/lab_website 의 **Actions** 탭을 본다. 가장 위의 실행이 초록색 체크면 끝, 빨간색 X면 실패(6장).
+**배포가 끝났는지 확인하려면:** 저장소 https://github.com/knuauxlab/knuauxlab.github.io 의 **Actions** 탭을 본다. 가장 위의 실행이 초록색 체크면 끝, 빨간색 X면 실패(6장).
 
 ![Actions 탭. 초록 체크는 배포 성공, 빨간 X는 실패](images/12-actions-tab.png)
 
@@ -223,7 +223,7 @@
 
 1. **Contents 권한:** 토큰 상세 화면(Settings → Developer settings → Fine-grained tokens → 토큰 이름)에서 Repository permissions의 **Contents가 `Read and write`**인지 확인한다. 비어 있거나 `Read-only`이면 **Add permissions**로 추가하거나 바꾸고 **Update**를 누른다.
 2. **Resource owner:** 토큰 화면 위에 **`Access on knuauxlab`**으로 나와야 한다. 개인 계정으로 나오면 이 화면에서 바꿀 수 없으니 토큰을 새로 만든다.
-3. **저장소 선택:** Repository access에 `knuauxlab/lab_website`가 있는지 본다.
+3. **저장소 선택:** Repository access에 `knuauxlab/knuauxlab.github.io`가 있는지 본다.
 4. **조직 승인:** 조직 Settings → Personal access tokens → Pending requests에 이 토큰이 있으면 승인한다.
 5. **계정 권한:** 토큰을 만든 계정이 저장소에 **쓰기 권한**이 있는지 확인한다.
 
@@ -290,7 +290,7 @@
 담당자가 바뀔 때 아래를 확인하고 넘긴다.
 
 ### 계정과 권한
-- [ ] 저장소 `knuauxlab/lab_website`의 소유 계정은 **`knuauxlab`**이다. 이 계정의 로그인 정보를 아는 사람이 있고, 담당자가 바뀌어도 접근할 수 있다.
+- [ ] 저장소 `knuauxlab/knuauxlab.github.io`의 소유 계정은 **`knuauxlab`**이다. 이 계정의 로그인 정보를 아는 사람이 있고, 담당자가 바뀌어도 접근할 수 있다.
 - [ ] 편집하는 사람이 **쓰기(Write) 이상** 권한이 있다.
 - [ ] 토큰(`aux-lab-cms`)을 만든 계정, 만료일을 2-2 표에 적었다. 달력 알림이 걸려 있다.
 - [ ] 떠나는 사람의 토큰은 **Delete**했다.
