@@ -4,13 +4,13 @@
 
 backend:
   name: github
-  repo: knuauxlab/lab_website
+  repo: knuauxlab/knuauxlab.github.io
   branch: main
 
 locale: ko
-site_url: https://knuauxlab.github.io/lab_website/
-display_url: https://knuauxlab.github.io/lab_website/
-logo_url: /lab_website/logo.png
+site_url: https://knuauxlab.github.io/
+display_url: https://knuauxlab.github.io/
+logo_url: /logo.png
 
 # 파일명은 ASCII로만 만든다. 한글 파일명은 링크와 도구에서 말썽이 되기 쉽다.
 slug:

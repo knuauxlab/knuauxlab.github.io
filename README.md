@@ -1,7 +1,7 @@
 # AUX Lab 웹사이트
 
 경북대학교 AUX Lab(Augmented User eXperience Laboratory) 연구실 홈페이지.
-Astro로 만든 정적 사이트이고 GitHub Pages로 배포한다. 주소는 https://knuauxlab.github.io/lab_website/
+Astro로 만든 정적 사이트이고 GitHub Pages로 배포한다. 주소는 https://knuauxlab.github.io/
 
 ## 개발
 
@@ -19,7 +19,7 @@ npm run check:links  # 빌드 결과의 내부 링크 검사 (build 다음에 �
 ## 콘텐츠 수정
 
 모든 콘텐츠는 `src/content/` 아래의 Markdown/YAML 파일이다. 코드를 건드리지 않고 파일만 고치면 된다.
-**비개발자(교수님)는 관리 화면에서 폼으로 수정한다.** https://knuauxlab.github.io/lab_website/admin/ 에 접속해 GitHub 토큰으로 로그인하면 되고, 저장하면 자동으로 커밋되어 몇 분 뒤 반영된다. 사용법과 토큰 갱신, 문제 해결은 **[관리 가이드(docs/guide.md)](docs/guide.md)**, 설정은 [docs/cms.md](docs/cms.md)에 있다.
+**비개발자(교수님)는 관리 화면에서 폼으로 수정한다.** https://knuauxlab.github.io/admin/ 에 접속해 GitHub 토큰으로 로그인하면 되고, 저장하면 자동으로 커밋되어 몇 분 뒤 반영된다. 사용법과 토큰 갱신, 문제 해결은 **[관리 가이드(docs/guide.md)](docs/guide.md)**, 설정은 [docs/cms.md](docs/cms.md)에 있다.
 
 개발자는 GitHub 웹 화면에서 파일을 열어 연필 아이콘으로 수정하고 `main`에 커밋해도 같은 결과다.
 
@@ -46,7 +46,7 @@ PR에서는 빌드와 링크 검사만 돌고 배포는 하지 않는다. 링크
 ## 검색과 공유
 
 - 모든 페이지에 검색 결과용 `description`, 완전한 주소의 `canonical`, 링크 공유 미리보기용 Open Graph 태그(`public/og-image.png`, 1200×630)가 들어간다. 새 서브페이지는 `PageLayout`에 `description`을 꼭 넘긴다.
-- `sitemap-index.xml`이 빌드 때 자동 생성된다(404 제외). 검색에 노출하려면 Google Search Console과 네이버 서치어드바이저에 `https://knuauxlab.github.io/lab_website/sitemap-index.xml`을 등록한다.
+- `sitemap-index.xml`이 빌드 때 자동 생성된다(404 제외). 검색에 노출하려면 Google Search Console과 네이버 서치어드바이저에 `https://knuauxlab.github.io/sitemap-index.xml`을 등록한다.
 - `robots.txt`는 두지 않았다. 프로젝트 페이지는 `knuauxlab.github.io/robots.txt`(도메인 루트)만 크롤러가 읽는데 그 파일은 이 저장소 소관이 아니다. 관리 화면(`/admin/`)은 페이지의 `noindex`로 막혀 있다.
 - `npm run check:seo`가 빠진 메타 태그, 없는 og:image, sitemap 누락을 찾고 CI에서도 돈다.
 
