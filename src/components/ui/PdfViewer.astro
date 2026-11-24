@@ -104,8 +104,11 @@ const slides = Object.entries(
       const slides = box.querySelector<HTMLElement>('[data-pdf-slides]');
       if (!iframe) return;
 
-      // PDF를 페이지 안에서 못 보여주는 브라우저: 쪽별 이미지를 옆으로 넘겨 보게 한다
-      if (navigator.pdfViewerEnabled === false) {
+      // PDF를 페이지 안에서 못 보여주는 브라우저: 쪽별 이미지를 옆으로 넘겨 보게 한다.
+      // 안드로이드 Chrome은 pdfViewerEnabled가 false가 아니어도 iframe의 PDF를 차단하고,
+      // iPad Safari는 첫 쪽만 보여준다. 그래서 터치가 주 입력인 기기(폰, 태블릿)도 여기에 넣는다.
+      const noInlinePdf = navigator.pdfViewerEnabled !== true || matchMedia('(pointer: coarse)').matches;
+      if (noInlinePdf) {
         if (slides) setupSlides(slides);
         else if (note) note.hidden = false;
         return;
