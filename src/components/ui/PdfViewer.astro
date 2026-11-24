@@ -156,6 +156,11 @@ const slides = Object.entries(
     border: 0;
   }
 
+  /* display를 지정하면 hidden 속성이 먹지 않아, 숨긴 iframe이 빈 칸(기본 150px)으로 남는다 */
+  .pdf-viewer iframe[hidden] {
+    display: none;
+  }
+
   .pdf-note {
     padding-block: var(--space-6);
   }
